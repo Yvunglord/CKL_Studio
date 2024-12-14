@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using CKLLib;
+using CKLLib.Operations;
 
 namespace CKL_Studio.MVVM.ViewModel
 {
@@ -47,7 +48,7 @@ namespace CKL_Studio.MVVM.ViewModel
             get => _cklService.CKL.GlobalInterval;
             set
             {
-                _cklService.CKL.GlobalInterval = value;
+                _cklService.CKL = CKLMath.TimeTransform(_cklService.CKL, value.StartTime, value.EndTime);
                 OnPropertyChanged(nameof(GlobalInterval));
             }
         }

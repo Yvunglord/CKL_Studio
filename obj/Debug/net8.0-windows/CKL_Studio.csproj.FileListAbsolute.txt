@@ -34,3 +34,17 @@ C:\Users\k_yak\source\repos\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\EnterD
 C:\Users\k_yak\source\repos\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\EnterStaticDataView.baml
 C:\Users\k_yak\source\repos\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\MainView.baml
 C:\Users\k_yak\source\repos\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\OnLoadView.baml
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\CKL_Studio.csproj.AssemblyReference.cache
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\Resources\Styles.baml
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\EnterDynamicDataView.g.cs
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\EnterStaticDataView.g.cs
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\MainView.g.cs
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\MVVM\View\OnLoadView.g.cs
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\PreprocessingWindow.g.cs
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\CKL_Studio_MarkupCompile.cache
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\CKL_Studio_MarkupCompile.lref
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\CKL_Studio.dll
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\refint\CKL_Studio.dll
+C:\Users\79136\source\repos\Projects\CKL_Studio\CKL\CKL_Studio\obj\Debug\net8.0-windows\CKL_Studio.pdb

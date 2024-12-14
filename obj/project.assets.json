@@ -8,23 +8,23 @@
     "net8.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\k_yak\\.nuget\\packages\\": {},
+    "C:\\Users\\79136\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\k_yak\\source\\repos\\CKL_Studio\\CKL_Studio.csproj",
+      "projectUniqueName": "C:\\Users\\79136\\source\\repos\\Projects\\CKL_Studio\\CKL\\CKL_Studio\\CKL_Studio.csproj",
       "projectName": "CKL_Studio",
-      "projectPath": "C:\\Users\\k_yak\\source\\repos\\CKL_Studio\\CKL_Studio.csproj",
-      "packagesPath": "C:\\Users\\k_yak\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\k_yak\\source\\repos\\CKL_Studio\\obj\\",
+      "projectPath": "C:\\Users\\79136\\source\\repos\\Projects\\CKL_Studio\\CKL\\CKL_Studio\\CKL_Studio.csproj",
+      "packagesPath": "C:\\Users\\79136\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\79136\\source\\repos\\Projects\\CKL_Studio\\CKL\\CKL_Studio\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\k_yak\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\79136\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -46,6 +46,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -70,7 +75,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

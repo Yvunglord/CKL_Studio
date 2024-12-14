@@ -53,7 +53,7 @@ namespace CKL_Studio {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CKL_Studio;V1.0.0.0;component/preprocessingwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CKL_Studio;component/preprocessingwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\PreprocessingWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

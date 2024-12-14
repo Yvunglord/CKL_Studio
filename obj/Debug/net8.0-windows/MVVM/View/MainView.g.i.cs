@@ -69,7 +69,7 @@ namespace CKL_Studio {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CKL_Studio;V1.0.0.0;component/mvvm/view/mainview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CKL_Studio;component/mvvm/view/mainview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\MVVM\View\MainView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

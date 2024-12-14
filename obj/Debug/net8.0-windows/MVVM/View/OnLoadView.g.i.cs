@@ -77,7 +77,7 @@ namespace CKL_Studio.OnLoad {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CKL_Studio;V1.0.0.0;component/mvvm/view/onloadview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CKL_Studio;component/mvvm/view/onloadview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\MVVM\View\OnLoadView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

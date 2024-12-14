@@ -85,7 +85,7 @@ namespace CKL_Studio.EnterDynamicData {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CKL_Studio;V1.0.0.0;component/mvvm/view/enterdynamicdataview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CKL_Studio;component/mvvm/view/enterdynamicdataview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\MVVM\View\EnterDynamicDataView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

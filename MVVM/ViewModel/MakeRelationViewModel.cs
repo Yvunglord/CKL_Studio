@@ -1,4 +1,5 @@
-﻿using CKLLib;
+﻿using CKLDrawing;
+using CKLLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +24,7 @@ namespace CKL_Studio.MVVM.ViewModel
             get => _cklService.CKL.Relation;
             set
             {
-                _cklService.CKL.Relation = value;
+                //_cklService.CKL.Relation = value;
                 OnPropertyChanged(nameof(Relation));
             }
         }

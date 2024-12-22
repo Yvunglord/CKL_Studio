@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="CKL_Studio.EnterStaticData.EnterStaticDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CKL_Studio.EnterStaticData"
+             mc:Ignorable="d"
+             d:MinHeight="600" d:MinWidth="800">
+    <Grid Background="#1e1e1e">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
+            <Button Style="{StaticResource btNavigate}" Name="btnBack" Content="Назад" Margin="0, 0, 10, 20" Command="{Binding DataContext.NavigateToOnLoadViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Button Style="{StaticResource btNavigate}" Name="btnForward" Content="Далее" Margin="0, 0, 20, 20" Command="{Binding DataContext.NavigateToEnterDynamicDataViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20, 20, 0, 0">
+            <Label Style="{StaticResource Header}" Content="Настроить новый проект"/>
+            <Label Style="{StaticResource h1}" Content="Файл алгебры динамических отношений .ckl"/>
+            <Label Style="{StaticResource h2}" Content="Имя файла"/>
+            <TextBox Style="{StaticResource CustomTextBoxStyle}" Width="390" Margin="6, 0, 0, 0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+            <Label Style="{StaticResource h2}" Content="Путь к файлу" Margin="0, 10, 0, 0"/>
+            <TextBox Style="{StaticResource CustomTextBoxStyle}" Width="390" Margin="6, 0, 0, 0" Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+            <Label Style="{StaticResource h2}" Content="Глобальный временной интервал" Margin="0, 10, 0, 0"/>
+            <StackPanel Orientation="Horizontal">
+                <ComboBox Style="{StaticResource CustomComboBoxStyle}"
+                          Name="timeComboBox"
+                          Width="390"
+                          Margin="6, 0, 0, 0"
+                          IsEditable="True"
+                          IsReadOnly="True"
+                          SelectedItem="{Binding SelectedTimeUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem Content="атс"/>
+                    <ComboBoxItem Content="фмс"/>
+                    <ComboBoxItem Content="пкс"/>
+                    <ComboBoxItem Content="нс"/>
+                    <ComboBoxItem Content="мкс"/>
+                    <ComboBoxItem Content="мс"/>
+                    <ComboBoxItem Content="сек"/>
+                    <ComboBoxItem Content="мин"/>
+                    <ComboBoxItem Content="ч"/>
+                    <ComboBoxItem Content="нед"/>
+                </ComboBox>
+                <Label Style="{StaticResource h2}"
+                       Content="{Binding SelectedTimeUnit.Content}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1"/>
+    </Grid>
+</UserControl>

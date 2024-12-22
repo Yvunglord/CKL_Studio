@@ -1,13 +1,7 @@
-﻿using System.Text;
+﻿using CKL_Studio.Services;
+using CKL_Studio.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using NavigationService = CKL_Studio.Services.NavigationService;
 
 namespace CKL_Studio
 {
@@ -16,9 +10,13 @@ namespace CKL_Studio
     /// </summary>
     public partial class MainWindow : Window
     {
+        NavigationService _navigationService;
+        CKLService _cklService;
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new MainVM(_navigationService, _cklService);
         }
     }
 }

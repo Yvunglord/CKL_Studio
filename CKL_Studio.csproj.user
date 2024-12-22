@@ -7,16 +7,19 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="MVVM\View\EnterDynamicDataView.xaml.cs">
+    <Compile Update="Views\EnterDynamicDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MVVM\View\EnterStaticDataView.xaml.cs">
+    <Compile Update="Views\EnterStaticDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MVVM\View\MainView.xaml.cs">
+    <Compile Update="Views\MainView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="MVVM\View\OnLoadView.xaml.cs">
+    <Compile Update="Views\MakeRelationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OnLoadView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="PreprocessingWindow.xaml.cs">
@@ -24,19 +27,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MVVM\View\EnterDynamicDataView.xaml">
+    <Page Update="Views\EnterDynamicDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MVVM\View\EnterStaticDataView.xaml">
+    <Page Update="Views\EnterStaticDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MVVM\View\MainView.xaml">
+    <Page Update="Views\MainView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MVVM\View\OnLoadView.xaml">
+    <Page Update="Views\MakeRelationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OnLoadView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="PreprocessingWindow.xaml">

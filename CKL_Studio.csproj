@@ -16,4 +16,5 @@
       <HintPath>..\..\..\Desktop\CKL\CKL_Lib\CKLLib\bin\Debug\net8.0\CKLLib.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 </Project>

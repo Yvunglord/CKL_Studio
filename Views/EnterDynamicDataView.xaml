@@ -34,7 +34,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource btNavigate}" Name="btnAdd" Content="Добавить" Margin="0, 0, 20, 10"  Command="{Binding DataContext.NavigateToEnterDynamicDataViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource btNavigate}" Name="btnAdd" Content="Добавить" Margin="0, 0, 20, 10"  Command="{Binding DataContext.NavigateToEnterDynamicDataViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" Click="btnAdd_Click"/>
                     <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource btNavigate}" Name="btnForward" Content="Далее" Margin="0, 0, 20, 20" Command="{Binding DataContext.NavigateToMakeRelationViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                     <Button Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource btNavigate}" Name="btnBack" Content="Назад" Margin="0, 0, 10, 20" Command="{Binding DataContext.NavigateToEnterStaticDataViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </Grid>

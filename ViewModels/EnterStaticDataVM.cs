@@ -1,8 +1,8 @@
 ﻿using CKL_Studio.Services;
 using CKLLib;
 using System.ComponentModel;
-using System.Windows.Input;
 using System.IO;
+using System.Windows.Input;
 
 namespace CKL_Studio.ViewModels
 {
@@ -89,7 +89,7 @@ namespace CKL_Studio.ViewModels
         private void UpdateFilePath()
         {
             string baseFileName = Name;
-            string extension = ".ckl"; 
+            string extension = ".ckl";
 
             if (!baseFileName.EndsWith(extension))
             {

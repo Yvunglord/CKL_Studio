@@ -1,6 +1,7 @@
 ﻿using CKL_Studio.Services;
 using CKL_Studio.ViewModels;
 using System.Windows.Controls;
+
 namespace CKL_Studio.EnterDynamicData
 {
     /// <summary>
@@ -9,11 +10,17 @@ namespace CKL_Studio.EnterDynamicData
     public partial class EnterDynamicDataView : UserControl
     {
         CKLService _service;
+
         public EnterDynamicDataView()
         {
             InitializeComponent();
 
             this.DataContext = new EnterDynamicDataVM(_service);
+        }
+
+        private void btnAdd_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
         }
     }
 }

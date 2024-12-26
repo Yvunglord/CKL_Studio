@@ -38,6 +38,13 @@ namespace CKL_Studio.ViewModels
         public ICommand NavigateToEnterDynamicDataViewCommand => new RelayCommand(() => CurrentView = new EnterDynamicDataView());
         public ICommand NavigateToMakeRelationViewCommand => new RelayCommand(() => CurrentView = new MakeRelationView());
         public ICommand NavigateToMainViewCommand => new RelayCommand(() => _navigationService.NavigateTo(ViewType.MainView));
+        public ICommand NavigateToEnterDynamicDataFromHerselfCommand => new RelayCommand(NavigateToEnterDynamicDataFromHerself);
+
+        private void NavigateToEnterDynamicDataFromHerself(object parameter)
+        {
+            // Логика для перехода со второго множества на первое
+            CurrentView = new EnterDynamicDataView();
+        }
 
         public CKL CKLInstance => _cklService.CKLInstance;
 

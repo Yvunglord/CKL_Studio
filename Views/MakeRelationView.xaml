@@ -5,8 +5,67 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CKL_Studio.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Background="#1e1e1e">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Label с текстом CKL Studio -->
+        <Label Style="{StaticResource Header}" Content="Настроить проект" Margin="60, 40, 0, 60" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Label Style="{StaticResource h1}" Content="Составьте отношение:" Margin="60, 0, 0, 0"/>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
+            <Button Style="{StaticResource btNavigate}" Name="btnBack" Content="Назад" Margin="0, 0, 10, 20"  Command="{Binding DataContext.NavigateToEnterDynamicDataViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Button Style="{StaticResource btNavigate}" Name="btnForward" Content="Далее" Margin="0, 0, 20, 20" Command="{Binding DataContext.NavigateToMainViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="0" Margin="60,0,73,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListBox MinHeight="350" MinWidth="350" Margin="10,10,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#1e1e1e" BorderThickness="0"
+              ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
+              ItemsSource="{Binding Items}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#373737" HorizontalAlignment="Stretch">
+                                <Grid Height="50" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Width="20" Height="20" VerticalAlignment="Top" Margin="10,10,10,10" Background="#2c2c2c" Command="{Binding AddItemCommand}">
+                    <Button.Content>
+                        <Path Data="M0,5 L10,5 M5,0 L5,10" Stroke="White" StrokeThickness="2" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Stretch="Uniform"/>
+                    </Button.Content>
+                </Button>
+
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

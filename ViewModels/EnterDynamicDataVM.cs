@@ -13,6 +13,7 @@ namespace CKL_Studio.ViewModels
         public EnterDynamicDataVM(CKLService cklService)
         {
             _cklService = cklService;
+
             Items = new ObservableCollection<ListBoxItemModel>
         {
             new ListBoxItemModel { Text = string.Empty },

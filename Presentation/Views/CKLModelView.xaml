@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="CKL_Studio.Presentation.Views.CKLModelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CKL_Studio.Presentation.Views"
+             xmlns:vm="clr-namespace:CKL_Studio.Presentation.ViewModels"
+             d:DataContext="{d:DesignInstance Type=vm:CKLViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Background="#2d2d2d">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="120" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#1e1e1e" Margin="0,0,0,20">
+            <MenuItem Header="Файл" Style="{StaticResource CustomMenuItemStyle}">
+                <MenuItem Header="Создать" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding CreateNewCommand}"/>
+                <MenuItem Header="Открыть" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding OpenNewCommand}"/>
+                <MenuItem Header="Сохранить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveCommand}"/>
+                <MenuItem Header="Сохранить как" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveAsCommand}"/>
+                <MenuItem Header="Удалить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DeleteCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Править" Style="{StaticResource CustomMenuItemStyle}">
+                <MenuItem Header="Назад" Style="{StaticResource CustomSubMenuItemStyle}"/>
+                <MenuItem Header="Вперед" Style="{StaticResource CustomSubMenuItemStyle}"/>
+                <MenuItem Header="Редактировать" Style="{StaticResource CustomSubMenuItemStyle}" />
+            </MenuItem>
+            <MenuItem Header="Временные" Style="{StaticResource CustomMenuItemStyle}" Width="120">
+                <MenuItem Header="Трансформировать" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding TimeTransformCommand}"/>
+                <MenuItem Header="Левое предшествование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding LeftPrecedenceCommand}"/>
+                <MenuItem Header="Правое предшествование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding RightPrecedenceCommand}"/>
+                <MenuItem Header="Левое следование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding LeftContinuationCommand}"/>
+                <MenuItem Header="Правое следование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding RightContinuationCommand}"/>
+                <MenuItem Header="Усечь сверху" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding TruncationHighLimitCommand}"/>
+                <MenuItem Header="Усечь снизу" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding TruncationLowLimitCommand}"/>
+
+
+            </MenuItem>
+            <MenuItem Header="Бинарные" Style="{StaticResource CustomMenuItemStyle}">
+                <MenuItem Header="Union" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding UnionCommand}"/>
+                <MenuItem Header="Intersect" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding IntersectCommand}"/>
+                <MenuItem Header="Difference" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DifferenceCommand}"/>
+                <MenuItem Header="Inversion" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding InversionCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Семантические" Style="{StaticResource CustomMenuItemStyle}" Width="70">
+                <MenuItem Header="Semantic Union" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticUnionCommand}"/>
+                <MenuItem Header="Semantic Intersect" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticIntersectionCommand}"/>
+                <MenuItem Header="Semantic Difference" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticDifferenceCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Окно" Style="{StaticResource CustomMenuItemStyle}">
+                <MenuItem Header="Подпункт 1" Style="{StaticResource CustomSubMenuItemStyle}" />
+                <MenuItem Header="Подпункт 2" Style="{StaticResource CustomSubMenuItemStyle}" />
+                <MenuItem Header="Подпункт 3" Style="{StaticResource CustomSubMenuItemStyle}" />
+            </MenuItem>
+            <MenuItem Header="Справка" Style="{StaticResource CustomMenuItemStyle}">
+                <MenuItem Header="Подпункт 1" Style="{StaticResource CustomSubMenuItemStyle}" />
+                <MenuItem Header="Подпункт 2" Style="{StaticResource CustomSubMenuItemStyle}" />
+                <MenuItem Header="Подпункт 3" Style="{StaticResource CustomSubMenuItemStyle}" />
+            </MenuItem>
+            <MenuItem Header="Терминал" Style="{StaticResource CustomMenuItemStyle}" Command="{Binding OpenTerminalCommand}"/>
+        </Menu>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,220,0">
+            <Label x:Name="FilePathLabel" Style="{StaticResource h2}" Height="30" Background="#1e1e1e" Foreground="White" Content="{Binding CKLView.Ckl.FilePath}" />
+            <Ellipse Width="10" Height="10" Margin="10,0,0,0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="2" Background="#2d2d2d" Margin="10,0,10,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+
+            <ContentPresenter Content="{Binding CKLView}" Margin="10,0,10,0" />
+
+            <TreeView x:Name="SolutionExplorer" Grid.Column="1" Background="#1e1e1e" Margin="0,-30,20,-149"
+   ItemsSource="{Binding SolutionItems}"
+               >
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,220,10">
+            <Button Style="{StaticResource btTemplate}" Content="+" Background="#2d2d2d" Width="20" Height="20" Margin="5,0,0,0" Command="{Binding ScalePlusCommand}"/>
+            <Button Style="{StaticResource btTemplate}" Content="-" Width="20" Background="#2d2d2d" Height="20" Margin="5,0,0,0" Command="{Binding ScaleMinusCommand}"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="4" Background="#1e1e1e" Height="100" Margin="20,0,220,20" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Button Height="40" Width="40" Margin="0,0,0,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="Transparent">
+                            <Line x:Name="Ln" X1="8.5" Y1="20" X2="31.5" Y2="20" Stroke="#4BB6F4" StrokeThickness="1" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#2c2c2c"/>
+                                <Setter TargetName="Ln" Property="Stroke" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button Height="40" Width="40" Margin="0,0,0,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="Transparent">
+                            <Rectangle x:Name="Rt" Width="25" Height="25" Fill="Transparent" Stroke="#FFFFFF" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#2c2c2c"/>
+                                <Setter TargetName="Rt" Property="Stroke" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button Height="40" Width="40" Margin="0,0,0,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="Transparent">
+                            <Path x:Name="Pt" Data="M0,0 M0.2,0.2 L 0.8,0.8 M0.2,0.8 L0.8,0.2 M1,1"
+    Stretch="Uniform" Stroke="#EF4B4C" StrokeThickness="1"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#2c2c2c"/>
+                                <Setter TargetName="Pt" Property="Stroke" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

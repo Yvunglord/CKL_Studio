@@ -1,0 +1,25 @@
+﻿<Application x:Class="CKL_Studio.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CKL_Studio">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Presentation/Resources/Templates/DataTemplates.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Templates/Other.xaml"/>
+
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/Buttons.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/ComboBox.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/Labels.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/ListBox.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/TextBox.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/Menu.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/TreeViewItem.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

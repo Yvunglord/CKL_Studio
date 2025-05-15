@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="CKL_Studio.Presentation.Views.SourceInputView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CKL_Studio.Presentation.Views"
+             xmlns:vm="clr-namespace:CKL_Studio.Presentation.ViewModels"
+             d:DataContext="{d:DesignInstance Type=vm:SourceInputViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Список элементов -->
+        <ListBox ItemsSource="{Binding CKL.Source}" 
+                 SelectedItem="{Binding SelectedPair}"
+                 DisplayMemberPath="ToString"
+                 Grid.Row="0"
+                 Margin="5"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+        <!-- Поля ввода -->
+        <TextBox Text="{Binding NewFirstValue, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="1"
+                 Margin="5"
+                 Tag="First Value"/>
+
+        <TextBox Text="{Binding NewSecondValue, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="2"
+                 Margin="5"
+                 Tag="Second Value (Optional)"/>
+
+        <TextBox Text="{Binding NewThirdValue, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="3"
+                 Margin="5"
+                 Tag="Third Value (Optional)"/>
+
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Add" 
+                    Command="{Binding AddCommand}" 
+                    Margin="5"
+                    Width="80"/>
+
+            <Button Content="Delete" 
+                    Command="{Binding DeleteCommand}" 
+                    Margin="5"
+                    Width="80"/>
+
+            <Button Content="Next" 
+                    Command="{Binding NavigateToRelationInputCommand}" 
+                    Margin="5"
+                    Width="80"/>
+
+            <Button Content="Back" 
+                    Command="{Binding GoBackCommand}" 
+                    Margin="5"
+                    Width="80"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

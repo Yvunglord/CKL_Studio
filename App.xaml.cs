@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using CKL_Studio.Common.Interfaces.CKLInterfaces;
 
 namespace CKL_Studio
 {
@@ -47,6 +48,7 @@ namespace CKL_Studio
             services.AddSingleton<CKL, CKL>();
             services.AddSingleton<CKLView, CKLView>();
             services.AddSingleton<INamingService, NamingService>();
+            services.AddSingleton<IJSONToCklСonversion, CklConversionService>();
 
             //Сервисы EntryPointViewModel
             services.AddSingleton<IDataService<FileData>, FileDataService>();

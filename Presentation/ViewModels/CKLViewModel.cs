@@ -17,12 +17,12 @@ namespace CKL_Studio.Presentation.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        private CKLView _cklView;
+        private CKLView _mainCklView;
 
-        public CKLView CKLView
+        public CKLView MainCKLView
         {
-            get => _cklView;
-            set => SetField(ref _cklView, value);
+            get => _mainCklView;
+            set => SetField(ref _mainCklView, value);
         }
 
         public ICommand NavigateToEntryPointViewCommand => new RelayCommand(NavigateToEntryPointView);
@@ -31,12 +31,12 @@ namespace CKL_Studio.Presentation.ViewModels
         public CKLViewModel(IServiceProvider serviceProvider, CKLView cklView) : base(serviceProvider)
         {
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();
-            _cklView  = cklView;
+            _mainCklView  = cklView;
         }
 
         public void ReceiveParameter(CKLView parameter)
         {
-            _cklView = parameter;
+            _mainCklView = parameter;
         }
 
         private void NavigateToEntryPointView() => _navigationService.NavigateTo<EntryPointViewModel>();

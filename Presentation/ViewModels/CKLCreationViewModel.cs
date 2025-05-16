@@ -14,6 +14,7 @@ using CKL_Studio.Common.Interfaces;
 using System.IO;
 using Microsoft.Win32;
 using System.ComponentModel;
+using CKL_Studio.Common.Interfaces.CKLInterfaces;
 
 namespace CKL_Studio.Presentation.ViewModels
 {
@@ -21,6 +22,7 @@ namespace CKL_Studio.Presentation.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
+        private readonly IJSONToCklСonversion _conversionService;
         private readonly INamingService _namingService;
 
         private CKL _ckl;
@@ -83,7 +85,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
         public ICommand GoBackCommand => new RelayCommand(GoBack);
         public ICommand NavigateToSourceInputCommand => new RelayCommand(NavigateToSourceInput, CanNavigateToSourceInput);
-        public ICommand NavigateToCKLViewCommand => new RelayCommand(NavigateToCKLView, CanNavigateToCKLView);
+        public ICommand NavigateToCKLViewCommand => new RelayCommand(async () => await OpenCKLView());
         public ICommand SelectFilePathCommand => new RelayCommand(SelectFilePath);
 
         #region IDataErrorInfo
@@ -185,6 +187,7 @@ namespace CKL_Studio.Presentation.ViewModels
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();
             _dialogService = serviceProvider.GetRequiredService<IDialogService>();
             _namingService = serviceProvider.GetRequiredService<INamingService>();
+            _conversionService = serviceProvider.GetRequiredService<IJSONToCklСonversion>();
 
             _ckl = ckl ?? new CKL();
 
@@ -228,7 +231,7 @@ namespace CKL_Studio.Presentation.ViewModels
         private void NavigateToCKLView() =>
             _navigationService.NavigateTo<CKLViewModel, CKLView>(CKLView ?? throw new InvalidOperationException("CKLView is null"));
 
-        private bool CanNavigateToCKLView() => CKLView != null;
+        //private bool CanNavigateToCKLView() => CKLView != null;
 
         private void NavigateToSourceInput() =>
             _navigationService.NavigateTo<SourceInputViewModel, CKL>(_ckl);
@@ -252,13 +255,44 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void SelectFilePath()
         {
-            var result = _dialogService.ShowSaveFileDialog($"{_name}.ckl", Constants.DEFAULT_CKL_FILE_PATH, "CKL Files (*.ckl)|*.ckl");
+            var result = _dialogService.ShowSaveFileDialog($"{_name}.ckl", Constants.DEFAULT_CKL_FILE_PATH, Constants.CKL_FILE_DIALOG_FILTER);
 
             if (!string.IsNullOrEmpty(result))
             { 
                 _isFilePathManuallySet = true;
                 Name = Path.GetFileNameWithoutExtension(result);
                 FilePath = result;
+            }
+        }
+
+        private async Task<string?> GetCklPathAsync()
+        {
+            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Constants.JSON_FILE_DIALOG_FILTER, Constants.DEFAULT_FILE_PATH));
+        }
+
+        private async Task BrowseAsync()
+        { 
+            var path = await GetCklPathAsync();
+            if (path != null)
+            {
+                _ckl = _conversionService.Convert(path);
+                CKL.Save(_ckl);
+            }
+        }
+
+        private async Task OpenCKLView()
+        {
+            try
+            {
+                await BrowseAsync();
+
+                _cklView = new CKLView(_ckl);
+                if (_cklView != null) 
+                    NavigateToCKLView();
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage($"Ошибка открытия файла: {ex.Message}");
             }
         }
     }

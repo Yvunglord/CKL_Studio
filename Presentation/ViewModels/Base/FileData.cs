@@ -18,6 +18,7 @@ namespace CKL_Studio.Presentation.ViewModels.Base
         private string _path = string.Empty;
         private DateTime _lastAccess;
         private FileInfo _file = null!;
+        private bool _isPinned;
 
         public FileData(FileInfo file) 
         {
@@ -68,12 +69,29 @@ namespace CKL_Studio.Presentation.ViewModels.Base
                 {
                     _lastAccess = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(LastAccessFormatted));
                 }
             }
         }
 
         [JsonIgnore]
+        public string LastAccessFormatted => _lastAccess.ToString("dd.MM.yyyy HH:mm");
+
+        [JsonIgnore]
         public FileInfo File => _file;
+
+        public bool IsPinned
+        {
+            get => _isPinned;
+            set
+            {
+                if (_isPinned != value)
+                {
+                    _isPinned = value;
+                    OnPropertyChanged(nameof(IsPinned));
+                }
+            }
+        }
 
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)

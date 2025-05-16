@@ -70,7 +70,7 @@ namespace CKL_Studio.Infrastructure.Services
                     _allFiles.Add(file);
                 }
 
-                _filteredFiles = new ObservableCollection<FileData>(_allFiles);
+                FilterFiles(string.Empty);
             }
         }
 
@@ -85,11 +85,15 @@ namespace CKL_Studio.Infrastructure.Services
             IEnumerable<FileData> filtered = string.IsNullOrEmpty(searchText)
                 ? _allFiles
                 : _allFiles.Where(f =>
-                    f.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
+                    f.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+
+            var sorted = filtered
+                .OrderByDescending(f => f.IsPinned)
+                .ThenByDescending(f => f.LastAccess)
+                .ToList();
 
             _filteredFiles.Clear();
-            foreach (var item in filtered)
+            foreach (var item in sorted)
             {
                 _filteredFiles.Add(item);
             }

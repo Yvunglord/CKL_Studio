@@ -5,6 +5,7 @@ using CKL_Studio.Presentation.ViewModels;
 using CKL_Studio.Presentation.ViewModels.Base;
 using CKL_Studio.Presentation.Views;
 using CKL_Studio.Presentation.Windows;
+using CKLLib;
 using CKLDrawing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
@@ -43,7 +44,7 @@ namespace CKL_Studio
                     viewModel => GetWindowTypeForViewModel(viewModel)
                 ));
 
-            services.AddSingleton<CKLLib.CKL, CKLLib.CKL>();
+            services.AddSingleton<CKL, CKL>();
             services.AddSingleton<CKLView, CKLView>();
             services.AddSingleton<INamingService, NamingService>();
 

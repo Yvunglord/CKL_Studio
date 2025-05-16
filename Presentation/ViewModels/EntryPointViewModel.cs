@@ -59,7 +59,10 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand NavigateToCKLCreationCommand => new RelayCommand(NavigateToCKLCreation);
         public ICommand NavigateToCKLViewCommand => new AsyncRelayCommand(BrowseAsync);
         public ICommand SaveCommand => new RelayCommand(Save);
-        public ICommand OpenFileCommand => new AsyncRelayCommand(OpenSelectedFileAsync);
+        public ICommand OpenFileCommand => new RelayCommand(async () => await OpenSelectedFileAsync());
+        public ICommand PinFileCommand => new RelayCommand<FileData>(PinFile);
+        public ICommand CopyFilePathCommand => new RelayCommand<FileData>(CopyFilePath);
+        public ICommand RemoveFileCommand => new RelayCommand<FileData>(RemoveFile);
 
         public EntryPointViewModel(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -115,7 +118,7 @@ namespace CKL_Studio.Presentation.ViewModels
             catch (Exception ex)
             {
                 _dialogService.ShowMessage($"Ошибка открытия файла: {ex.Message}");
-                RemoveFile(file.Path);
+                RemoveFile(file);
                 Save();
             }
         }
@@ -181,10 +184,29 @@ namespace CKL_Studio.Presentation.ViewModels
             Save();
         }
 
-        public void RemoveFile(string path) 
+        public void RemoveFile(FileData? file) 
+        {         
+            if (file != null)
+                _fileService.Delete(file);   
+            Save();
+        }
+
+        private void PinFile(FileData? file)
         {
-            var file = _fileService.Get(path);
-            _fileService.Delete(file);
+            if (file != null)
+            {
+                file.IsPinned = !file.IsPinned;
+                Save();
+            }
+        }
+
+        private void CopyFilePath(FileData? file)
+        {
+            if (file != null)
+            {
+                Clipboard.SetText(file.Path);
+                _dialogService.ShowMessage("Путь скопирован в буфер обмена");
+            }
         }
     }
 }

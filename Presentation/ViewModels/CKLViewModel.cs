@@ -41,10 +41,5 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void NavigateToEntryPointView() => _navigationService.NavigateTo<EntryPointViewModel>();
         private void NavigateToCKLCreationView() => _navigationService.NavigateTo<CKLCreationViewModel>();
-
-        private void Reset(CKL ckl)
-        {
-            CKLView = new CKLView(ckl);
-        }
     }
 }

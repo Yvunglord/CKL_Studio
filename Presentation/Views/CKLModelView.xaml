@@ -18,8 +18,8 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#1e1e1e" Margin="0,0,0,20">
             <MenuItem Header="Файл" Style="{StaticResource CustomMenuItemStyle}">
-                <MenuItem Header="Создать" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding CreateNewCommand}"/>
-                <MenuItem Header="Открыть" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding OpenNewCommand}"/>
+                <MenuItem Header="Создать" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding NavigateToCKLCreationViewCommand}"/>
+                <MenuItem Header="Открыть" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding NavigateToEntryPointViewCommand}"/>
                 <MenuItem Header="Сохранить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveCommand}"/>
                 <MenuItem Header="Сохранить как" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveAsCommand}"/>
                 <MenuItem Header="Удалить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DeleteCommand}"/>
@@ -93,56 +93,5 @@
         </StackPanel>
 
         <ListBox Grid.Row="4" Background="#1e1e1e" Height="100" Margin="20,0,220,20" />
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
-            <Button Height="40" Width="40" Margin="0,0,0,0">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Bd" Background="Transparent">
-                            <Line x:Name="Ln" X1="8.5" Y1="20" X2="31.5" Y2="20" Stroke="#4BB6F4" StrokeThickness="1" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#2c2c2c"/>
-                                <Setter TargetName="Ln" Property="Stroke" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <Button Height="40" Width="40" Margin="0,0,0,0">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Bd" Background="Transparent">
-                            <Rectangle x:Name="Rt" Width="25" Height="25" Fill="Transparent" Stroke="#FFFFFF" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#2c2c2c"/>
-                                <Setter TargetName="Rt" Property="Stroke" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <Button Height="40" Width="40" Margin="0,0,0,0">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Bd" Background="Transparent">
-                            <Path x:Name="Pt" Data="M0,0 M0.2,0.2 L 0.8,0.8 M0.2,0.8 L0.8,0.2 M1,1"
-    Stretch="Uniform" Stroke="#EF4B4C" StrokeThickness="1"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#2c2c2c"/>
-                                <Setter TargetName="Pt" Property="Stroke" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-        </StackPanel>
     </Grid>
 </UserControl>

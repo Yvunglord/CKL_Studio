@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CKL_Studio.Presentation.Windows"
         mc:Ignorable="d"
-        Title="CKLWindow" Height="600" Width="800" MinHeight="600" MinWidth="800">
+        Title="CKL Studio" Height="600" Width="800" MinHeight="600" MinWidth="800">
     <ContentControl Content="{Binding}"/>
 </Window>

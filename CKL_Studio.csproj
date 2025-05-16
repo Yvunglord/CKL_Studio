@@ -26,6 +26,7 @@
   <ItemGroup>
     <Folder Include="Common\Services\" />
     <Folder Include="Infrastructure\Interfaces\" />
+    <Folder Include="Presentation\Resources\Styles\Images\" />
   </ItemGroup>
 
 </Project>

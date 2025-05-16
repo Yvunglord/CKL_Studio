@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CKL_Studio.Presentation.Services.Navigation
@@ -96,19 +94,30 @@ namespace CKL_Studio.Presentation.Services.Navigation
         {
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-            Window? newWindow = _windowFactory(viewModel)
-                ?? throw new InvalidOperationException("Window factory returned null");
+            Type newWindowType = _windowTypeResolver(viewModel);
 
-            newWindow.Closed += OnWindowClosed;
-
-            if (_windowStack.Count > 0 && _windowStack.Peek() is Window existingWindow)
+            if (_windowStack.Count > 0 && _windowStack.Peek().GetType() == newWindowType)
             {
-                existingWindow.Hide();
+                var currentWindow = _windowStack.Peek();
+                currentWindow.DataContext = viewModel;
+                _navigationStack.Push(viewModel);
             }
+            else
+            {
+                Window? newWindow = _windowFactory(viewModel)
+                    ?? throw new InvalidOperationException("Window factory returned null");
 
-            _windowStack.Push(newWindow);
-            _navigationStack.Push(viewModel);
-            newWindow.Show();
+                newWindow.Closed += OnWindowClosed;
+
+                if (_windowStack.Count > 0 && _windowStack.Peek() is Window existingWindow)
+                {
+                    existingWindow.Hide();
+                }
+
+                _windowStack.Push(newWindow);
+                _navigationStack.Push(viewModel);
+                newWindow.Show();
+            }
 
             OnCurrentViewChanged();
         }

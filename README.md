@@ -19,4 +19,4 @@ CKL Studio — это прототип инструментальной сист
 ## Установка и запуск
 1. **Клонирование репозитория**:
    ```bash
-   git clone https://github.com/your-repository/CKL_Studio.git
+   git clone https://github.com/Yvunglord/CKL_Studio.git

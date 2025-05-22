@@ -41,15 +41,16 @@
         </Setter>
     </Style>
 
-    <Style x:Key="btNavigate" TargetType="Button">
+    <Style x:Key="btNavigateForward" TargetType="Button">
         <Setter Property="Width" Value="90"/>
         <Setter Property="Height" Value="30"/>
-        <Setter Property="Background" Value="#43506C"/>
+        <Setter Property="Background" Value="#281ac1"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Margin" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -62,17 +63,58 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#92aeeb"/>
+                            <Setter Property="Background" Value="#4d4d4d"/>
                             <Setter Property="Margin" Value="1"/>
-                            <Setter Property="BorderBrush" Value="#92aeeb"/>
+                            <Setter Property="BorderBrush" Value="#4d4d4d"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#4d4d4d"/>
+                            <Setter Property="Margin" Value="1"/>
+                            <Setter Property="BorderBrush" Value="#4d4d4d"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btNavigateBack" TargetType="Button">
+        <Setter Property="Width" Value="90"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Background" Value="#3d3d3d"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#4d4d4d"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="BorderBrush" Value="#4d4d4d"/>
                             <Setter Property="BorderThickness" Value="1"/>
                             <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#92aeeb"/>
+                            <Setter Property="Background" Value="#4d4d4d"/>
                             <Setter Property="Margin" Value="1"/>
-                            <Setter Property="BorderBrush" Value="#92aeeb"/>
-                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="#4d4d4d"/>
+                            <Setter Property="BorderThickness" Value="0"/>
                             <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

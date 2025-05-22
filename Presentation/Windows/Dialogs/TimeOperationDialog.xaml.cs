@@ -19,9 +19,33 @@ namespace CKL_Studio.Presentation.Windows.Dialogs
     /// </summary>
     public partial class TimeOperationDialog : Window
     {
+        public string TextBox1Value { get; private set; } = string.Empty;
+        public string TextBox2Value { get; private set; } = string.Empty;
         public TimeOperationDialog()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            TextBox1Value = TextBox1.Text;
+            TextBox2Value = TextBox2.Text;
+            DialogResult = true;
+            Close();
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is Grid)
+            {
+                this.DragMove();
+            }
         }
     }
 }

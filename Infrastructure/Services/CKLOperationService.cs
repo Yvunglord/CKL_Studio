@@ -14,13 +14,13 @@ namespace CKL_Studio.Infrastructure.Services
     public class CKLOperationService : ICklOperationService
     {
         private readonly IDialogService _dialogService;
-        private readonly Func<CKL> _getCurrentCkl;
+        private readonly CKL _currentCkl;
         private readonly Action<CKL> _resetCkl;
 
-        public CKLOperationService(IDialogService dialogService, Func<CKL> getCurrentCkl, Action<CKL> resetCkl)
+        public CKLOperationService(IDialogService dialogService, CKL currentCkl, Action<CKL> resetCkl)
         {
             _dialogService = dialogService;
-            _getCurrentCkl = getCurrentCkl;
+            _currentCkl = currentCkl;
             _resetCkl = resetCkl;
         }
 
@@ -34,8 +34,7 @@ namespace CKL_Studio.Infrastructure.Services
                 {
                     try
                     {
-                        var current = _getCurrentCkl();
-                        var result = operation(current, ckl);
+                        var result = operation(_currentCkl, ckl);
                         _resetCkl(result);
                     }
                     catch (ArgumentException ex)
@@ -50,8 +49,7 @@ namespace CKL_Studio.Infrastructure.Services
         {
             try
             {
-                var currentCkl = _getCurrentCkl();
-                var result = operation(currentCkl);
+                var result = operation(_currentCkl);
                 _resetCkl(result);
             }
             catch (ArgumentException ex)
@@ -62,7 +60,7 @@ namespace CKL_Studio.Infrastructure.Services
 
         public void ExecuteParameterizedTimeOperation(Func<CKL, TimeInterval, double, CKL> operation, string dialogTitle)
         {
-           /* var dialog = new ParameterizedTimeOperationDialog() { Title = dialogTitle};
+            var dialog = new ParameterizedTimeOperationDialog() { Title = dialogTitle};
             if (_dialogService.ShowDialog<ParameterizedTimeOperationDialog>(d => d.Title = dialogTitle) == true)
             {
                 var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
@@ -71,20 +69,19 @@ namespace CKL_Studio.Infrastructure.Services
 
                 try
                 {
-                    var currentCkl = _getCurrentCkl();
-                    var result = operation(currentCkl, new TimeInterval(stTime, enTime), t);
+                    var result = operation(_currentCkl, new TimeInterval(stTime, enTime), t);
                     _resetCkl(result);
                 }
                 catch (ArgumentException ex)
                 {
                     _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
                 } 
-            } */
+            } 
         }
 
         public void ExecuteTimeOperation(Func<CKL, TimeInterval, CKL> operation, string dialogTitle)
         {
-           /* var dialog = new TimeOperationDialog() { Title = dialogTitle };
+            var dialog = new TimeOperationDialog() { Title = dialogTitle };
             if (_dialogService.ShowDialog<TimeOperationDialog>(d => d.Title = dialogTitle) == true)
             {
                 var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
@@ -92,15 +89,14 @@ namespace CKL_Studio.Infrastructure.Services
 
                 try
                 {
-                    var currentCkl = _getCurrentCkl();
-                    var result = operation(currentCkl, new TimeInterval(stTime, enTime));
+                    var result = operation(_currentCkl, new TimeInterval(stTime, enTime));
                     _resetCkl(result);
                 }
                 catch (ArgumentException ex)
                 {
                     _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
                 }
-            } */
+            } 
         }
     }
 }

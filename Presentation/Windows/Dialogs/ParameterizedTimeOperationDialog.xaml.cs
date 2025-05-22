@@ -21,6 +21,7 @@ namespace CKL_Studio.Presentation.Windows.Dialogs
     {
         public string TextBox1Value { get; private set; } = string.Empty;
         public string TextBox2Value { get; private set; } = string.Empty;
+        public string TextBox3Value { get; private set; } = string.Empty;
 
         public ParameterizedTimeOperationDialog()
         {
@@ -37,6 +38,7 @@ namespace CKL_Studio.Presentation.Windows.Dialogs
         {
             TextBox1Value = TextBox1.Text;
             TextBox2Value = TextBox2.Text;
+            TextBox3Value = TextBox3.Text;
             DialogResult = true;
             Close();
         }

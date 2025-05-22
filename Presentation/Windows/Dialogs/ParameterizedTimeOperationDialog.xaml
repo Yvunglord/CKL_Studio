@@ -5,16 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CKL_Studio.Presentation.Windows.Dialogs"
         mc:Ignorable="d"
-        Title="ParameterizedTimeOperationDialog" Height="200" Width="300" WindowStyle="None" ResizeMode="NoResize">
+        Title="ParameterizedTimeOperationDialog" Height="300" Width="300" WindowStyle="None" ResizeMode="NoResize">
     <Grid Background="#1e1e1e" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <StackPanel Margin="10">
             <Label Style="{StaticResource h2}" Content="Стартовое значение:" />
             <TextBox x:Name="TextBox1" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,10" />
             <Label Style="{StaticResource h2}" Content="Конечное значение:" />
-            <TextBox x:Name="TextBox2" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,32" />
+            <TextBox x:Name="TextBox2" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,10" />
+            <Label Style="{StaticResource h2}" Content="Контрольное значение:" />
+            <TextBox x:Name="TextBox3" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,70" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource btNavigate}" Content="Назад" Width="70" Margin="0,0,10,0" Click="Button_Click" />
-                <Button Style="{StaticResource btNavigate}" Content="OK" Width="70" Click="Button_Click_1" />
+                <Button Style="{StaticResource btNavigateBack}" Content="Назад" Width="70" Margin="0,0,10,0" Click="Button_Click" />
+                <Button Style="{StaticResource btNavigateForward}" Content="OK" Width="70" Click="Button_Click_1" />
             </StackPanel>
         </StackPanel>
     </Grid>

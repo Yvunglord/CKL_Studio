@@ -29,4 +29,8 @@
     <Folder Include="Presentation\Resources\Styles\Images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\workflows\build.yml" />
+  </ItemGroup>
+
 </Project>

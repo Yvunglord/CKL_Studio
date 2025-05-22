@@ -25,7 +25,7 @@ namespace CKL_Studio.Presentation.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
         private readonly ISolutionExplorerDataServiceFactory _serviceFactory;
-        private IDataService<CKL> _solutionExplorerService;
+        private IDataService<CKL>? _solutionExplorerService;
 
         private CKLView _mainCklView;
         private CKL? _selectedSolutionItem;

@@ -11,31 +11,30 @@ namespace CKL_Studio.Infrastructure.Static
 {
     public static class BinaryCKLOperationsValidator
     {
-        CKLMath
-        public static bool CanPerformOperations(CKL ckl1, CKL ckl2)
+        public static bool CanPerformOperation(CKL ckl1, CKL ckl2)
         {
-            if (ckl1 != null && ckl2 != null)
-            {
-                return false;
-            }
-
             bool[] checks = new bool[]
-                {
+            {
+                CheckBinaryConditions(ckl1, ckl2),
+                CheckAlgebraConditions(ckl1, ckl2),
+                CheckSemanticConditions(ckl1, ckl2)
+            };
 
-                };
-
-            return checks.Any(c => c);
+            return checks.Any(check => check);
         }
+
         private static bool CheckBinaryConditions(CKL ckl1, CKL ckl2)
         {
             try
             {
+                if (ckl1 == null) return false;
+                if (ckl2 == null) return false;
+
                 if (!ckl1.GlobalInterval.Equals(ckl2.GlobalInterval)) return false;
                 if (!ckl1.Dimention.Equals(ckl2.Dimention)) return false;
-                if (!ckl1.Source.SequenceEqual(ckl2.Source)) return false;
+                if (!ckl1.Source.SequenceEqual(ckl2.Source)) return false;     
 
-                return ckl1.Relation.Any(item1 =>
-                    ckl2.Relation.Any(item2 => item1.Value.Equals(item2.Value)));
+                return true;
             }
             catch { return false; }
         }
@@ -44,17 +43,18 @@ namespace CKL_Studio.Infrastructure.Static
         {
             try
             {
+                if (ckl1 == null) return false;
+                if (ckl2 == null) return false;
+
                 if (!ckl1.GlobalInterval.Equals(ckl2.GlobalInterval)) return false;
                 if (!ckl1.Dimention.Equals(ckl2.Dimention)) return false;
 
-                bool sourceMatch = ckl1.Source.All(p1 =>
-                    ckl2.Source.Any(p2 => p2.FirstValue.ToString().Equals(p1.SecondValue.ToString())));
+                foreach (Pair p1 in ckl1.Source)
+                {
+                    if (!ckl2.Source.Any(el => el.FirstValue.ToString().Equals(p1.SecondValue.ToString()))) return false;
+                }
 
-                if (!sourceMatch) return false;
-
-                return ckl1.Relation.Any(item1 =>
-                    ckl2.Relation.Any(item2 =>
-                        item2.Value.FirstValue.ToString().Equals(item1.Value.SecondValue.ToString())));
+                return true;
             }
             catch { return false; }
         }
@@ -63,13 +63,22 @@ namespace CKL_Studio.Infrastructure.Static
         {
             try
             {
+                if (ckl1 == null) return false;
+                if (ckl2 == null) return false;
+
                 if (!ckl1.GlobalInterval.Equals(ckl2.GlobalInterval)) return false;
                 if (!ckl1.Dimention.Equals(ckl2.Dimention)) return false;
 
-                bool ckl1Valid = ckl1.Source.All(p => p.SecondValue == null);
-                bool ckl2Valid = ckl2.Source.All(p => p.SecondValue == null);
+                foreach (Pair p in ckl1.Source)
+                {
+                    if (p.SecondValue != null) return false;
+                }
+                foreach (Pair p in ckl2.Source)
+                {
+                    if (p.SecondValue != null) return false;
+                }
 
-                return ckl1Valid && ckl2Valid;
+                return true;
             }
             catch { return false; }
         }

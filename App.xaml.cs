@@ -12,6 +12,8 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 using CKL_Studio.Common.Interfaces.CKLInterfaces;
+using CKL_Studio.Common.Interfaces.Factories;
+using CKL_Studio.Infrastructure.Services.Factories;
 
 namespace CKL_Studio
 {
@@ -49,6 +51,8 @@ namespace CKL_Studio
             services.AddSingleton<CKLView, CKLView>();
             services.AddSingleton<INamingService, NamingService>();
             services.AddSingleton<IJSONToCklСonversion, CklConversionService>();
+            services.AddSingleton<IDataService<CKL>, SolutionExplorerDataService>();
+            services.AddSingleton<ISolutionExplorerDataServiceFactory, SolutionExplorerDataServiceFactory>();
 
             //Сервисы EntryPointViewModel
             services.AddSingleton<IDataService<FileData>, FileDataService>();
@@ -86,5 +90,4 @@ namespace CKL_Studio
             };
         }
     }
-
 }

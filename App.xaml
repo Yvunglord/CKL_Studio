@@ -16,7 +16,7 @@
                 <ResourceDictionary Source="Presentation/Resources/Styles/Controls/ListBox.xaml"/>
                 <ResourceDictionary Source="Presentation/Resources/Styles/Controls/TextBox.xaml"/>
                 <ResourceDictionary Source="Presentation/Resources/Styles/Controls/Menu.xaml"/>
-                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/TreeViewItem.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/SolutionItem.xaml"/>
                 <ResourceDictionary Source="Presentation/Resources/Styles/Controls/CustomContextMenuStyle.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>

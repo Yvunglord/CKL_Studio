@@ -18,6 +18,7 @@ namespace CKL_Studio.Infrastructure.Services
             { 
 #pragma warning disable CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
                 CKL ckl = CKL.GetFromFile(path);
+                ckl.FilePath = path;
 #pragma warning restore CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
 #pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
                 return dispatcher.Invoke(() => new CKLView(ckl));

@@ -51,7 +51,10 @@ namespace CKL_Studio.Infrastructure.Static
 
                 foreach (Pair p1 in ckl1.Source)
                 {
-                    if (!ckl2.Source.Any(el => el.FirstValue.ToString().Equals(p1.SecondValue.ToString()))) return false;
+                    if (p1.SecondValue != null)
+                    {
+                        if (!ckl2.Source.Any(el => el.FirstValue.ToString().Equals(p1.SecondValue.ToString()))) return false;
+                    }
                 }
 
                 return true;

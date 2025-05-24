@@ -22,5 +22,5 @@
     <DataTemplate DataType="{x:Type vm:CKLViewModel}">
         <views:CKLModelView/>
     </DataTemplate>
-    
+
 </ResourceDictionary>

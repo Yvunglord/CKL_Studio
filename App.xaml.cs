@@ -14,6 +14,7 @@ using System.Windows;
 using CKL_Studio.Common.Interfaces.CKLInterfaces;
 using CKL_Studio.Common.Interfaces.Factories;
 using CKL_Studio.Infrastructure.Services.Factories;
+using CKL_Studio.Presentation.ViewModels.Dialog;
 
 namespace CKL_Studio
 {
@@ -53,7 +54,6 @@ namespace CKL_Studio
             services.AddSingleton<IJSONToCklСonversion, CklConversionService>();
             services.AddSingleton<IDataService<CKL>, SolutionExplorerDataService>();
             services.AddSingleton<ISolutionExplorerDataServiceFactory, SolutionExplorerDataServiceFactory>();
-            services.AddSingleton<ICklViewManager, CKLViewManager>();
 
             //Сервисы EntryPointViewModel
             services.AddSingleton<IDataService<FileData>, FileDataService>();
@@ -67,7 +67,6 @@ namespace CKL_Studio
             services.AddTransient<SourceInputViewModel>();
             services.AddTransient<RelationInputViewModel>();
             services.AddTransient<CKLViewModel>();
-
             //Windows
             services.AddTransient<LoadDataWindow>();
             services.AddTransient<CKLWindow>();

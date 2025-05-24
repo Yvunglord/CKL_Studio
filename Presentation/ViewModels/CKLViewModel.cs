@@ -6,6 +6,8 @@ using CKL_Studio.Infrastructure.Static;
 using CKL_Studio.Presentation.Commands;
 using CKL_Studio.Presentation.Services.Navigation;
 using CKL_Studio.Presentation.ViewModels.Base;
+using CKL_Studio.Presentation.ViewModels.Dialog;
+using CKL_Studio.Presentation.Windows.Dialogs;
 using CKLDrawing;
 using CKLLib;
 using CKLLib.Operations;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,6 +69,18 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand NavigateToCKLCreationViewCommand => new RelayCommand(NavigateToCKLCreationView);
         public ICommand OpenSolutionItemCommand => new RelayCommand(OpenSelectedItem);
         public ICommand CloseTabCommand => new RelayCommand<CKLView>(CloseTab);
+        public ICommand UnionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Union));
+        public ICommand IntersectionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Intersection));
+        public ICommand DifferenceCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Difference));
+        public ICommand CompositionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Composition));
+        public ICommand SemanticUnionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.SemanticUnion));
+        public ICommand SemanticIntersectionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.SemanticIntersection));
+        public ICommand SemanticDifferenceCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.SemanticDifference));
+        public ICommand InversionCommand => new RelayCommand(() => PerformUnaryOperation(CKLMath.Inversion));
+        public ICommand TranspositionCommand => new RelayCommand(() => PerformUnaryOperation(CKLMath.Tranposition));
+        public ICommand TimeTransformCommand => new RelayCommand(() => PerformTimeOperation(CKLMath.TimeTransform, "Изменение времени"));
+        public ICommand ScalePlusCommand => new RelayCommand(ScalePlus);
+        public ICommand ScaleMinusCommand => new RelayCommand(ScaleMinus);
 
         public CKLViewModel(IServiceProvider serviceProvider, CKLView cklView) : base(serviceProvider)
         {
@@ -102,7 +117,7 @@ namespace CKL_Studio.Presentation.ViewModels
                         {
                             var related = CKL.GetFromFile(path);
                             related.FilePath = path;
-                            if (related != null /*&& BinaryCKLOperationsValidator.CanPerformOperation(MainCKLView.Ckl, related)*/)
+                            if (related != null && BinaryCKLOperationsValidator.CanPerformOperation(MainCKLView.Ckl, related))
                             {
                                 _solutionExplorerService.Add(related);
                             }
@@ -142,6 +157,159 @@ namespace CKL_Studio.Presentation.ViewModels
 
                 if (SelectedCKLView == viewToClose)
                     SelectedCKLView = OpenedCKLViews.LastOrDefault();
+            }
+        }
+
+        private int _currentDelCoast = 0;
+        private TimeDimentions _currentDimentions = default;
+        private static readonly int[] TIME_DIMENTIONS_CONVERT = new int[] { 1000, 1000, 1000, 60, 60, 24, 7 };
+
+        private void ScalePlus()
+        {
+
+            if (_currentDelCoast != _selectedCklView.DelCoast)
+            {
+                _currentDelCoast = _selectedCklView.DelCoast;
+                _currentDimentions = _selectedCklView.TimeDimention;
+            }
+
+            if (_currentDelCoast * 2 >= TIME_DIMENTIONS_CONVERT[(int)_currentDimentions]
+                   && !_currentDimentions.Equals(TimeDimentions.WEEKS))
+            {
+                _currentDelCoast = 1;
+                _currentDimentions = (TimeDimentions)(int)_currentDimentions + 1;
+            }
+            else _currentDelCoast *= 2;
+
+
+            _selectedCklView.ChangeDelCoast(_currentDimentions, _currentDelCoast);
+        }
+
+        private void ScaleMinus()
+        {
+
+            if (_currentDelCoast != _selectedCklView.DelCoast)
+            {
+                _currentDelCoast = _selectedCklView.DelCoast;
+                _currentDimentions = _selectedCklView.TimeDimention;
+            }
+
+            if (_currentDelCoast / 2 == 0
+                    && !_currentDimentions.Equals(TimeDimentions.NANOSECONDS))
+            {
+                _currentDimentions = (TimeDimentions)(int)_currentDimentions - 1;
+                _currentDelCoast = TIME_DIMENTIONS_CONVERT[(int)_currentDimentions] / 2;
+            }
+            else if (_currentDelCoast >= 2) _currentDelCoast /= 2;
+
+            _selectedCklView.ChangeDelCoast(_currentDimentions, _currentDelCoast);
+        }
+
+        private void PerformBinaryOperation(Func<CKL, CKL, CKL> operation)
+        {
+            if (SelectedCKLView == null)
+            {
+                _dialogService.ShowMessage("Сначала выберите основную CKL в рабочей области");
+                return;
+            }
+
+            var currentCkl = SelectedCKLView.Ckl;
+            var allCkls = SolutionItems.Concat(OpenedCKLViews.Select(v => v.Ckl)).Distinct().ToList();
+
+            var dialogVm = new SelectCklDialogViewModel(allCkls, currentCkl.FilePath);
+
+            dialogVm.RequestClose += result =>
+            {
+                if (result == true && dialogVm.SelectedCkl != null)
+                {
+                    try
+                    {
+                        var resultCkl = operation(currentCkl, dialogVm.SelectedCkl);
+                        CKL.Save(resultCkl);
+                        AddResultToWorkspace(resultCkl);
+                    }
+                    catch (Exception ex)
+                    {
+                        _dialogService.ShowMessage($"Ошибка выполнения бинарной операции: {ex.Message}");
+                    }
+                }
+            };
+
+            _dialogService.ShowDialog<SelectCklDialog>(dialog => dialog.DataContext = dialogVm);
+        }
+
+        private void PerformUnaryOperation(Func<CKL, CKL> operation)
+        {
+            if (SelectedCKLView == null)
+            {
+                _dialogService.ShowMessage("Сначала выберите основную CKL в рабочей области");
+                return;
+            }
+
+            try
+            {
+                var resultCkl = operation(SelectedCKLView.Ckl);
+                CKL.Save(resultCkl);
+                AddResultToWorkspace(resultCkl);
+            }
+            catch (Exception ex)
+            { 
+                _dialogService.ShowMessage($"Ошибка выполнения унарной операции: {ex.Message}");
+            }
+        }
+
+        public void PerformTimeOperation(Func<CKL, TimeInterval, CKL> operation, string dialogTitle)
+        {
+            var dialog = new TimeOperationDialog() { Title = dialogTitle };
+            if (_dialogService.ShowDialog<TimeOperationDialog>(d => d.Title = dialogTitle) == true)
+            {
+                var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
+                var enTime = double.Parse(dialog.TextBox2Value, NumberStyles.Any, CultureInfo.InvariantCulture);
+
+                try
+                {
+                    var resultCkl = operation(SelectedCKLView.Ckl, new TimeInterval(stTime, enTime));
+                    CKL.Save(resultCkl);
+                    AddResultToWorkspace(resultCkl);
+                }
+                catch (ArgumentException ex)
+                {
+                    _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
+                }
+            }
+        }
+
+        public void PerformParameterizedTimeOperation(Func<CKL, TimeInterval, double, CKL> operation, string dialogTitle)
+        {
+            var dialog = new ParameterizedTimeOperationDialog() { Title = dialogTitle };
+            if (_dialogService.ShowDialog<ParameterizedTimeOperationDialog>(d => d.Title = dialogTitle) == true)
+            {
+                var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
+                var enTime = double.Parse(dialog.TextBox2Value, NumberStyles.Any, CultureInfo.InvariantCulture);
+                var t = double.Parse(dialog.TextBox3Value, NumberStyles.Any, CultureInfo.InvariantCulture);
+
+                try
+                {
+                    var resultCKl = operation(SelectedCKLView.Ckl, new TimeInterval(stTime, enTime), t);
+                    CKL.Save(resultCKl);
+                    AddResultToWorkspace(resultCKl);
+                }
+                catch (ArgumentException ex)
+                {
+                    _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
+                }
+            }
+        }
+
+        private void AddResultToWorkspace(CKL result)
+        {
+            var newView = new CKLView(result);
+            OpenedCKLViews.Add(newView);
+            SelectedCKLView = newView;
+
+            if (_solutionExplorerService != null && !SolutionItems.Contains(result))
+            {
+                _solutionExplorerService.Add(result);
             }
         }
     }

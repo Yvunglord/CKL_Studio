@@ -50,4 +50,25 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="SelectionListBoxStyle" TargetType="ListBox">
+        <Setter Property="Background" Value="#1e1e1e"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <RadioButton Content="{TemplateBinding Content}"
+                                       IsChecked="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}}"
+                                       GroupName="CklGroup"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

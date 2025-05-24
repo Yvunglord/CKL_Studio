@@ -1,0 +1,75 @@
+﻿<Window x:Class="CKL_Studio.Presentation.Windows.Dialogs.SelectCklDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CKL_Studio.Presentation.Windows.Dialogs"
+        xmlns:vm="clr-namespace:CKL_Studio.Presentation.ViewModels.Dialog"
+        xmlns:converters="clr-namespace:CKL_Studio.Common.Converters"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:SelectCklDialogViewModel}"
+        Title="Выберите CKL для операции" 
+        Height="300" Width="400"
+        WindowStartupLocation="CenterOwner"
+        Background="#2d2d2d"
+        MaxHeight="800" MaxWidth="600">
+    <Window.Resources>
+        <converters:FileToNameConverter x:Key="FileToNameConverter"/>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListBox ItemsSource="{Binding AvailableCkls}"
+         SelectedItem="{Binding SelectedCkl}" Background="#1e1e1e">
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Height" Value="25"/>
+                    <Setter Property="Background" Value="#1e1e1e"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                Padding="5">
+                                    <ContentPresenter HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="#4d4d4d"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton Content="{Binding FilePath, Converter={StaticResource FileToNameConverter}}"
+                         IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                         GroupName="CklGroup">
+                        <RadioButton.Style>
+                            <Style TargetType="{x:Type RadioButton}">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </RadioButton.Style>
+                    </RadioButton>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource btNavigateForward}" Content="OK" Command="{Binding OkCommand}" Width="80" Margin="5"/>
+            <Button Style="{StaticResource btNavigateBack}" Content="Назад" Command="{Binding CancelCommand}" Width="80" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

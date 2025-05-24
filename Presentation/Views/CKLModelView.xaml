@@ -18,31 +18,48 @@
                         <Grid>
                             <Border Name="Border" Background="#1e1e1e" BorderBrush="Gray" BorderThickness="1,1,1,0">
                                 <DockPanel>
-                                    <TextBlock Text="{Binding Ckl.FilePath, Converter={StaticResource FilePathToNameConverter}}" 
-                                               Margin="5,0,0,0" 
-                                               Foreground="White"/>
-                                    <Button Content="×" 
-                                            Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                            CommandParameter="{Binding}"
-                                            Margin="5,0,0,0"
-                                            Width="20"
-                                            Height="20"
-                                            Background="Transparent"
-                                            Foreground="White"
-                                            BorderThickness="0"/>
+                                    <TextBlock Name="HeaderText" 
+                                       Text="{Binding Ckl.FilePath, Converter={StaticResource FilePathToNameConverter}}" 
+                                       Margin="5,0,0,0" 
+                                       Foreground="White"
+                                       FontWeight="Normal"/>
+                                    <Button Name="CloseButton"
+                                    Content="×" 
+                                    Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Margin="5,0,0,0"
+                                    Width="20"
+                                    Height="20"
+                                    Background="Transparent"
+                                    Foreground="White"
+                                    BorderThickness="0"/>
                                 </DockPanel>
                             </Border>
+                            <Border Name="SelectionIndicator" 
+                            Height="3" 
+                            Background="Transparent" 
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Stretch"/>
                         </Grid>
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#2d2d2d"/>
+                            </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#2d2d2d"/>
+                                <Setter TargetName="SelectionIndicator" Property="Background" Value="#7160e8"/>
+                                <Setter TargetName="HeaderText" Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger SourceName="CloseButton" Property="IsMouseOver" Value="True">
+                                <Setter TargetName="CloseButton" Property="Background" Value="White"/>
+                                <Setter TargetName="CloseButton" Property="Foreground" Value="#2d2d2d"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
     </UserControl.Resources>
     
     <Grid Background="#2d2d2d">
@@ -54,51 +71,52 @@
             <RowDefinition Height="120" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#1e1e1e" Margin="0,0,0,20">
-            <MenuItem Header="Файл" Style="{StaticResource CustomMenuItemStyle}">
+            <MenuItem Header="Файл" Style="{StaticResource CustomMenuItemStyle}" Width="40">
                 <MenuItem Header="Создать" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding NavigateToCKLCreationViewCommand}"/>
                 <MenuItem Header="Открыть" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding NavigateToEntryPointViewCommand}"/>
                 <MenuItem Header="Сохранить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveCommand}"/>
                 <MenuItem Header="Сохранить как" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveAsCommand}"/>
                 <MenuItem Header="Удалить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DeleteCommand}"/>
             </MenuItem>
-            <MenuItem Header="Править" Style="{StaticResource CustomMenuItemStyle}">
+            <MenuItem Header="Править" Style="{StaticResource CustomMenuItemStyle}" Width="60">
                 <MenuItem Header="Назад" Style="{StaticResource CustomSubMenuItemStyle}"/>
                 <MenuItem Header="Вперед" Style="{StaticResource CustomSubMenuItemStyle}"/>
                 <MenuItem Header="Редактировать" Style="{StaticResource CustomSubMenuItemStyle}" />
             </MenuItem>
-            <MenuItem Header="Временные" Style="{StaticResource CustomMenuItemStyle}" Width="120">
-                <MenuItem Header="Трансформировать" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding TimeTransformCommand}"/>
-                <MenuItem Header="Левое предшествование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding LeftPrecedenceCommand}"/>
-                <MenuItem Header="Правое предшествование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding RightPrecedenceCommand}"/>
-                <MenuItem Header="Левое следование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding LeftContinuationCommand}"/>
-                <MenuItem Header="Правое следование" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding RightContinuationCommand}"/>
-                <MenuItem Header="Усечь сверху" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding TruncationHighLimitCommand}"/>
-                <MenuItem Header="Усечь снизу" Style="{StaticResource CustomSubMenuItemStyle}" Width="120" Command="{Binding TruncationLowLimitCommand}"/>
-
-
+            <MenuItem Header="Временные" Style="{StaticResource CustomMenuItemStyle}" Width="80">
+                <MenuItem Header="Трансформировать" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding TimeTransformCommand}"/>
+                <MenuItem Header="Левое предшествование" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding LeftPrecedenceCommand}"/>
+                <MenuItem Header="Правое предшествование" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding RightPrecedenceCommand}"/>
+                <MenuItem Header="Левое следование" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding LeftContinuationCommand}"/>
+                <MenuItem Header="Правое следование" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding RightContinuationCommand}"/>
+                <MenuItem Header="Усечь сверху" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding TruncationHighLimitCommand}"/>
+                <MenuItem Header="Усечь снизу" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding TruncationLowLimitCommand}"/>
             </MenuItem>
-            <MenuItem Header="Бинарные" Style="{StaticResource CustomMenuItemStyle}">
-                <MenuItem Header="Union" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding UnionCommand}"/>
-                <MenuItem Header="Intersect" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding IntersectCommand}"/>
-                <MenuItem Header="Difference" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DifferenceCommand}"/>
-                <MenuItem Header="Inversion" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding InversionCommand}"/>
+            <MenuItem Header="Унарные" Style="{StaticResource CustomMenuItemStyle}" Width="70">
+                <MenuItem Header="Инверсия" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding InversionCommand}"/>
+                <MenuItem Header="Перестановка" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding TranspositionCommand}"/>
             </MenuItem>
-            <MenuItem Header="Семантические" Style="{StaticResource CustomMenuItemStyle}" Width="70">
-                <MenuItem Header="Semantic Union" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticUnionCommand}"/>
-                <MenuItem Header="Semantic Intersect" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticIntersectionCommand}"/>
-                <MenuItem Header="Semantic Difference" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticDifferenceCommand}"/>
+            <MenuItem Header="Бинарные" Style="{StaticResource CustomMenuItemStyle}" Width="70">
+                <MenuItem Header="Объединение" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding UnionCommand}"/>
+                <MenuItem Header="Пересечение" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding IntersectionCommand}"/>
+                <MenuItem Header="Разность" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DifferenceCommand}"/>
             </MenuItem>
-            <MenuItem Header="Окно" Style="{StaticResource CustomMenuItemStyle}">
+            <MenuItem Header="Семантические" Style="{StaticResource CustomMenuItemStyle}">
+                <MenuItem Header="Семантическое объединение" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticUnionCommand}"/>
+                <MenuItem Header="Семантическое пересечение" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticIntersectionCommand}"/>
+                <MenuItem Header="Семантическая разность" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticDifferenceCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Окно" Style="{StaticResource CustomMenuItemStyle}" Width="40">
                 <MenuItem Header="Подпункт 1" Style="{StaticResource CustomSubMenuItemStyle}" />
                 <MenuItem Header="Подпункт 2" Style="{StaticResource CustomSubMenuItemStyle}" />
                 <MenuItem Header="Подпункт 3" Style="{StaticResource CustomSubMenuItemStyle}" />
             </MenuItem>
-            <MenuItem Header="Справка" Style="{StaticResource CustomMenuItemStyle}">
+            <MenuItem Header="Справка" Style="{StaticResource CustomMenuItemStyle}" Width="60">
                 <MenuItem Header="Подпункт 1" Style="{StaticResource CustomSubMenuItemStyle}" />
                 <MenuItem Header="Подпункт 2" Style="{StaticResource CustomSubMenuItemStyle}" />
                 <MenuItem Header="Подпункт 3" Style="{StaticResource CustomSubMenuItemStyle}" />
             </MenuItem>
-            <MenuItem Header="Терминал" Style="{StaticResource CustomMenuItemStyle}" Command="{Binding OpenTerminalCommand}"/>
+            <MenuItem Header="Терминал" Style="{StaticResource CustomMenuItemStyle}" Command="{Binding OpenTerminalCommand}" Width="80"/>
         </Menu>
 
         <Grid Grid.Row="2" Background="#2d2d2d" Margin="10,0,10,20">

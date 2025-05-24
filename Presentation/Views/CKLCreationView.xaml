@@ -46,7 +46,8 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Label Style="{StaticResource h1}"
-                    Content="Файл алгебры динамических отношений .ckl" Margin="0, 0, 50, 0"/>                <Viewbox Width="32" Height="32" Margin="0,0,10,0">
+                    Content="Файл алгебры динамических отношений .ckl" Margin="0, 0, 50, 0"/>                
+                <Viewbox Width="32" Height="32" Margin="0,0,10,0">
                     <Canvas Width="512" Height="512">
                         <Ellipse Width="512" Height="512" Fill="#4b5896"/>
                         <Path Data="M256,0V512C397.38,512,512,397.38,512,256S397.38,0,256,0Z" Fill="#656faa"/>

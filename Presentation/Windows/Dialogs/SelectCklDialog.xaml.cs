@@ -39,5 +39,13 @@ namespace CKL_Studio.Presentation.Windows.Dialogs
                 };
             }
         }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is Grid)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

@@ -9,11 +9,11 @@
     <Grid Background="#1e1e1e" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <StackPanel Margin="10">
             <Label Style="{StaticResource h2}" Content="Стартовое значение:" />
-            <TextBox x:Name="TextBox1" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,10" />
+            <TextBox x:Name="TextBox1" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox"/>
             <Label Style="{StaticResource h2}" Content="Конечное значение:" />
-            <TextBox x:Name="TextBox2" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,10" />
+            <TextBox x:Name="TextBox2" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox"/>
             <Label Style="{StaticResource h2}" Content="Контрольное значение:" />
-            <TextBox x:Name="TextBox3" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,70" />
+            <TextBox x:Name="TextBox3" Style="{StaticResource CustomTextBoxStyle}" Margin="0,0,0,70" PreviewTextInput="NumberValidationTextBox"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource btNavigateBack}" Content="Назад" Width="70" Margin="0,0,10,0" Click="Button_Click" />
                 <Button Style="{StaticResource btNavigateForward}" Content="OK" Width="70" Click="Button_Click_1" />

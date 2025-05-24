@@ -78,7 +78,12 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand SemanticDifferenceCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.SemanticDifference));
         public ICommand InversionCommand => new RelayCommand(() => PerformUnaryOperation(CKLMath.Inversion));
         public ICommand TranspositionCommand => new RelayCommand(() => PerformUnaryOperation(CKLMath.Tranposition));
-        public ICommand TimeTransformCommand => new RelayCommand(() => PerformTimeOperation(CKLMath.TimeTransform, "Изменение времени"));
+        public ICommand TimeTransformCommand => new RelayCommand(() => PerformTimeOperation(CKLMath.TimeTransform));
+        public ICommand LeftPrecedenceCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.LeftPrecedence));
+        public ICommand LeftContinuationCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.LeftContinuation));
+        public ICommand RightPrecedenceCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.RightPrecedence));
+        public ICommand RightContinuationCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.RightContinuation));
+
         public ICommand ScalePlusCommand => new RelayCommand(ScalePlus);
         public ICommand ScaleMinusCommand => new RelayCommand(ScaleMinus);
 
@@ -258,10 +263,10 @@ namespace CKL_Studio.Presentation.ViewModels
             }
         }
 
-        public void PerformTimeOperation(Func<CKL, TimeInterval, CKL> operation, string dialogTitle)
+        public void PerformTimeOperation(Func<CKL, TimeInterval, CKL> operation)
         {
-            var dialog = new TimeOperationDialog() { Title = dialogTitle };
-            if (_dialogService.ShowDialog<TimeOperationDialog>(d => d.Title = dialogTitle) == true)
+            var dialog = new TimeOperationDialog();
+            if (dialog.ShowDialog() == true)
             {
                 var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
                 var enTime = double.Parse(dialog.TextBox2Value, NumberStyles.Any, CultureInfo.InvariantCulture);
@@ -279,10 +284,10 @@ namespace CKL_Studio.Presentation.ViewModels
             }
         }
 
-        public void PerformParameterizedTimeOperation(Func<CKL, TimeInterval, double, CKL> operation, string dialogTitle)
+        public void PerformParameterizedTimeOperation(Func<CKL, TimeInterval, double, CKL> operation)
         {
-            var dialog = new ParameterizedTimeOperationDialog() { Title = dialogTitle };
-            if (_dialogService.ShowDialog<ParameterizedTimeOperationDialog>(d => d.Title = dialogTitle) == true)
+            var dialog = new ParameterizedTimeOperationDialog();
+            if (dialog.ShowDialog() == true)
             {
                 var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
                 var enTime = double.Parse(dialog.TextBox2Value, NumberStyles.Any, CultureInfo.InvariantCulture);

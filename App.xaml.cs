@@ -53,6 +53,7 @@ namespace CKL_Studio
             services.AddSingleton<IJSONToCklСonversion, CklConversionService>();
             services.AddSingleton<IDataService<CKL>, SolutionExplorerDataService>();
             services.AddSingleton<ISolutionExplorerDataServiceFactory, SolutionExplorerDataServiceFactory>();
+            services.AddSingleton<ICklViewManager, CKLViewManager>();
 
             //Сервисы EntryPointViewModel
             services.AddSingleton<IDataService<FileData>, FileDataService>();

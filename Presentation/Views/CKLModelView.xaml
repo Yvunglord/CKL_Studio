@@ -11,7 +11,40 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:FileToNameConverter x:Key="FilePathToNameConverter"/>
+        <Style x:Key="ClosableTabItemStyle" TargetType="TabItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid>
+                            <Border Name="Border" Background="#1e1e1e" BorderBrush="Gray" BorderThickness="1,1,1,0">
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Ckl.FilePath, Converter={StaticResource FilePathToNameConverter}}" 
+                                               Margin="5,0,0,0" 
+                                               Foreground="White"/>
+                                    <Button Content="×" 
+                                            Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            Margin="5,0,0,0"
+                                            Width="20"
+                                            Height="20"
+                                            Background="Transparent"
+                                            Foreground="White"
+                                            BorderThickness="0"/>
+                                </DockPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#2d2d2d"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
     </UserControl.Resources>
+    
     <Grid Background="#2d2d2d">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -67,10 +100,6 @@
             </MenuItem>
             <MenuItem Header="Терминал" Style="{StaticResource CustomMenuItemStyle}" Command="{Binding OpenTerminalCommand}"/>
         </Menu>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,220,0">
-            <Label x:Name="FilePathLabel" Style="{StaticResource h2}" Height="30" Background="#1e1e1e" Foreground="White" Content="{Binding MainCKLView.Ckl.FilePath}" />
-            <Ellipse Width="10" Height="10" Margin="10,0,0,0"/>
-        </StackPanel>
 
         <Grid Grid.Row="2" Background="#2d2d2d" Margin="10,0,10,20">
             <Grid.ColumnDefinitions>
@@ -78,7 +107,28 @@
                 <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
 
-            <ContentPresenter Content="{Binding MainCKLView}" Margin="10,0,10,0" />
+            <TabControl ItemsSource="{Binding OpenedCKLViews}" 
+                       SelectedItem="{Binding SelectedCKLView}"
+                       Background="Transparent"
+                       BorderThickness="0">
+                <TabControl.Style>
+                    <Style TargetType="TabControl">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OpenedCKLViews.Count}" Value="1">
+                                <Setter Property="SelectedIndex" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabControl.Style>
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="TabItem" BasedOn="{StaticResource ClosableTabItemStyle}"/>
+                </TabControl.ItemContainerStyle>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding}"/>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
 
             <ListBox x:Name="SolutionExplorer" 
                      Grid.Column="1" 
@@ -92,6 +142,15 @@
                                    Style="{StaticResource SolutionItemTextStyle}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+
+                <ListBox.ContextMenu>
+                    <ContextMenu Background="#1e1e1e">
+                        <MenuItem Header="Открыть" 
+                      Command="{Binding PlacementTarget.DataContext.OpenSolutionItemCommand, 
+                               RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                      Style="{StaticResource CustomSubMenuItemStyle}"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
             </ListBox>
         </Grid>
 

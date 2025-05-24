@@ -286,8 +286,8 @@ namespace CKL_Studio.Presentation.ViewModels
             {
                 await BrowseAsync();
 
-                _cklView = new CKLView(_ckl);
-                if (_cklView != null) 
+                CKLView = new CKLView(_ckl);
+                if (CKLView != null) 
                     NavigateToCKLView();
             }
             catch (Exception ex)

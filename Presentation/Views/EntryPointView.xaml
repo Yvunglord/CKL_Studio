@@ -112,7 +112,6 @@
                 <ListBox.ContextMenu>
                     <ContextMenu Background="#2c2c2c" BorderBrush="#2c2c2c"
                  Foreground="White" FontSize="12">
-                        <!-- Стиль для MenuItem, чтобы фон иконки совпадал с общим фоном -->
                         <ContextMenu.Resources>
                             <Style TargetType="MenuItem">
                                 <Setter Property="Background" Value="#2c2c2c"/>
@@ -244,17 +243,6 @@
                                            HorizontalAlignment="Right"
                                            Grid.Column="1"
                                            Grid.RowSpan="2"/>
-                                <Path Data="m21 11.76v-3.931a3 3 0 0 0 -1-5.829h-8a3 3 0 0 0 -1 5.829v3.931a8.01 8.01 0 0 0 -3 6.24v1a1 1 0 0 0 1 1h6v9a1 1 0 0 0 2 0v-9h6a1 1 0 0 0 1-1v-1a8.01 8.01 0 0 0 -3-6.24zm-11 6.24a6.01 6.01 0 0 1 2.572-4.92 1 1 0 0 0 .428-.82v-5.26a1 1 0 0 0 -1-1 1 1 0 0 1 0-2h8a1 1 0 0 1 0 2 1 1 0 0 0 -1 1v5.26a1 1 0 0 0 .428.82 6.01 6.01 0 0 1 2.572 4.92z"
-                                      Fill="White" 
-                                      Stretch="Uniform" 
-                                      Width="16"
-                                      Height="16"
-                                      HorizontalAlignment="Right"
-                                      VerticalAlignment="Center"
-                                      Grid.Column="2"
-                                      Grid.RowSpan="2"
-                                      Margin="2, 2, 5, 2"
-                                      Visibility="{Binding IsPinned, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             </Grid>
                         </Border>
                     </DataTemplate>

@@ -44,8 +44,17 @@
             <Label Style="{StaticResource Header}"
                 Content="Настроить новый проект"/>
 
-            <Label Style="{StaticResource h1}"
-                Content="Файл алгебры динамических отношений .ckl"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Style="{StaticResource h1}"
+                    Content="Файл алгебры динамических отношений .ckl" Margin="0, 0, 50, 0"/>                <Viewbox Width="32" Height="32" Margin="0,0,10,0">
+                    <Canvas Width="512" Height="512">
+                        <Ellipse Width="512" Height="512" Fill="#4b5896"/>
+                        <Path Data="M256,0V512C397.38,512,512,397.38,512,256S397.38,0,256,0Z" Fill="#656faa"/>
+                        <Path Data="M238.35,289.26L238.61,290.02Q239.12,316,220.33,333.55T170.69,351.07Q139.32,351.07,119.59,328.85T99.85,272.48V239.6Q99.85,205.46,119.59,183.17T170.69,160.89Q202,160.89,220.58,177.59T238.61,221.83L238.35,222.59H214.35Q214.35,203.16,202.92,191.87T170.69,180.57Q149.69,180.57,137.3,197.45T124.86,239.35V272.48Q124.86,297.76,137.3,314.63T170.69,331.52Q191.51,331.52,202.92,320.28T214.35,300.04Z" Fill="White"/>
+                        <Path Data="M312.37,264.89H296.12V348.42H271.12V163.58H296.12V245.34H309.83L378.38,163.58H406.57L406.82,164.21L331.92,251.68L412.15,347.79L411.9,348.42H381.56Z" Fill="White"/>
+                    </Canvas>
+                </Viewbox>
+            </StackPanel>
 
             <Label Style="{StaticResource h2}"
                 Content="Имя файла"/>

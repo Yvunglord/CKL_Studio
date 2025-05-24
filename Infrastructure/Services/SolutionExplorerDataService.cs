@@ -51,7 +51,7 @@ namespace CKL_Studio.Infrastructure.Services
 
         public CKL? Get(string identifier)
         {
-            var ckl = _solutionItems.FirstOrDefault(c => c.FilePath == identifier);
+            var ckl = _solutionItems.FirstOrDefault(c => Path.GetFileName(c.FilePath) == identifier);
             if (ckl != null)
                 return ckl;
 

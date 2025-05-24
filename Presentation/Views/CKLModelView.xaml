@@ -160,13 +160,57 @@
                                    Style="{StaticResource SolutionItemTextStyle}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
                 <ListBox.ContextMenu>
-                    <ContextMenu Background="#1e1e1e">
+                    <ContextMenu Background="#2c2c2c" BorderBrush="#2c2c2c"
+                 Foreground="White" Width="200">
+                        <ContextMenu.Resources>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Background" Value="#2c2c2c"/>
+                                <Setter Property="BorderBrush" Value="#2c2c2c"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Height" Value="20"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="MenuItem">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="0">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" MinWidth="24"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <ContentPresenter Grid.Column="0"
+                                                      Content="{TemplateBinding Icon}"
+                                                      VerticalAlignment="Center"
+                                                      Margin="5,0,0,0"/>
+
+                                                    <ContentPresenter Grid.Column="1"
+                                                      Content="{TemplateBinding Header}"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Left"
+                                                      Margin="5,0,0,0"/>
+                                                </Grid>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Border" Property="Background" Value="#373737"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ContextMenu.Resources>
                         <MenuItem Header="Открыть" 
-                      Command="{Binding PlacementTarget.DataContext.OpenSolutionItemCommand, 
-                               RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                      Style="{StaticResource CustomSubMenuItemStyle}"/>
+                  Command="{Binding PlacementTarget.DataContext.OpenSolutionItemCommand, 
+                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                        <MenuItem Header="Удалить"
+                  Command="{Binding PlacementTarget.DataContext.DeleteSolutionItemCommand, 
+                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>

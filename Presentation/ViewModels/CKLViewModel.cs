@@ -68,6 +68,7 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand NavigateToEntryPointViewCommand => new RelayCommand(NavigateToEntryPointView);
         public ICommand NavigateToCKLCreationViewCommand => new RelayCommand(NavigateToCKLCreationView);
         public ICommand OpenSolutionItemCommand => new RelayCommand(OpenSelectedItem);
+        public ICommand DeleteSolutionItemCommand => new RelayCommand(DeleteSolutionItem);
         public ICommand CloseTabCommand => new RelayCommand<CKLView>(CloseTab);
         public ICommand UnionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Union));
         public ICommand IntersectionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Intersection));
@@ -83,7 +84,6 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand LeftContinuationCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.LeftContinuation));
         public ICommand RightPrecedenceCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.RightPrecedence));
         public ICommand RightContinuationCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.RightContinuation));
-
         public ICommand ScalePlusCommand => new RelayCommand(ScalePlus);
         public ICommand ScaleMinusCommand => new RelayCommand(ScaleMinus);
 
@@ -152,6 +152,18 @@ namespace CKL_Studio.Presentation.ViewModels
                 OpenedCKLViews.Add(newView);
                 SelectedCKLView = newView;
             }
+        }
+
+        private void DeleteSolutionItem()
+        {
+            _dialogService.ShowMessage("Вы собираетесь безвозвратно удалить файл! \n Хотите продолжить?");
+
+            if (SelectedSolutionItem != null)
+            {
+                File.Delete(SelectedSolutionItem.FilePath);
+            }
+
+            LoadSolutionItems();
         }
 
         private void CloseTab(CKLView? viewToClose)

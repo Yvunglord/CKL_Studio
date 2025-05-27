@@ -15,11 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CKLDrawing">
-      <HintPath>..\..\..\Desktop\CKL\CKLLib-1.1\CKLDrawing\bin\Release\net8.0-windows\CKLDrawing.dll</HintPath>
-    </Reference>
     <Reference Include="CKLLib">
-      <HintPath>..\..\..\Desktop\CKL\CKLLib-1.1\CKLLib\bin\Release\net8.0\CKLLib.dll</HintPath>
+      <HintPath>C:\Users\79136\source\repos\Projects\CKL_Studio\CKL_Library\CKL\CKLLib\bin\Release\net8.0\CKLLib.dll</HintPath>
+    </Reference>
+    <Reference Include="CKLDrawing">
+      <HintPath>C:\Users\79136\source\repos\Projects\CKL_Studio\CKL_Library\CKL\CKLDrawing\bin\Release\net8.0-windows\CKLDrawing.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -190,8 +190,7 @@ namespace CKL_Studio.Presentation.ViewModels
                 _currentDimentions = _selectedCklView.TimeDimention;
             }
 
-            if (_currentDelCoast * 2 >= TIME_DIMENTIONS_CONVERT[(int)_currentDimentions]
-                   && !_currentDimentions.Equals(TimeDimentions.WEEKS))
+            if (!_currentDimentions.Equals(TimeDimentions.WEEKS) && _currentDelCoast * 2 >= TIME_DIMENTIONS_CONVERT[(int)_currentDimentions])
             {
                 _currentDelCoast = 1;
                 _currentDimentions = (TimeDimentions)(int)_currentDimentions + 1;

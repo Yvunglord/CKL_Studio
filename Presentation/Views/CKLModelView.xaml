@@ -11,55 +11,6 @@
              d:DesignHeight="600" d:DesignWidth="800">  
     <UserControl.Resources>
         <converters:FileToNameConverter x:Key="FilePathToNameConverter"/>
-        <Style x:Key="ClosableTabItemStyle" TargetType="TabItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Grid>
-                            <Border Name="Border" Background="#1e1e1e" BorderBrush="Gray" BorderThickness="1,1,1,0">
-                                <DockPanel>
-                                    <TextBlock Name="HeaderText" 
-                                       Text="{Binding Ckl.FilePath, Converter={StaticResource FilePathToNameConverter}}" 
-                                       Margin="5,0,0,0" 
-                                       Foreground="White"
-                                       FontWeight="Normal"/>
-                                    <Button Name="CloseButton"
-                                    Content="×" 
-                                    Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding}"
-                                    Margin="5,0,0,0"
-                                    Width="20"
-                                    Height="20"
-                                    Background="Transparent"
-                                    Foreground="White"
-                                    BorderThickness="0"/>
-                                </DockPanel>
-                            </Border>
-                            <Border Name="SelectionIndicator" 
-                            Height="3" 
-                            Background="Transparent" 
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Stretch"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#2d2d2d"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#2d2d2d"/>
-                                <Setter TargetName="SelectionIndicator" Property="Background" Value="#7160e8"/>
-                                <Setter TargetName="HeaderText" Property="FontWeight" Value="Bold"/>
-                            </Trigger>
-                            <Trigger SourceName="CloseButton" Property="IsMouseOver" Value="True">
-                                <Setter TargetName="CloseButton" Property="Background" Value="White"/>
-                                <Setter TargetName="CloseButton" Property="Foreground" Value="#2d2d2d"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
     </UserControl.Resources>
     
     <Grid Background="#2d2d2d">
@@ -122,13 +73,16 @@
         <Grid Grid.Row="2" Background="#2d2d2d" Margin="10,0,10,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="200" MinWidth="100"/>
             </Grid.ColumnDefinitions>
 
-            <TabControl ItemsSource="{Binding OpenedCKLViews}" 
+            <TabControl Grid.Column="0"
+                       ItemsSource="{Binding OpenedCKLViews}" 
                        SelectedItem="{Binding SelectedCKLView}"
                        Background="Transparent"
-                       BorderThickness="0">
+                       BorderThickness="0" 
+                       Margin="0, 0, 20, 0">
                 <TabControl.Style>
                     <Style TargetType="TabControl">
                         <Style.Triggers>
@@ -148,21 +102,46 @@
                 </TabControl.ContentTemplate>
             </TabControl>
 
+            <GridSplitter Grid.Column="1" 
+                  Width="5" 
+                  HorizontalAlignment="Stretch" 
+                  Background="Transparent"
+                  ResizeBehavior="PreviousAndNext"/>
+
             <ListBox x:Name="SolutionExplorer" 
-                     Grid.Column="1" 
-                     Style="{StaticResource SolutionExplorerListBoxStyle}"
-                     Margin="20,0,20,-149"
-                     ItemsSource="{Binding SolutionItems}"
-                     SelectedItem="{Binding SelectedSolutionItem}">
+         Grid.Column="2" 
+         Style="{StaticResource SolutionExplorerListBoxStyle}"
+         Margin="0,0,20,-149"
+         ItemsSource="{Binding SolutionItems}"
+         SelectedItem="{Binding SelectedSolutionItem}">
+                <ListBox.Template>
+                    <ControlTemplate TargetType="ListBox">
+                        <Grid>
+                            <Border Background="#252526" Height="30" VerticalAlignment="Top">
+                                <TextBlock Text="Обозреватель решений" 
+                               Foreground="White" 
+                               FontSize="12"
+                               Margin="5,5,0,0"
+                               VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ScrollViewer Margin="0,30,0,0">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </Grid>
+                    </ControlTemplate>
+                </ListBox.Template>
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FilePath, Converter={StaticResource FilePathToNameConverter}}"
-                                   Style="{StaticResource SolutionItemTextStyle}"/>
+                       Style="{StaticResource SolutionItemTextStyle}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+
                 <ListBox.ContextMenu>
                     <ContextMenu Background="#2c2c2c" BorderBrush="#2c2c2c"
-                 Foreground="White" Width="200">
+                     Foreground="White" Width="200">
                         <ContextMenu.Resources>
                             <Style TargetType="MenuItem">
                                 <Setter Property="Background" Value="#2c2c2c"/>
@@ -175,8 +154,8 @@
                                     <Setter.Value>
                                         <ControlTemplate TargetType="MenuItem">
                                             <Border x:Name="Border" Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="0">
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="0">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto" MinWidth="24"/>
@@ -184,15 +163,15 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <ContentPresenter Grid.Column="0"
-                                                      Content="{TemplateBinding Icon}"
-                                                      VerticalAlignment="Center"
-                                                      Margin="5,0,0,0"/>
+                                                          Content="{TemplateBinding Icon}"
+                                                          VerticalAlignment="Center"
+                                                          Margin="5,0,0,0"/>
 
                                                     <ContentPresenter Grid.Column="1"
-                                                      Content="{TemplateBinding Header}"
-                                                      VerticalAlignment="Center"
-                                                      HorizontalAlignment="Left"
-                                                      Margin="5,0,0,0"/>
+                                                          Content="{TemplateBinding Header}"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Left"
+                                                          Margin="5,0,0,0"/>
                                                 </Grid>
                                             </Border>
                                             <ControlTemplate.Triggers>
@@ -206,11 +185,11 @@
                             </Style>
                         </ContextMenu.Resources>
                         <MenuItem Header="Открыть" 
-                  Command="{Binding PlacementTarget.DataContext.OpenSolutionItemCommand, 
-                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                      Command="{Binding PlacementTarget.DataContext.OpenSolutionItemCommand, 
+                      RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                         <MenuItem Header="Удалить"
-                  Command="{Binding PlacementTarget.DataContext.DeleteSolutionItemCommand, 
-                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                      Command="{Binding PlacementTarget.DataContext.DeleteSolutionItemCommand, 
+                      RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>

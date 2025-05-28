@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CKLLib;
 using System.Windows.Threading;
+using System.IO;
 
 namespace CKL_Studio.Infrastructure.Services
 {
@@ -25,14 +26,17 @@ namespace CKL_Studio.Infrastructure.Services
 #pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
             }
 
-            throw new InvalidOperationException("CKL file loaded but returned null object");
+            return null;
         }
 
         public bool Validate(string path)
         {
-            if (CKL.GetFromFile(path) != null)
-                return true;
-
+            if (File.Exists(path))
+            { 
+                if (CKL.GetFromFile(path) != null)
+                    return true;
+            }
+            
             return false;
         }
     }

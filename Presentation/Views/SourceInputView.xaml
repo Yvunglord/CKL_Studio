@@ -7,61 +7,100 @@
              xmlns:vm="clr-namespace:CKL_Studio.Presentation.ViewModels"
              d:DataContext="{d:DesignInstance Type=vm:SourceInputViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="10">
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Background="#1e1e1e">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Список элементов -->
-        <ListBox ItemsSource="{Binding CKL.Source}" 
-                 SelectedItem="{Binding SelectedPair}"
-                 DisplayMemberPath="ToString"
-                 Grid.Row="0"
-                 Margin="5"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- Поля ввода -->
-        <TextBox Text="{Binding NewFirstValue, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Row="1"
-                 Margin="5"
-                 Tag="First Value"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
+            <Button Style="{StaticResource btNavigateBack}"
+         Content="Назад"
+         Margin="0, 0, 10, 20"
+         Command="{Binding GoBackCommand}"/>
 
-        <TextBox Text="{Binding NewSecondValue, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Row="2"
-                 Margin="5"
-                 Tag="Second Value (Optional)"/>
-
-        <TextBox Text="{Binding NewThirdValue, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Row="3"
-                 Margin="5"
-                 Tag="Third Value (Optional)"/>
-
-        <!-- Кнопки управления -->
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Add" 
-                    Command="{Binding AddCommand}" 
-                    Margin="5"
-                    Width="80"/>
-
-            <Button Content="Delete" 
-                    Command="{Binding DeleteCommand}" 
-                    Margin="5"
-                    Width="80"/>
-
-            <Button Content="Next" 
-                    Command="{Binding NavigateToRelationInputCommand}" 
-                    Margin="5"
-                    Width="80"/>
-
-            <Button Content="Back" 
-                    Command="{Binding GoBackCommand}" 
-                    Margin="5"
-                    Width="80"/>
+            <Button Style="{StaticResource btNavigateForward}"
+         Content="Далее"
+         Margin="0, 0, 20, 20"
+         Command="{Binding NavigateToRelationInputCommand}"/>
         </StackPanel>
+
+        <Label Style="{StaticResource Header}"
+               Content="Настроить проект"
+               Margin="60, 40, 0, 60"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top" />
+
+        <Label Style="{StaticResource h1}"
+               Content ="Начните вводить данные"
+               Margin="60, 0, 0, 0"/>
+
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              Margin="60,0,73,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+
+                <ListBox MinHeight="350"
+                         MinWidth="350"
+                         Margin="10,10,0,10"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Background="#1e1e1e"
+                         BorderThickness="0"
+                         ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
+                         ItemsSource="{Binding ListBoxItems}">
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#373737"
+                                HorizontalAlignment="Stretch">
+                                <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Background="Transparent"
+                                     Foreground="White"
+                                     BorderThickness="0"
+                                     Padding="10"/>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button Width="20"
+                        Height="20"
+                        VerticalAlignment="Top"
+                        Margin="10,10,10,10"
+                        Background="#2c2c2c"
+                        Command="{Binding AddItemCommand}">
+                    <Button.Content>
+                        <Path Data="M0,5 L10,5 M5,0 L5,10"
+                              Stroke="White"
+                              StrokeThickness="2"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Stretch="Uniform"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

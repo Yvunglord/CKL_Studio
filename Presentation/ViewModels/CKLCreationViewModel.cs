@@ -12,10 +12,10 @@ using System.Windows.Input;
 using CKL_Studio.Presentation.Commands;
 using CKL_Studio.Common.Interfaces;
 using System.IO;
-using Microsoft.Win32;
 using System.ComponentModel;
 using CKL_Studio.Common.Interfaces.CKLInterfaces;
-
+using System.Windows;
+using CKL_Studio.Infrastructure.Services;
 namespace CKL_Studio.Presentation.ViewModels
 {
     public class CKLCreationViewModel : ViewModelBase, IParameterReceiver<CKL>, IDataErrorInfo
@@ -24,6 +24,7 @@ namespace CKL_Studio.Presentation.ViewModels
         private readonly IDialogService _dialogService;
         private readonly IJSONToCklСonversion _conversionService;
         private readonly INamingService _namingService;
+        private readonly IDataService<FileData> _fileService;
 
         private CKL _ckl;
         private CKLView? _cklView;
@@ -188,6 +189,7 @@ namespace CKL_Studio.Presentation.ViewModels
             _dialogService = serviceProvider.GetRequiredService<IDialogService>();
             _namingService = serviceProvider.GetRequiredService<INamingService>();
             _conversionService = serviceProvider.GetRequiredService<IJSONToCklСonversion>();
+            _fileService = serviceProvider.GetRequiredService<IDataService<FileData>>();
 
             _ckl = ckl ?? new CKL();
 
@@ -270,30 +272,70 @@ namespace CKL_Studio.Presentation.ViewModels
             return await Task.Run(() => _dialogService.ShowOpenFileDialog(Constants.JSON_FILE_DIALOG_FILTER, Constants.DEFAULT_FILE_PATH));
         }
 
-        private async Task BrowseAsync()
+        private async Task<bool> BrowseAsync()
         { 
             var path = await GetCklPathAsync();
             if (path != null)
             {
-                _ckl = _conversionService.Convert(path);
-                CKL.Save(_ckl);
+                try
+                {
+                    _ckl = _conversionService.Convert(path);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
+
+            return false;
         }
 
         private async Task OpenCKLView()
         {
             try
             {
-                await BrowseAsync();
+                bool success = await BrowseAsync();
+                if (!success) return;
 
                 CKLView = new CKLView(_ckl);
-                if (CKLView != null) 
+                if (CKLView != null)
+                {
+                    AddFile(_ckl.FilePath);
+                    CKL.Save(_ckl);
                     NavigateToCKLView();
+                }              
             }
             catch (Exception ex)
             {
                 _dialogService.ShowMessage($"Ошибка открытия файла: {ex.Message}");
             }
+        }
+
+        public void AddFile(string path)
+        {
+            var file = new FileInfo(path);
+            var fileData = new FileData(file)
+            {
+                LastAccess = DateTime.Now
+            };
+
+            if (_fileService.Get(path) == null)
+            {
+                _fileService.Add(fileData);
+            }
+            else
+            {
+                _fileService.Update(fileData);
+            }
+
+            Save();
+        }
+
+        private void Save()
+        {
+            var fileService = _fileService as FileDataService;
+            fileService?.Save();
         }
     }
 }

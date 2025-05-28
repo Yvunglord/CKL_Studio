@@ -12,6 +12,7 @@ using CKLDrawing;
 using CKLLib;
 using CKLLib.Operations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,6 +33,7 @@ namespace CKL_Studio.Presentation.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
         private readonly ISolutionExplorerDataServiceFactory _serviceFactory;
+        private readonly IDataService<FileData> _fileService;
         private IDataService<CKL>? _solutionExplorerService;
 
         private CKLView _mainCklView;
@@ -91,6 +93,7 @@ namespace CKL_Studio.Presentation.ViewModels
         {
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();  
             _dialogService = serviceProvider.GetRequiredService<IDialogService>();
+            _fileService = serviceProvider.GetRequiredService<IDataService<FileData>>();
             _mainCklView  = cklView;
             _serviceFactory = serviceProvider.GetRequiredService<ISolutionExplorerDataServiceFactory>();
         }
@@ -160,7 +163,9 @@ namespace CKL_Studio.Presentation.ViewModels
 
             if (SelectedSolutionItem != null)
             {
-                File.Delete(SelectedSolutionItem.FilePath);
+                string path = SelectedSolutionItem.FilePath;
+                File.Delete(path);              
+                MainCKLView = new CKLView(new CKL() { FilePath = path});
             }
 
             LoadSolutionItems();
@@ -318,8 +323,35 @@ namespace CKL_Studio.Presentation.ViewModels
             }
         }
 
+        public void AddFile(string path)
+        {
+            var file = new FileInfo(path);
+            var fileData = new FileData(file)
+            {
+                LastAccess = DateTime.Now
+            };
+
+            if (_fileService.Get(path) == null)
+            {
+                _fileService.Add(fileData);
+            }
+            else
+            {
+                _fileService.Update(fileData);
+            }
+
+            Save();
+        }
+
+        private void Save()
+        {
+            var fileService = _fileService as FileDataService;
+            fileService?.Save();
+        }
+
         private void AddResultToWorkspace(CKL result)
         {
+            AddFile(result.FilePath);
             var newView = new CKLView(result);
             OpenedCKLViews.Add(newView);
             SelectedCKLView = newView;

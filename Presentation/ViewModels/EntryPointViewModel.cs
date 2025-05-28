@@ -115,9 +115,9 @@ namespace CKL_Studio.Presentation.ViewModels
                 _cklView = await LoadCklAsync(file.Path);
                 NavigateToCKLView();
             }
-            catch (Exception ex)
+            catch
             {
-                _dialogService.ShowMessage($"Ошибка открытия файла: {ex.Message}");
+                _dialogService.ShowMessage($"Ошибка открытия файла:\n Возможно файл был перенесен или удален");
                 RemoveFile(file);
                 Save();
             }

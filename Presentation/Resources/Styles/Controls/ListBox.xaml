@@ -14,40 +14,86 @@
         </Setter>
     </Style>
 
-    <Style x:Key="CustomListBoxItemStyle" TargetType="ListBoxItem">
-        <Setter Property="Height" Value="40"/>
+    <Style x:Key="CustomListBoxStyle" TargetType="ListBox">
         <Setter Property="Background" Value="#2c2c2c"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="Margin" Value="0, 0, 0, 1"/>
+        <Setter Property="BorderBrush" Value="#2c2c2c"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
-                    <Grid Background="{TemplateBinding Background}">
-                        <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Height="40"
-                         Foreground="White"
-                         FontSize="16"
-                         FontWeight="Regular"
-                         VerticalAlignment="Center"
-                         HorizontalAlignment="Stretch"
-                         TextAlignment="Left"
-                         VerticalContentAlignment="Center"
-                         Background="Transparent"
-                         BorderThickness="0"
-                         BorderBrush="#1e1e1e"
-                         Padding="5,0,0,0"
-                         CaretBrush="White"/>
-                    </Grid>
+                <ControlTemplate TargetType="ListBox">
+                    <Border x:Name="Bd" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="#2c2c2c"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" Value="#7160e8"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                            <Setter Property="BorderBrush" Value="#7160e8"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#373737"/>
-            </Trigger>
-        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CustomListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="#2c2c2c"/>
+        <Setter Property="BorderBrush" Value="#2c2c2c"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#6d6d6d"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0,0,0,1"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="IsTabStop" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="Bd" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#4d4d4d"/>
+                            <Setter Property="BorderBrush" Value="#7160e8"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" Value="#4d4d4d"/>
+                            <Setter Property="BorderBrush" Value="#7160e8"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="SelectionListBoxStyle" TargetType="ListBox">

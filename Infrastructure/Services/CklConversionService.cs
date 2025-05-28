@@ -18,7 +18,7 @@ namespace CKL_Studio.Infrastructure.Services
             {
                 try
                 {
-                    return JSONToCKLConverter.ConvertJSONToCKL(path);            
+                    return JSONToCKLConverter.ConvertFromJson(path);            
                 }
                 catch (ArgumentException ex)
                 {

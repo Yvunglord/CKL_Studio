@@ -1,0 +1,56 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:CKL_Studio.Common.Converters">
+
+    <converters:FileToNameConverter x:Key="FilePathToNameConverter"/>
+
+    <Style x:Key="ClosableTabItemStyle" TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid>
+                        <Border Name="Border" Background="#1e1e1e" BorderBrush="Gray" BorderThickness="1,1,1,0">
+                            <DockPanel>
+                                <TextBlock Name="HeaderText" 
+                                           Text="{Binding Ckl.FilePath, Converter={StaticResource FilePathToNameConverter}}" 
+                                           Margin="5,0,0,0" 
+                                           Foreground="White"
+                                           FontWeight="Normal"/>
+                                <Button Name="CloseButton"
+                                        Content="×" 
+                                        Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Margin="5,0,0,0"
+                                        Width="20"
+                                        Height="20"
+                                        Background="Transparent"
+                                        Foreground="White"
+                                        BorderThickness="0"/>
+                            </DockPanel>
+                        </Border>
+                        <Border Name="SelectionIndicator" 
+                                Height="3" 
+                                Background="Transparent" 
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Stretch"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#2d2d2d"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#2d2d2d"/>
+                            <Setter TargetName="SelectionIndicator" Property="Background" Value="#7160e8"/>
+                            <Setter TargetName="HeaderText" Property="FontWeight" Value="Bold"/>
+                        </Trigger>
+                        <Trigger SourceName="CloseButton" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CloseButton" Property="Background" Value="White"/>
+                            <Setter TargetName="CloseButton" Property="Foreground" Value="#2d2d2d"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

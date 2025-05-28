@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using CKLLib;
 using System.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Input;
+using CKL_Studio.Presentation.Commands;
 
 namespace CKL_Studio.Presentation.ViewModels
 {
@@ -30,6 +32,9 @@ namespace CKL_Studio.Presentation.ViewModels
             set => SetField(ref _cklView, value);
         }
 
+        public ICommand GoBackCommand => new RelayCommand(GoBack);
+        public ICommand NavigateToCKLViewCommand => new RelayCommand(NavigateToCKLView);
+
         public RelationInputViewModel(IServiceProvider serviceProvider, CKL ckl) : base(serviceProvider)
         {
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();
@@ -41,5 +46,11 @@ namespace CKL_Studio.Presentation.ViewModels
         {
             _ckl = parameter;
         }
+
+        private void GoBack() => _navigationService.GoBack();
+
+#pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
+        private void NavigateToCKLView() => _navigationService.NavigateTo<CKLViewModel, CKLView>(CKLView);
+#pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
     }
 }

@@ -7,8 +7,51 @@
              xmlns:vm="clr-namespace:CKL_Studio.Presentation.ViewModels"
              d:DataContext="{d:DesignInstance Type=vm:RelationInputViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Background="#1e1e1e">
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <Label Style="{StaticResource Header}"
+            Content="Настроить проект"
+            Margin="60, 40, 0, 60"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+
+        <Label Style="{StaticResource h1}"
+            Content="Составьте отношение:"
+            Margin="60, 0, 0, 0"/>
+
+        <StackPanel Grid.Column="1"
+                 Grid.Row="1"
+                 Orientation="Horizontal"
+                 VerticalAlignment="Bottom" 
+                 HorizontalAlignment="Right" 
+                 Margin="0, 0, 0, 0">
+
+            <Button Style="{StaticResource btNavigateBack}"
+                 Content="Назад"
+                 Margin="0, 0, 10, 20"
+                 Command="{Binding GoBackCommand}"/>
+
+            <Button Style="{StaticResource btNavigateForward}"
+                 Content="Создать"
+                 Margin="0, 0, 20, 20"
+                 Command="{Binding NavigateToCKLViewCommand}"/>
+
+        </StackPanel>
 
     </Grid>
 </UserControl>

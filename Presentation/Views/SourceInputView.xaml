@@ -11,8 +11,6 @@
              d:DesignHeight="800" d:DesignWidth="1000">
     <UserControl.Resources>
         <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
-        <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
-        <converters:IntToVisibilityMinConverter x:Key="IntToVisibilityMinConverter"/>
     </UserControl.Resources>
     <Grid Background="#1e1e1e"
           PreviewMouseDown="Grid_PreviewMouseDown">
@@ -79,6 +77,20 @@
                              Width="50" 
                              PreviewTextInput="NumberValidationTextBox"
                              KeyDown="TextBox_KeyDown"/>
+                    <Button Style="{StaticResource btTemplate}" 
+                            Content="+" 
+                            Width="20" Height="20"
+                            Command="{Binding AddRowCommand}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Margin="150,5,5,5"/>
+                    <Button Style="{StaticResource btTemplate}" 
+                            Width="20" Height="20"
+                            Content="-" 
+                            Command="{Binding RemoveRowCommand}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Margin="0, 5, 5, 5"/>
                 </StackPanel>
 
                 <DataGrid Grid.Row="2"

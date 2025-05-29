@@ -1,29 +1,28 @@
-﻿name: Build CKL Studio
+﻿name: CKL_Studio_CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: 
+    push:
+        branches: ["master", "dev"]
+    pull_request: 
+        branches: ["master"]
 
 jobs:
   build:
     runs-on: windows-latest
-
+    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Setup .NET SDK
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'  
-
-    - name: Restore NuGet packages
-      run: dotnet restore
-
-    - name: Build the solution
-      run: dotnet build --configuration Release --no-restore
-
-    - name: Run tests 
-      run: dotnet test --no-build --configuration Release
+        dotnet-version: '8.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore CKL_Studio\CKL_Studio.sln  
+    
+    - name: Build
+      run: dotnet build CKL_Studio\CKL_Studio.sln --configuration Release --no-restore
+    
+    - name: Test
+      run: dotnet test CKL_Studio\CKL_Studio.sln --configuration Release --no-build --verbosity normal

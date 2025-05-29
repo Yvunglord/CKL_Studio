@@ -7,9 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CKL_Studio.Presentation.ViewModels
@@ -17,7 +14,6 @@ namespace CKL_Studio.Presentation.ViewModels
     public class SourceInputViewModel : ViewModelBase, IParameterReceiver<CKL>
     {
         private readonly INavigationService _navigationService;
-
         private CKL _ckl;
         private Pair? _selectedPair;
         private int _dim = 1;
@@ -64,6 +60,9 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand NavigateToRelationInputCommand => new RelayCommand(NavigateToRelationInput);
         public ICommand GoBackCommand => new RelayCommand(GoBack);
         public ICommand SaveCommand => new RelayCommand(Save);
+        public ICommand AddRowCommand => new RelayCommand(AddRow);
+        public ICommand RemoveRowCommand => new RelayCommand(RemoveRow, () => CanRemoveRow);
+        public bool CanRemoveRow => Source.Count > 0;
 
         public SourceInputViewModel(IServiceProvider serviceProvider, CKL ckl) : base(serviceProvider)
         {
@@ -86,28 +85,36 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void GoBack() => _navigationService.GoBack();
 
+        private void AddRow()
+        {
+            RowCount = Source.Count + 1;
+        }
+
+        private void RemoveRow()
+        {
+            if (Source.Count > 0)
+            {
+                RowCount = Source.Count - 1;
+            }
+        }
+
         private void UpdateSourceStructure()
         {
-            int currentCount = Source.Count;
+            var currentData = Source.ToList();
+            Source.Clear();
 
-            if (currentCount > RowCount)
+            for (int i = 0; i < RowCount; i++)
             {
-                for (int i = currentCount - 1; i >= RowCount; i--)
+                Pair newPair;
+                if (i < currentData.Count)
                 {
-                    Source.RemoveAt(i);
+                    newPair = AdjustPairToDimension(currentData[i]);
                 }
-            }
-            else if (currentCount < RowCount)
-            {
-                for (int i = currentCount; i < RowCount; i++)
+                else
                 {
-                    Source.Add(CreateEmptyPair());
+                    newPair = CreateEmptyPair();
                 }
-            }
-
-            for (int i = 0; i < Source.Count; i++)
-            {
-                Source[i] = AdjustPairToDimension(Source[i]);
+                Source.Add(newPair);
             }
         }
 
@@ -147,42 +154,77 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void Save()
         {
-            _ckl.Source = new HashSet<Pair>(Source);
+            _ckl.Source = GenerateValidatedSource();
+            OnPropertyChanged(nameof(CKL));
+        }
 
-            foreach (var pair in Source.ToList()) 
+        private HashSet<Pair> GenerateValidatedSource()
+        {
+            var validatedSource = new HashSet<Pair>(new PairComparer());
+
+            foreach (var pair in Source)
             {
-                bool shouldRemove = false;
-
-                if (string.IsNullOrEmpty(pair.FirstValue?.ToString()))
+                if (IsValidPair(pair))
                 {
-                    shouldRemove = true;
-                }
-                else if (Dim == 2)
-                {
-                    if (string.IsNullOrEmpty(pair.SecondValue?.ToString()) ||
-                        pair.SecondValue?.ToString() == "0")
-                    {
-                        shouldRemove = true;
-                    }
-                }
-                else if (Dim == 3)
-                {
-                    if (string.IsNullOrEmpty(pair.SecondValue?.ToString()) ||
-                        pair.SecondValue?.ToString() == "0" ||
-                        string.IsNullOrEmpty(pair.ThirdValue?.ToString()) ||
-                        pair.ThirdValue?.ToString() == "0")
-                    {
-                        shouldRemove = true;
-                    }
-                }
-
-                if (shouldRemove)
-                {
-                    _ckl.Source.Remove(pair);
+                    validatedSource.Add(NormalizePair(pair));
                 }
             }
 
-            OnPropertyChanged(nameof(CKL));
+            if (Dim >= 2)
+            {
+                var validPairs = validatedSource.ToList();
+                for (int i = 0; i < validPairs.Count; i++)
+                {
+                    for (int j = 0; j < validPairs.Count; j++)
+                    {
+                        if (Dim == 2)
+                        {
+                            validatedSource.Add(new Pair(
+                                validPairs[i].FirstValue,
+                                validPairs[j].SecondValue ?? string.Empty));
+                        }
+                        else if (Dim == 3)
+                        {
+                            validatedSource.Add(new Pair(
+                                validPairs[i].FirstValue,
+                                validPairs[j].SecondValue ?? string.Empty,
+                                validPairs[j].ThirdValue ?? string.Empty));
+                        }
+                    }
+                }
+            }
+
+            return validatedSource;
+        }
+
+        private bool IsValidPair(Pair pair)
+        {
+            if (string.IsNullOrEmpty(pair.FirstValue?.ToString()))
+                return false;
+
+            if (Dim >= 2 && string.IsNullOrEmpty(pair.SecondValue?.ToString()))
+                return false;
+
+            if (Dim >= 3 && string.IsNullOrEmpty(pair.ThirdValue?.ToString()))
+                return false;
+
+            return true;
+        }
+
+        private Pair NormalizePair(Pair pair)
+        {
+            return Dim switch
+            {
+                1 => new Pair(pair.FirstValue.ToString().Trim()),
+                2 => new Pair(
+                    pair.FirstValue.ToString().Trim(),
+                    pair.SecondValue.ToString().Trim()),
+                3 => new Pair(
+                    pair.FirstValue.ToString().Trim(),
+                    pair.SecondValue.ToString().Trim(),
+                    pair.ThirdValue.ToString().Trim()),
+                _ => pair
+            };
         }
     }
 }

@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="Presentation/Resources/Styles/Controls/TabItem.xaml"/>
                 <ResourceDictionary Source="Presentation/Resources/Styles/Controls/CustomContextMenuStyle.xaml"/>
                 <ResourceDictionary Source="Presentation/Resources/Styles/Controls/RadioButton.xaml"/>
+                <ResourceDictionary Source="Presentation/Resources/Styles/Controls/DataGrid.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
 

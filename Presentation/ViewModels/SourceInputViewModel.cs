@@ -148,11 +148,40 @@ namespace CKL_Studio.Presentation.ViewModels
         private void Save()
         {
             _ckl.Source = new HashSet<Pair>(Source);
-            foreach (var pair in Source) 
+
+            foreach (var pair in Source.ToList()) 
             {
-                if (string.IsNullOrEmpty(pair.FirstValue.ToString()))
+                bool shouldRemove = false;
+
+                if (string.IsNullOrEmpty(pair.FirstValue?.ToString()))
+                {
+                    shouldRemove = true;
+                }
+                else if (Dim == 2)
+                {
+                    if (string.IsNullOrEmpty(pair.SecondValue?.ToString()) ||
+                        pair.SecondValue?.ToString() == "0")
+                    {
+                        shouldRemove = true;
+                    }
+                }
+                else if (Dim == 3)
+                {
+                    if (string.IsNullOrEmpty(pair.SecondValue?.ToString()) ||
+                        pair.SecondValue?.ToString() == "0" ||
+                        string.IsNullOrEmpty(pair.ThirdValue?.ToString()) ||
+                        pair.ThirdValue?.ToString() == "0")
+                    {
+                        shouldRemove = true;
+                    }
+                }
+
+                if (shouldRemove)
+                {
                     _ckl.Source.Remove(pair);
+                }
             }
+
             OnPropertyChanged(nameof(CKL));
         }
     }

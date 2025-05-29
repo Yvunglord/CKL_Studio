@@ -24,7 +24,82 @@ namespace CKL_Studio.Presentation.Views
         public SourceInputView()
         {
             InitializeComponent();
+            this.DataContextChanged += SourceInputView_DataContextChanged;
         }
+
+        private void SourceInputView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ViewModels.SourceInputViewModel vm)
+            {
+                vm.PropertyChanged += (s, args) =>
+                {
+                    if (args.PropertyName == nameof(vm.Dim))
+                    {
+                        UpdateDataGridColumns();
+                    }
+                };
+                UpdateDataGridColumns();
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateDataGridColumns();
+        }
+
+        private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            if (!e.Column.IsReadOnly)
+            {
+                e.Cancel = false;
+            }
+        }
+
+
+        private void UpdateDataGridColumns()
+        {
+            SourceDataGrid.Columns.Clear();
+
+            if (DataContext is ViewModels.SourceInputViewModel vm)
+            {
+                var col1 = new DataGridTextColumn
+                {
+                    Header = "Множество 1",
+                    Binding = new Binding("FirstValue") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
+                    Width = new DataGridLength(1, DataGridLengthUnitType.Star),
+                    HeaderStyle = (Style)FindResource("CustomDataGridColumnHeaderStyle"),
+                    EditingElementStyle = (Style)FindResource("CustomDataGridCellEditingStyle")
+                };
+                SourceDataGrid.Columns.Add(col1);
+
+                if (vm.Dim >= 2)
+                {
+                    var col2 = new DataGridTextColumn
+                    {
+                        Header = "Множество 2",
+                        Binding = new Binding("SecondValue") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
+                        Width = new DataGridLength(1, DataGridLengthUnitType.Star),
+                        HeaderStyle = (Style)FindResource("CustomDataGridColumnHeaderStyle"),
+                        EditingElementStyle = (Style)FindResource("CustomDataGridCellEditingStyle")
+                    };
+                    SourceDataGrid.Columns.Add(col2);
+                }
+
+                if (vm.Dim >= 3)
+                {
+                    var col3 = new DataGridTextColumn
+                    {
+                        Header = "Множество 3",
+                        Binding = new Binding("ThirdValue") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
+                        Width = new DataGridLength(1, DataGridLengthUnitType.Star),
+                        HeaderStyle = (Style)FindResource("CustomDataGridColumnHeaderStyle"),
+                        EditingElementStyle = (Style)FindResource("CustomDataGridCellEditingStyle")
+                    };
+                    SourceDataGrid.Columns.Add(col3);
+                }
+            }
+        }
+    
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9.-]+");
@@ -48,87 +123,71 @@ namespace CKL_Studio.Presentation.Views
         {
             var focusedElement = Keyboard.FocusedElement as TextBox;
 
-            if (focusedElement != null && focusedElement.Name == "RowCountTextBox") 
+            if (focusedElement != null && (focusedElement.Name == "RowCountTextBox" || focusedElement.Name == "SourceDataGrid"))
             {
                 var binding = focusedElement.GetBindingExpression(TextBox.TextProperty);
-                binding?.UpdateSource(); 
+                binding?.UpdateSource();
                 Keyboard.ClearFocus();  
             }
         }
 
-        private void ListBox_KeyDown(object sender, KeyEventArgs e)
+        private void SourceDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            var currentListBox = sender as ListBox;
-            if (currentListBox == null || currentListBox.Items.Count == 0)
+            var dataGrid = sender as DataGrid;
+
+            if (dataGrid == null)
                 return;
 
-            int currentIndex = currentListBox.SelectedIndex;
-            var listBoxes = new List<ListBox>();
+            var currentCell = dataGrid.CurrentCell;
+            var currentColumn = currentCell.Column as DataGridBoundColumn;
 
-            var parent = VisualTreeHelper.GetParent(currentListBox);
-            while (parent != null && !(parent is ScrollViewer))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
+            if (currentColumn == null)
+                return;
 
-            if (parent is ScrollViewer scrollViewer)
+            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
             {
-                var stackPanel = scrollViewer.Content as StackPanel;
-                if (stackPanel != null)
+                e.Handled = true;
+
+                int rowIndex = dataGrid.Items.IndexOf(currentCell.Item);
+                int columnIndex = dataGrid.Columns.IndexOf(currentColumn);
+
+                switch (e.Key)
                 {
-                    foreach (var child in stackPanel.Children)
-                    {
-                        if (child is ListBox lb && lb.Visibility == Visibility.Visible)
-                        {
-                            listBoxes.Add(lb);
-                        }
-                    }
+                    case Key.Left:
+                        columnIndex--;
+                        break;
+                    case Key.Right:
+                        columnIndex++;
+                        break;
+                    case Key.Up:
+                        rowIndex--;
+                        break;
+                    case Key.Down:
+                        rowIndex++;
+                        break;
+                }
+
+                if (rowIndex >= 0 && rowIndex < dataGrid.Items.Count &&
+                    columnIndex >= 0 && columnIndex < dataGrid.Columns.Count)
+                {
+                    var newCell = new DataGridCellInfo(
+                        dataGrid.Items[rowIndex],
+                        dataGrid.Columns[columnIndex]);
+
+                    dataGrid.CurrentCell = newCell;
+                    dataGrid.ScrollIntoView(dataGrid.Items[rowIndex], dataGrid.Columns[columnIndex]);
+
+                    dataGrid.BeginEdit();
                 }
             }
+        }
 
-            int currentListBoxIndex = listBoxes.IndexOf(currentListBox);
-
-            switch (e.Key)
+        private void SourceDataGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            var dataGrid = sender as DataGrid;
+            if (dataGrid != null)
             {
-                case Key.Up:
-                    if (currentIndex > 0)
-                    {
-                        currentListBox.SelectedIndex = currentIndex - 1;
-                        currentListBox.ScrollIntoView(currentListBox.SelectedItem);
-                    }
-                    e.Handled = true;
-                    break;
-
-                case Key.Down:
-                    if (currentIndex < currentListBox.Items.Count - 1)
-                    {
-                        currentListBox.SelectedIndex = currentIndex + 1;
-                        currentListBox.ScrollIntoView(currentListBox.SelectedItem);
-                    }
-                    e.Handled = true;
-                    break;
-
-                case Key.Left:
-                    if (currentListBoxIndex > 0)
-                    {
-                        var prevListBox = listBoxes[currentListBoxIndex - 1];
-                        prevListBox.SelectedIndex = Math.Min(currentIndex, prevListBox.Items.Count - 1);
-                        prevListBox.Focus();
-                        prevListBox.ScrollIntoView(prevListBox.SelectedItem);
-                    }
-                    e.Handled = true;
-                    break;
-
-                case Key.Right:
-                    if (currentListBoxIndex < listBoxes.Count - 1)
-                    {
-                        var nextListBox = listBoxes[currentListBoxIndex + 1];
-                        nextListBox.SelectedIndex = Math.Min(currentIndex, nextListBox.Items.Count - 1);
-                        nextListBox.Focus();
-                        nextListBox.ScrollIntoView(nextListBox.SelectedItem);
-                    }
-                    e.Handled = true;
-                    break;
+                dataGrid.PreviewKeyDown += SourceDataGrid_PreviewKeyDown;
             }
         }
     }

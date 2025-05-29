@@ -14,7 +14,6 @@
         <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
         <converters:IntToVisibilityMinConverter x:Key="IntToVisibilityMinConverter"/>
     </UserControl.Resources>
-
     <Grid Background="#1e1e1e"
           PreviewMouseDown="Grid_PreviewMouseDown">
         <Grid.RowDefinitions>
@@ -23,40 +22,46 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
-            <Button Style="{StaticResource btNavigateForward}"
-          Content="Далее"
-          Margin="0, 0, 20, 10"
-          Command="{Binding NavigateToRelationInputCommand}"/>
+        <StackPanel Grid.Column="1"
+           Grid.Row="1"
+           Orientation="Horizontal"
+           VerticalAlignment="Bottom" 
+           HorizontalAlignment="Right" 
+           Margin="0, 0, 0, 0">
 
             <Button Style="{StaticResource btNavigateBack}"
-          Content="Назад"
-          Margin="0, 0, 20, 20"
-          Command="{Binding GoBackCommand}"/>
+           Content="Назад"
+           Margin="0, 0, 10, 20"
+           Command="{Binding GoBackCommand}"/>
+
+            <Button Style="{StaticResource btNavigateForward}"
+           Content="Далее"
+           Margin="0, 0, 20, 20"
+           Command="{Binding NavigateToRelationInputCommand}"/>
         </StackPanel>
 
         <Label Style="{StaticResource Header}"
-            Content="Настроить проект"
-            Margin="60, 40, 0, 60"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
+               Content="Настроить проект"
+               Margin="60, 40, 0, 60"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top" />
 
         <Label Style="{StaticResource h1}"
-            Content="Введите множество(а)"
-            Margin="60, 0, 0, 0"/>
+               Content="Введите множество(а)"
+               Margin="60, 0, 0, 0"/>
 
         <Grid Grid.Row="1"
-           Grid.Column="0"
-           Margin="60,0,73,0">
+              Grid.Column="0"
+              Margin="60,0,73,0">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
@@ -76,78 +81,17 @@
                              KeyDown="TextBox_KeyDown"/>
                 </StackPanel>
 
-                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Horizontal">
-                        <ListBox Style="{StaticResource CustomListBoxStyle}"
-                              ItemsSource="{Binding Source}" 
-                              SelectedItem="{Binding SelectedPair}"
-                              ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
-                              Visibility="{Binding Dim, Converter={StaticResource IntToVisibilityMinConverter}, ConverterParameter=1}"
-                              Width="200"
-                              Margin="0,0,5,0"
-                              PreviewKeyDown="ListBox_KeyDown">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding FirstValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          Background="Transparent"
-                                          BorderThickness="0"
-                                          Width="200"
-                                          Foreground="White"
-                                          FontSize="16"
-                                          VerticalContentAlignment="Center"
-                                          Padding="5,0,0,0"
-                                          CaretBrush="White"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-
-                        <ListBox Style="{StaticResource CustomListBoxStyle}"
-                              ItemsSource="{Binding Source}" 
-                              SelectedItem="{Binding SelectedPair}"
-                              ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
-                              Visibility="{Binding Dim, Converter={StaticResource IntToVisibilityMinConverter}, ConverterParameter=2}"
-                              Width="200"
-                              Margin="5,0,5,0"
-                              PreviewKeyDown="ListBox_KeyDown">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding SecondValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          Background="Transparent"
-                                          BorderThickness="0"
-                                          Foreground="White"
-                                          Width="200"
-                                          FontSize="16"
-                                          VerticalContentAlignment="Center"
-                                          Padding="5,0,0,0"
-                                          CaretBrush="White"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-
-                        <ListBox Style="{StaticResource CustomListBoxStyle}"
-                              ItemsSource="{Binding Source}" 
-                              SelectedItem="{Binding SelectedPair}"
-                              ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
-                              Visibility="{Binding Dim, Converter={StaticResource IntToVisibilityMinConverter}, ConverterParameter=3}"
-                              Width="200"
-                              Margin="5,0,0,0"
-                              PreviewKeyDown="ListBox_KeyDown">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding ThirdValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          Background="Transparent"
-                                          BorderThickness="0"
-                                          Foreground="White"
-                                          Width="200"
-                                          FontSize="16"
-                                          VerticalContentAlignment="Center"
-                                          Padding="5,0,0,0"
-                                          CaretBrush="White"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                </ScrollViewer>
+                <DataGrid Grid.Row="2"
+                        x:Name="SourceDataGrid"
+                        Style="{StaticResource CustomDataGridStyle}"
+                        ItemsSource="{Binding Source}"
+                        SelectedItem="{Binding SelectedPair}"
+                        CellStyle="{StaticResource CustomDataGridCellStyle}"
+                        BeginningEdit="DataGrid_BeginningEdit"
+                        Loaded="SourceDataGrid_Loaded"
+                        SelectionUnit="Cell"
+                        SelectionMode="Single">
+                </DataGrid>
             </Grid>
         </Grid>
     </Grid>

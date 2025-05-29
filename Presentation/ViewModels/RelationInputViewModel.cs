@@ -45,6 +45,8 @@ namespace CKL_Studio.Presentation.ViewModels
         public void ReceiveParameter(CKL parameter)
         {
             _ckl = parameter;
+
+            CKLView = new CKLView(_ckl);
         }
 
         private void GoBack() => _navigationService.GoBack();

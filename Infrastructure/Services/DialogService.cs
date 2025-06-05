@@ -33,6 +33,16 @@ namespace CKL_Studio.Infrastructure.Services
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        public bool? ShowConfirmationDialog(string title, string message)
+        {
+            return MessageBox.Show(
+                message,
+                title,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning
+            ) == MessageBoxResult.Yes;
+        }
+
         public string? ShowSaveFileDialog(string defaultName, string defaultDir, string filter)
         {
             var dialog = new SaveFileDialog

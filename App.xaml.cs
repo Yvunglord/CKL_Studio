@@ -48,7 +48,7 @@ namespace CKL_Studio
                     viewModel => GetWindowTypeForViewModel(viewModel)
                 ));
 
-            services.AddSingleton<CKL, CKL>();
+            services.AddTransient<CKL, CKL>();
             services.AddSingleton<CKLView, CKLView>();
             services.AddSingleton<INamingService, NamingService>();
             services.AddSingleton<IJSONToCklСonversion, CklConversionService>();

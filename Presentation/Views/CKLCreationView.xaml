@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:CKL_Studio.Presentation.Views"
              xmlns:vm="clr-namespace:CKL_Studio.Presentation.ViewModels"
              xmlns:converters="clr-namespace:CKL_Studio.Common.Converters"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DataContext="{d:DesignInstance Type=vm:CKLCreationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
@@ -13,7 +14,7 @@
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    
+
     <Grid Background="#1e1e1e">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -46,7 +47,7 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Label Style="{StaticResource h1}"
-                    Content="Файл алгебры динамических отношений .ckl" Margin="0, 0, 50, 0"/>                
+                    Content="Файл алгебры динамических отношений .ckl" Margin="0, 0, 50, 0"/>
                 <Viewbox Width="32" Height="32" Margin="0,0,10,0">
                     <Canvas Width="512" Height="512">
                         <Ellipse Width="512" Height="512" Fill="#4b5896"/>
@@ -123,15 +124,19 @@
 
         <StackPanel Grid.Column="1"/>
 
-        <Button
-         Grid.Column="1"
-         Style="{StaticResource btTemplate}"
-         VerticalAlignment="Bottom"
-         HorizontalAlignment="Right"
-         Content="Импорт"
-         Margin="0,0,20,120"
-         Command="{Binding NavigateToCKLViewCommand}"/>
-
+        <StackPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Vertical">
+            <TextBlock Text="Ошибка импорта! Проверьте корректность данных"
+                Foreground="Red"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                TextWrapping="Wrap"
+                Visibility="{Binding IsFileImportedUncorrect, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <Button
+                 Style="{StaticResource btTemplate}"
+                 Content="Импорт"
+                 Margin="0,0,20,120"
+                 Command="{Binding NavigateToCKLViewCommand}"/>
+        </StackPanel>
     </Grid>
-
 </UserControl>

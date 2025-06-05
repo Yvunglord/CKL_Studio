@@ -5,6 +5,7 @@
     <converters:FileToNameConverter x:Key="FilePathToNameConverter"/>
 
     <Style x:Key="ClosableTabItemStyle" TargetType="TabItem">
+        <Setter Property="AllowDrop" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">

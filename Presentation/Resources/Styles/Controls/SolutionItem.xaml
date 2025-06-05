@@ -45,5 +45,13 @@
         <Setter Property="Background" Value="#1e1e1e"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource SolutionItemStyle}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#7160e8"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="#7160e8"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

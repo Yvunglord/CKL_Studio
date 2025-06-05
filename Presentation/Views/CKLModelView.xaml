@@ -6,14 +6,16 @@
              xmlns:local="clr-namespace:CKL_Studio.Presentation.Views"
              xmlns:vm="clr-namespace:CKL_Studio.Presentation.ViewModels"
              xmlns:converters="clr-namespace:CKL_Studio.Common.Converters"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DataContext="{d:DesignInstance Type=vm:CKLViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">  
     <UserControl.Resources>
         <converters:FileToNameConverter x:Key="FilePathToNameConverter"/>
     </UserControl.Resources>
-    
-    <Grid Background="#2d2d2d">
+
+    <Grid Background="#2d2d2d" 
+          PreviewMouseDown="Grid_PreviewMouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -27,7 +29,7 @@
                 <MenuItem Header="Открыть" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding NavigateToEntryPointViewCommand}"/>
                 <MenuItem Header="Сохранить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveCommand}"/>
                 <MenuItem Header="Сохранить как" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SaveAsCommand}"/>
-                <MenuItem Header="Удалить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DeleteCommand}"/>
+                <MenuItem Header="Удалить" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DeleteSolutionItemCommand}"/>
             </MenuItem>
             <MenuItem Header="Править" Style="{StaticResource CustomMenuItemStyle}" Width="60">
                 <MenuItem Header="Назад" Style="{StaticResource CustomSubMenuItemStyle}"/>
@@ -114,6 +116,7 @@
                      Margin="0,0,20,-149"
                      ItemsSource="{Binding SolutionItems}"
                      SelectedItem="{Binding SelectedSolutionItem}">
+                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FilePath, Converter={StaticResource FilePathToNameConverter}}"
@@ -128,7 +131,7 @@
                                 <Setter Property="Background" Value="#2c2c2c"/>
                                 <Setter Property="BorderBrush" Value="#2c2c2c"/>
                                 <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="Height" Value="20"/>
+                                <Setter Property="Height" Value="25"/>
                                 <Setter Property="FontSize" Value="12"/>
                                 <Setter Property="Padding" Value="0"/>
                                 <Setter Property="Template">
@@ -165,14 +168,34 @@
                                 </Setter>
                             </Style>
                         </ContextMenu.Resources>
+                        <MenuItem Header="Добавить" 
+                                  Command="{Binding PlacementTarget.DataContext.AddSolutionItemCommand, 
+                                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                         <MenuItem Header="Открыть" 
-                  Command="{Binding PlacementTarget.DataContext.OpenSolutionItemCommand, 
-                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                  Command="{Binding PlacementTarget.DataContext.OpenSolutionItemCommand, 
+                                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                        <MenuItem Header="Копировать полный путь" 
+                                  Command="{Binding PlacementTarget.DataContext.CopyFilePathCommand, 
+                                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                        <MenuItem Header="Удалить из списка"
+                                  Command="{Binding PlacementTarget.DataContext.DeleteSolutionItemFromListCommand, 
+                                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                         <MenuItem Header="Удалить"
-                  Command="{Binding PlacementTarget.DataContext.DeleteSolutionItemCommand, 
-                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                  Command="{Binding PlacementTarget.DataContext.DeleteSolutionItemCommand, 
+                                  RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
+
+                <ListBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding OpenSolutionItemCommand}"/>
+                </ListBox.InputBindings>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding OpenSolutionItemCommand}"
+                       CommandParameter="{Binding ElementName=ListBox, Path=SelectedSolutionItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>   
             </ListBox>
         </Grid>
 
@@ -181,6 +204,22 @@
             <Button Style="{StaticResource btTemplate}" Content="-" Width="20" Background="#2d2d2d" Height="20" Margin="5,0,0,0" Command="{Binding ScaleMinusCommand}"/>
         </StackPanel>
 
-        <ListBox Grid.Row="4" Background="#1e1e1e" Height="100" Margin="20,0,220,20" />
+        <ListBox Grid.Row="4" 
+         Style="{StaticResource SolutionExplorerListBoxStyle}"
+         Height="99" 
+         Margin="20,0,220,20"
+         ItemsSource="{Binding OperationLogs}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" 
+                       Style="{StaticResource SolutionItemTextStyle}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem" BasedOn="{StaticResource SolutionItemStyle}">
+                    <Setter Property="Height" Value="25"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
     </Grid>
 </UserControl>

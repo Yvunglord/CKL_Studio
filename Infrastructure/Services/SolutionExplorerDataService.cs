@@ -44,9 +44,22 @@ namespace CKL_Studio.Infrastructure.Services
             }
         }
 
+        public void AddUnsafe(CKL item)
+        {
+            if (!_solutionItems.Any(f => f.FilePath == item.FilePath))
+            {
+                _solutionItems.Add(item);
+            }
+        }
+
         public void Delete(CKL item)
         {
             _solutionItems?.Remove(item);
+        }
+
+        public void Clear()
+        {
+            _solutionItems.Clear();
         }
 
         public CKL? Get(string identifier)

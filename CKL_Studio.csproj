@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <Reference Include="CKLDrawing">
-      <HintPath>..\..\..\Desktop\CKL\CKLLib-1.1\CKLDrawing\bin\Release\net8.0-windows\CKLDrawing.dll</HintPath>
+      <HintPath>..\..\..\Desktop\CKL\CKLLib-1.1\CKLDrawing\bin\Debug\net8.0-windows\CKLDrawing.dll</HintPath>
     </Reference>
     <Reference Include="CKLLib">
       <HintPath>..\..\..\Desktop\CKL\CKLLib-1.1\CKLLib\bin\Release\net8.0\CKLLib.dll</HintPath>

@@ -33,7 +33,7 @@ namespace CKL_Studio.Presentation.ViewModels
         }
 
         public ICommand GoBackCommand => new RelayCommand(GoBack);
-        public ICommand NavigateToCKLViewCommand => new RelayCommand(NavigateToCKLView);
+        public ICommand NavigateToCKLViewCommand => new RelayCommand(Save);
 
         public RelationInputViewModel(IServiceProvider serviceProvider, CKL ckl) : base(serviceProvider)
         {
@@ -54,5 +54,11 @@ namespace CKL_Studio.Presentation.ViewModels
 #pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
         private void NavigateToCKLView() => _navigationService.NavigateTo<CKLViewModel, CKLView>(CKLView);
 #pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
+
+        private void Save()
+        {
+            CKL.Save(_ckl);
+            NavigateToCKLView();
+        }
     }
 }

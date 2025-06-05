@@ -1,9 +1,9 @@
 ﻿using CKL_Studio.Common.Interfaces;
-using CKL_Studio.Common.Interfaces.CKLInterfaces;
 using CKL_Studio.Common.Interfaces.Factories;
 using CKL_Studio.Infrastructure.Services;
 using CKL_Studio.Infrastructure.Static;
 using CKL_Studio.Presentation.Commands;
+using CKL_Studio.Presentation.Services.LogData;
 using CKL_Studio.Presentation.Services.Navigation;
 using CKL_Studio.Presentation.ViewModels.Base;
 using CKL_Studio.Presentation.ViewModels.Dialog;
@@ -12,18 +12,10 @@ using CKLDrawing;
 using CKLLib;
 using CKLLib.Operations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace CKL_Studio.Presentation.ViewModels
@@ -34,12 +26,15 @@ namespace CKL_Studio.Presentation.ViewModels
         private readonly IDialogService _dialogService;
         private readonly ISolutionExplorerDataServiceFactory _serviceFactory;
         private readonly IDataService<FileData> _fileService;
+        private readonly IOpenCklService _openCklService;
         private IDataService<CKL>? _solutionExplorerService;
 
         private CKLView _mainCklView;
         private CKL? _selectedSolutionItem;
         private CKLView? _selectedCklView;
         private ObservableCollection<CKLView> _openedCKLViews = new ObservableCollection<CKLView>();
+
+        private ObservableCollection<OperationLog> _operationLogs = new ObservableCollection<OperationLog>();
 
         public CKLView MainCKLView
         {
@@ -67,10 +62,18 @@ namespace CKL_Studio.Presentation.ViewModels
             set => SetField(ref _openedCKLViews, value);
         }
 
+        public ObservableCollection<OperationLog> OperationLogs
+        { 
+            get => _operationLogs;
+            set => SetField(ref _operationLogs, value);
+        }
+
         public ICommand NavigateToEntryPointViewCommand => new RelayCommand(NavigateToEntryPointView);
         public ICommand NavigateToCKLCreationViewCommand => new RelayCommand(NavigateToCKLCreationView);
+        public ICommand AddSolutionItemCommand => new AsyncRelayCommand(AddSolutionItemAsync);
         public ICommand OpenSolutionItemCommand => new RelayCommand(OpenSelectedItem);
         public ICommand DeleteSolutionItemCommand => new RelayCommand(DeleteSolutionItem);
+        public ICommand DeleteSolutionItemFromListCommand => new RelayCommand(DeleteSolutionItemFromList);
         public ICommand CloseTabCommand => new RelayCommand<CKLView>(CloseTab);
         public ICommand UnionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Union));
         public ICommand IntersectionCommand => new RelayCommand(() => PerformBinaryOperation(CKLMath.Intersection));
@@ -88,12 +91,13 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand RightContinuationCommand => new RelayCommand(() => PerformParameterizedTimeOperation(CKLMath.RightContinuation));
         public ICommand ScalePlusCommand => new RelayCommand(ScalePlus);
         public ICommand ScaleMinusCommand => new RelayCommand(ScaleMinus);
-
+        public ICommand CopyFilePathCommand => new RelayCommand(CopyFilePath);
         public CKLViewModel(IServiceProvider serviceProvider, CKLView cklView) : base(serviceProvider)
         {
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();  
             _dialogService = serviceProvider.GetRequiredService<IDialogService>();
             _fileService = serviceProvider.GetRequiredService<IDataService<FileData>>();
+            _openCklService = serviceProvider.GetRequiredService<IOpenCklService>();
             _mainCklView  = cklView;
             _serviceFactory = serviceProvider.GetRequiredService<ISolutionExplorerDataServiceFactory>();
         }
@@ -104,6 +108,7 @@ namespace CKL_Studio.Presentation.ViewModels
             _solutionExplorerService = _serviceFactory.Create(_mainCklView.Ckl);
             _openedCKLViews.Add(_mainCklView);
             LoadSolutionItems();
+            AddOperationLog("Открытие проекта", $"{Path.GetFileName(MainCKLView.Ckl.FilePath)}");
         }
 
         private void NavigateToEntryPointView() => _navigationService.NavigateTo<EntryPointViewModel>();
@@ -159,16 +164,91 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void DeleteSolutionItem()
         {
-            _dialogService.ShowMessage("Вы собираетесь безвозвратно удалить файл! \n Хотите продолжить?");
+            if (SelectedSolutionItem == null) return;
 
+            string path = SelectedSolutionItem.FilePath;
+
+            var dialogResult = _dialogService.ShowConfirmationDialog(
+                "Подтверждение удаления",
+                "Вы собираетесь безвозвратно удалить файл! Хотите продолжить?"
+            );
+
+            if (dialogResult != true) return;
+
+            try
+            {
+                if (File.Exists(path)) File.Delete(path);
+
+                CloseTabsForFile(path);
+                _solutionExplorerService?.Delete(SelectedSolutionItem);
+                if (IsMainCKLView(path))
+                {
+                    if (_solutionExplorerService.GetAll().Count() != 0)
+                    {
+                        var newMainCkl = SolutionItems.First();
+                        MainCKLView = new CKLView(newMainCkl);
+                    }
+                    else
+                    { 
+                        HandleMainCKLDeletion();
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage($"Ошибка удаления: {ex.Message}");
+            }
+        }
+
+        private void CloseTabsForFile(string path)
+        {
+            var viewsToRemove = OpenedCKLViews
+                .Where(v => v.Ckl.FilePath == path)
+                .ToList();
+
+            foreach (var view in viewsToRemove)
+            {
+                OpenedCKLViews.Remove(view);
+                if (SelectedCKLView == view)
+                {
+                    SelectedCKLView = OpenedCKLViews.LastOrDefault();
+                }
+            }
+        }
+
+        private bool IsMainCKLView(string path)
+            => MainCKLView.Ckl.FilePath == path;
+
+        private void HandleMainCKLDeletion()
+        {
+            var newCKL = new CKL();
+            var newMainView = new CKLView(newCKL);
+            MainCKLView = newMainView;
+            (_solutionExplorerService as SolutionExplorerDataService)?.Clear();
+
+            OpenedCKLViews.Clear();
+            OpenedCKLViews.Add(newMainView);
+            SelectedCKLView = newMainView;
+        }
+
+        private void DeleteSolutionItemFromList()
+        {
             if (SelectedSolutionItem != null)
             {
-                string path = SelectedSolutionItem.FilePath;
-                File.Delete(path);              
-                MainCKLView = new CKLView(new CKL() { FilePath = path});
+                var path = SelectedSolutionItem.FilePath;
+                CloseTabsForFile(path); 
+                _solutionExplorerService?.Delete(SelectedSolutionItem);
+                if (IsMainCKLView(path))
+                {
+                    if (_solutionExplorerService.GetAll().Count() != 0)
+                    {
+                        var newMainCkl = SolutionItems.First();
+                        MainCKLView = new CKLView(newMainCkl);
+                    }
+                    else HandleMainCKLDeletion();
+                }
             }
-
-            LoadSolutionItems();
         }
 
         private void CloseTab(CKLView? viewToClose)
@@ -246,12 +326,20 @@ namespace CKL_Studio.Presentation.ViewModels
                 {
                     try
                     {
+                        var operationName = operation.Method.Name;
                         var resultCkl = operation(currentCkl, dialogVm.SelectedCkl);
                         CKL.Save(resultCkl);
                         AddResultToWorkspace(resultCkl);
+
+                        AddOperationLog(operationName,
+                             $"{Path.GetFileName(currentCkl.FilePath)} и {Path.GetFileName(dialogVm.SelectedCkl.FilePath)}",
+                             $"Результат сохранен в {Path.GetFileName(resultCkl.FilePath)}");
                     }
                     catch (Exception ex)
                     {
+                        AddOperationLog("Ошибка",
+                          $"{Path.GetFileName(currentCkl.FilePath)} и {Path.GetFileName(dialogVm.SelectedCkl.FilePath)}",
+                          ex.Message);
                         _dialogService.ShowMessage($"Ошибка выполнения бинарной операции: {ex.Message}");
                     }
                 }
@@ -270,12 +358,19 @@ namespace CKL_Studio.Presentation.ViewModels
 
             try
             {
+                var operationName = operation.Method.Name;
                 var resultCkl = operation(SelectedCKLView.Ckl);
                 CKL.Save(resultCkl);
                 AddResultToWorkspace(resultCkl);
+                AddOperationLog(operationName,
+                            $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
+                            $"Результат сохранен в {Path.GetFileName(resultCkl.FilePath)}");
             }
             catch (Exception ex)
-            { 
+            {
+                AddOperationLog("Ошибка",
+                          $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
+                          ex.Message);
                 _dialogService.ShowMessage($"Ошибка выполнения унарной операции: {ex.Message}");
             }
         }
@@ -290,12 +385,19 @@ namespace CKL_Studio.Presentation.ViewModels
 
                 try
                 {
+                    var operationName = operation.Method.Name;
                     var resultCkl = operation(SelectedCKLView.Ckl, new TimeInterval(stTime, enTime));
                     CKL.Save(resultCkl);
                     AddResultToWorkspace(resultCkl);
+                    AddOperationLog(operationName,
+                       $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
+                       $"Результат сохранен в {Path.GetFileName(resultCkl.FilePath)}");
                 }
                 catch (ArgumentException ex)
                 {
+                    AddOperationLog("Ошибка",
+                         $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
+                         ex.Message);
                     _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
                 }
             }
@@ -312,14 +414,64 @@ namespace CKL_Studio.Presentation.ViewModels
 
                 try
                 {
+                    var operationName = operation.Method.Name;
                     var resultCKl = operation(SelectedCKLView.Ckl, new TimeInterval(stTime, enTime), t);
                     CKL.Save(resultCKl);
                     AddResultToWorkspace(resultCKl);
+                    AddOperationLog(operationName,
+                           $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
+                           $"Результат сохранен в {Path.GetFileName(resultCKl.FilePath)}");
                 }
                 catch (ArgumentException ex)
                 {
+                    AddOperationLog("Ошибка",
+                         $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
+                         ex.Message);
                     _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
                 }
+            }
+        }
+
+        private async Task<string?> GetCklPathAsync()
+        {
+            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Constants.CKL_FILE_DIALOG_FILTER, Constants.DEFAULT_FILE_PATH));
+        }
+
+        private async Task<CKLView?> LoadCklAsync(string path)
+        {
+            return await Task.Run(() => _openCklService.Load(path, Application.Current.Dispatcher));
+        }
+
+        private async Task AddSolutionItemAsync()
+        {
+            var path = await GetCklPathAsync();
+            if (path != null)
+            {
+                AddSolutionItemUnsafe(path); 
+            }
+        }
+
+        private void AddSolutionItemUnsafe(string path)
+        {
+            try
+            {
+                var ckl = CKL.GetFromFile(path);
+                ckl.FilePath = path;
+
+                (_solutionExplorerService as SolutionExplorerDataService)?.AddUnsafe(ckl);
+
+                var cklView = new CKLView(ckl);
+                OpenedCKLViews.Add(cklView);
+                SelectedCKLView = cklView;
+
+                if (!BinaryCKLOperationsValidator.CanPerformOperation(MainCKLView.Ckl, ckl))
+                    AddOperationLog("Добавление файла", Path.GetFileName(path), "Возможны проблемы применения бинарных операций к этой CKL!");
+                else
+                    AddOperationLog("Добавление файла", Path.GetFileName(path));
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage($"Ошибка при добавлении файла: {ex.Message}");
             }
         }
 
@@ -360,6 +512,30 @@ namespace CKL_Studio.Presentation.ViewModels
             {
                 _solutionExplorerService.Add(result);
             }
+        }
+
+        private void AddOperationLog(string operationName, string fileName, string additionalInfo = "")
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                OperationLogs.Insert(0, new OperationLog
+                {
+                    Timestamp = DateTime.Now,
+                    OperationName = operationName,
+                    FileName = fileName,
+                    AdditionalInfo = additionalInfo
+                });
+            });
+
+            if (OperationLogs.Count > 25)
+            {
+                OperationLogs.RemoveAt(OperationLogs.Count - 1);
+            }
+        }
+
+        private void CopyFilePath()
+        { 
+            Clipboard.SetText(SelectedSolutionItem.FilePath);
         }
     }
 }

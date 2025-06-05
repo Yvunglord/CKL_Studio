@@ -30,6 +30,7 @@ namespace CKL_Studio.Presentation.ViewModels
         private CKLView? _cklView;
         private string _name = "Project1";
         private bool _isFilePathManuallySet;
+        private bool _isFileImportedUncorrect;
 
         public CKLView? CKLView
         {
@@ -83,6 +84,12 @@ namespace CKL_Studio.Presentation.ViewModels
 
         public IEnumerable<TimeDimentions> TimeDimensions =>
             Enum.GetValues(typeof(TimeDimentions)).Cast<TimeDimentions>();
+
+        public bool IsFileImportedUncorrect
+        {
+            get => _isFileImportedUncorrect;
+            set => SetField(ref _isFileImportedUncorrect, value);
+        }
 
         public ICommand GoBackCommand => new RelayCommand(GoBack);
         public ICommand NavigateToSourceInputCommand => new RelayCommand(NavigateToSourceInput, CanNavigateToSourceInput);
@@ -296,7 +303,11 @@ namespace CKL_Studio.Presentation.ViewModels
             try
             {
                 bool success = await BrowseAsync();
-                if (!success) return;
+                if (!success)
+                { 
+                    IsFileImportedUncorrect = true;
+                    return;
+                }
 
                 CKLView = new CKLView(_ckl);
                 if (CKLView != null)

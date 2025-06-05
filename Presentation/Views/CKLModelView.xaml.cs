@@ -24,5 +24,32 @@ namespace CKL_Studio.Presentation.Views
         {
             InitializeComponent();
         }
+
+        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            foreach (var listBox in FindVisualChildren<ListBox>(this))
+            {
+                if (listBox.IsKeyboardFocusWithin)
+                {
+                    Keyboard.ClearFocus();
+                    break;
+                }
+            }
+        }
+
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null) yield break;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T t)
+                    yield return t;
+
+                foreach (var nestedChild in FindVisualChildren<T>(child))
+                    yield return nestedChild;
+            }
+        }
     }
 }

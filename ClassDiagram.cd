@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CKL_Studio.Common.Converters.BoolToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAIAAAAAAAAgAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Common\Converters\BoolToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Common.Converters.DirtyToColorConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Converters\DirtyToColorConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Common.Converters.FileToNameConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Converters\FileToNameConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Common.Converters.IntToBoolConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Converters\IntToBoolConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Common.Converters.IntToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Converters\IntToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Common.Converters.IntToVisibilityMinConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Converters\IntToVisibilityMinConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.Factories.SolutionExplorerDataServiceFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Services\Factories\SolutionExplorerDataServiceFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.CklConversionService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Services\CklConversionService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.CKLOperationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAgAAAAAACAAAAAAABAAAQAAACAAIAAAAA=</HashCode>
+      <FileName>Infrastructure\Services\CKLOperationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.DialogService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAgAAEAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Infrastructure\Services\DialogService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.FileDataService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAgIAgAAAAAABAAAAAAAAAAAEAAAIAEiAAIAAAAAA=</HashCode>
+      <FileName>Infrastructure\Services\FileDataService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.NamingService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAIA=</HashCode>
+      <FileName>Infrastructure\Services\NamingService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.OpenCklService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Services\OpenCklService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.SearchHistoryDataService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAgIAAAAAACABAAAAAAAAAAAEAAIAAEgAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Services\SearchHistoryDataService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Services.SolutionExplorerDataService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAABAAICABAAAAAgAAAgAEAAAAAAgAAAABAAAA=</HashCode>
+      <FileName>Infrastructure\Services\SolutionExplorerDataService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Static.BinaryCKLOperationsValidator" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAgAAAAAAAAAAAAAAAAEAAAAAAAAAE=</HashCode>
+      <FileName>Infrastructure\Static\BinaryCKLOperationsValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKL_Studio.Infrastructure.Static.JSONToCKLConverter" Collapsed="true">
+    <Position X="22.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Static\JSONToCKLConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Commands.AsyncRelayCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQEADAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Commands\AsyncRelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Commands.RelayCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Commands\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Commands.RelayCommand&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Commands\RelayCommandGeneric.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Services.LogData.OperationLog" Collapsed="true">
+    <Position X="21" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAEAAACEAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Presentation\Services\LogData\OperationLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Services.Navigation.NavigationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAQEAAAQiAAAAABAAAAAEEBAAAAAgBAAY=</HashCode>
+      <FileName>Presentation\Services\Navigation\NavigationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.Base.Constants" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Presentation\ViewModels\Base\Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.Base.FileData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAMAEAAAACEAIAIAAAAAQAgAAEBAAAQAAAAAAAEAA=</HashCode>
+      <FileName>Presentation\ViewModels\Base\FileData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.Base.ViewModelBase" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAABAEA=</HashCode>
+      <FileName>Presentation\ViewModels\Base\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.Dialog.SelectCklDialogViewModel" BaseTypeListCollapsed="true">
+    <Position X="21" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAAAAAAAAAQAABAIAAAAAAQgAAAAgAIAAAEAAAACAA=</HashCode>
+      <FileName>Presentation\ViewModels\Dialog\SelectCklDialogViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.CKLCreationViewModel" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAAsIAAEAgBIQJAKgAAAARQAACRBCUoABhAEAAAwIA=</HashCode>
+      <FileName>Presentation\ViewModels\CKLCreationViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.CKLViewModel" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAMAAIGKgNAMID4wMkQBBABAZIGAYBUAsAIABekwQSQ=</HashCode>
+      <FileName>Presentation\ViewModels\CKLViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.EntryPointViewModel" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQJAAIAoAIRQIAIAIoAAAAJEUACEBAY0ACAAEAqEQAA=</HashCode>
+      <FileName>Presentation\ViewModels\EntryPointViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.RelationInputViewModel" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAEAAAAAAAIgAAAABQAAAABAEAABAAEAAAQAA=</HashCode>
+      <FileName>Presentation\ViewModels\RelationInputViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.ViewModels.SourceInputViewModel" Collapsed="true">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgIAMgAEgAgAAAgKAAAEAJQACBBAAEBkBAIAAAECgA=</HashCode>
+      <FileName>Presentation\ViewModels\SourceInputViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Views.CKLCreationView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Views\CKLCreationView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Views.CKLModelView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Views\CKLModelView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Views.EntryPointView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Views\EntryPointView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Views.RelationInputView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Views\RelationInputView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Views.SourceInputView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAABMAAABAAAIAAAAAFAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Presentation\Views\SourceInputView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Windows.Dialogs.ParameterizedTimeOperationDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAiAAAAABAAAAAAAAAAEQAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Presentation\Windows\Dialogs\ParameterizedTimeOperationDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Windows.Dialogs.SelectCklDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Windows\Dialogs\SelectCklDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Windows.Dialogs.TimeOperationDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAiAAAAABAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Windows\Dialogs\TimeOperationDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Windows.CKLWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Windows\CKLWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.Presentation.Windows.LoadDataWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Windows\LoadDataWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CKL_Studio.App" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAACAAABAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CKL_Studio.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="CKL_Studio.Common.Interfaces.CKLInterfaces.ICklOperationService" Collapsed="true">
+    <Position X="14" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAgAAAAAACAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Interfaces\CKLInterfaces\ICklOperationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Common.Interfaces.CKLInterfaces.IJSONToCklСonversion" Collapsed="true">
+    <Position X="19.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Interfaces\CKLInterfaces\IJSONToCklСonversion.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Common.Interfaces.Factories.ISolutionExplorerDataServiceFactory" Collapsed="true">
+    <Position X="15.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Interfaces\Factories\ISolutionExplorerDataServiceFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Common.Interfaces.IDataService&lt;T&gt;" Collapsed="true">
+    <Position X="15.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAABAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Common\Interfaces\IDataService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Common.Interfaces.IDialogService" Collapsed="true">
+    <Position X="17.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAgAAEAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Common\Interfaces\IDialogService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Common.Interfaces.INamingService" Collapsed="true">
+    <Position X="21" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAIA=</HashCode>
+      <FileName>Common\Interfaces\INamingService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Common.Interfaces.IOpenCklService" Collapsed="true">
+    <Position X="24.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Interfaces\IOpenCklService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Presentation.Services.Navigation.INavigationService" Collapsed="true">
+    <Position X="22.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAACAAAAAAAAAAAEAAAAAAAAAAAQ=</HashCode>
+      <FileName>Presentation\Services\Navigation\INavigationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CKL_Studio.Presentation.Services.Navigation.IParameterReceiver&lt;T&gt;" Collapsed="true">
+    <Position X="14" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Presentation\Services\Navigation\IParameterReceiver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

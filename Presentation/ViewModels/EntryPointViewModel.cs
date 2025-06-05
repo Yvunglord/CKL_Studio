@@ -205,7 +205,7 @@ namespace CKL_Studio.Presentation.ViewModels
             if (file != null)
             {
                 Clipboard.SetText(file.Path);
-                _dialogService.ShowMessage("Путь скопирован в буфер обмена");
+                //_dialogService.ShowMessage("Путь скопирован в буфер обмена");
             }
         }
     }

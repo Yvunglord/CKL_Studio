@@ -61,7 +61,7 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand SaveCommand => new RelayCommand(Save);
         public ICommand OpenFileCommand => new RelayCommand(async () => await OpenSelectedFileAsync());
         public ICommand PinFileCommand => new RelayCommand<FileData>(PinFile);
-        public ICommand CopyFilePathCommand => new RelayCommand<FileData>(CopyFilePath);
+        public static ICommand CopyFilePathCommand => new RelayCommand<FileData>(CopyFilePath);
         public ICommand RemoveFileCommand => new RelayCommand<FileData>(RemoveFile);
 
         public EntryPointViewModel(IServiceProvider serviceProvider) : base(serviceProvider)

@@ -222,9 +222,9 @@ namespace CKL_Studio.Presentation.ViewModels
                 _solutionExplorerService?.Delete(SelectedSolutionItem);
                 if (IsMainCKLView(path))
                 {
-                    if (_solutionExplorerService.GetAll().Count() != 0)
+                    if (_solutionExplorerService.GetAll().Any())
                     {
-                        var newMainCkl = SolutionItems.First();
+                        var newMainCkl = SolutionItems[0];
                         MainCKLView = new CKLView(newMainCkl);
                     }
                     else HandleMainCKLDeletion();

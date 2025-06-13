@@ -1,4 +1,9 @@
 ﻿[*.cs]
 
-# CS8602: Разыменование вероятной пустой ссылки.
-dotnet_diagnostic.CS8602.severity = none
+# Стиль кода
+dotnet_style_require_accessibility_modifiers = always:suggestion
+csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:suggestion
+
+# Качество кода
+dotnet_diagnostic.CA1822.severity = warning # Mark members as static
+dotnet_diagnostic.CA1848.severity = warning # Use LoggerMessage attributes

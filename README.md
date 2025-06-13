@@ -9,6 +9,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/Yvunglord/CKL_Studio?style=social)](https://github.com/Yvunglord/CKL_Studio/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/Yvunglord/CKL_Studio)](https://github.com/Yvunglord/CKL_Studio/commits/main)
+[![Roslyn Analyzers](https://img.shields.io/badge/Roslyn%20Analyzers-0%20warnings-green?logo=.net)](https://github.com/Yvunglord/CKL_Studio/actions)
 
 </div>
 

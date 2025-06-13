@@ -66,3 +66,5 @@ jobs:
         dotnet build CKL_Studio.sln --configuration Release
         dotnet test --configuration Release --collect:"XPlat Code Coverage"
         dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+    - name: Run Roslyn analyzers
+      run: dotnet build --configuration Release --no-restore /p:RunAnalyzers=true /p:AnalysisLevel=latest

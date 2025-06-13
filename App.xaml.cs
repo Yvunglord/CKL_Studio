@@ -73,7 +73,7 @@ namespace CKL_Studio
             services.AddTransient<CKLWindow>();
         }
 
-        private Window CreateWindowForViewModel(ViewModelBase viewModel)
+        private static Window CreateWindowForViewModel(ViewModelBase viewModel)
         {
             return viewModel switch
             {

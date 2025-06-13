@@ -7,22 +7,27 @@ on:
         branches: ["master"]
 
 jobs:
-  build:
+  sonarcloud:
     runs-on: windows-latest
-    
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions/checkout@v3
+      
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'
-    
+        dotnet-version: 7.0.x
+
     - name: Restore dependencies
-      run: dotnet restore CKL_Studio\CKL_Studio.sln  
-    
-    - name: Build
-      run: dotnet build CKL_Studio\CKL_Studio.sln --configuration Release --no-restore
-    
-    - name: Test
-      run: dotnet test CKL_Studio\CKL_Studio.sln --configuration Release --no-build --verbosity normal
+      run: dotnet restore  
+
+    - name: Install SonarScanner
+      run: dotnet tool install --global dotnet-sonarscanner
+
+    - name: Build and analyze
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        dotnet sonarscanner begin /k:"CKL_Studio" /o:"yvunglord" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        dotnet build
+        dotnet test --configuration Release --collect:"XPlat Code Coverage" --settings coverlet.runsettings
+        dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

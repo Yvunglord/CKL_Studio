@@ -13,5 +13,7 @@ namespace CKL_Studio.Presentation.ViewModels.Base
         public static readonly string JSON_FILE_DIALOG_FILTER = "JSON Files (*.json)|*.json";
         public static readonly string DEFAULT_FILE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         public static readonly string DEFAULT_CKL_FILE_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CKL_Files");
+
+        public static readonly string DEFAULT_LOG_ERROR_MESSAGE = "Ошибка";
     }
 }

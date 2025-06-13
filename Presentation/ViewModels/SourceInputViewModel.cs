@@ -160,15 +160,11 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private HashSet<Pair> GenerateValidatedSource()
         {
-            var validatedSource = new HashSet<Pair>(new PairComparer());
+            var validatedSource = Source
+                .Where(IsValidPair)
+                .Select(NormalizePair)
+                .ToHashSet();
 
-            foreach (var pair in Source)
-            {
-                if (IsValidPair(pair))
-                {
-                    validatedSource.Add(NormalizePair(pair));
-                }
-            }
 
             if (Dim >= 2)
             {
@@ -230,9 +226,9 @@ namespace CKL_Studio.Presentation.ViewModels
 
     public class PairComparer : IEqualityComparer<Pair>
     {
-        public bool Equals(Pair x, Pair y)
+        public bool Equals(Pair? x, Pair? y)
         {
-            if (ReferenceEquals(x, y)) return true;
+            if (x is null && y is null) return true;
             if (x is null || y is null) return false;
 
             return string.Equals(x.ToString(), y.ToString(), StringComparison.OrdinalIgnoreCase);

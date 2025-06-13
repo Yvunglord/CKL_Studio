@@ -21,6 +21,8 @@ namespace CKL_Studio.Presentation.Views
     /// </summary>
     public partial class SourceInputView : UserControl
     {
+        private static readonly Regex NumberRegex = NumberValidationRegex();
+
         public SourceInputView()
         {
             InitializeComponent();
@@ -99,11 +101,13 @@ namespace CKL_Studio.Presentation.Views
                 }
             }
         }
-    
+
+        [GeneratedRegex("[^0-9.-]+")]
+        private static partial Regex NumberValidationRegex();
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9.-]+");
-            e.Handled = regex.IsMatch(e.Text);
+            e.Handled = NumberRegex.IsMatch(e.Text);
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)

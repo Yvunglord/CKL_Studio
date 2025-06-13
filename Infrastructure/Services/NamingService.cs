@@ -11,15 +11,15 @@ namespace CKL_Studio.Infrastructure.Services
 {
     public class NamingService : INamingService
     {
-        public string GeneratePath(string baseName, string directory)
+        public string GeneratePath(string name, string directory)
         {
             Directory.CreateDirectory(directory);
-            baseName = SanitizeName(baseName);
+            name = SanitizeName(name);
             int i = 1;
             string fileName;
             do
             {
-                fileName = $"{baseName}{i}.ckl";
+                fileName = $"{name}{i}.ckl";
                 i++;
             } while (File.Exists(Path.Combine(directory, fileName)));
 

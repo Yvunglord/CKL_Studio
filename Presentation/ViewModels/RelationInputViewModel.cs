@@ -52,7 +52,7 @@ namespace CKL_Studio.Presentation.ViewModels
         private void GoBack() => _navigationService.GoBack();
 
 #pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
-        private void NavigateToCKLView() => _navigationService.NavigateTo<CKLViewModel, CKLView>(CKLView);
+        private void NavigateToCKLView() => _navigationService.NavigateTo<CklViewModel, CKLView>(CKLView);
 #pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
 
         private void Save()

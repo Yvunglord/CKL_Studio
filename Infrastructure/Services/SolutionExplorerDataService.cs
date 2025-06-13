@@ -37,12 +37,10 @@ namespace CKL_Studio.Infrastructure.Services
 
         public void Add(CKL item)
         {
-            if (!_solutionItems.Any(f => f.FilePath == item.FilePath))
+            if (!_solutionItems.Any(f => f.FilePath == item.FilePath) &&
+                _originalDirectory.Equals(Path.GetDirectoryName(item.FilePath), StringComparison.Ordinal))
             {
-                if (_originalDirectory.Equals(Path.GetDirectoryName(item.FilePath), StringComparison.Ordinal))
-                { 
-                    _solutionItems.Add(item);
-                }    
+                    _solutionItems.Add(item);   
             }
         }
 
@@ -101,12 +99,11 @@ namespace CKL_Studio.Infrastructure.Services
                     { 
                         var related = CKL.GetFromFile(path);
                         related.FilePath = path;
-                        if (related != null && BinaryCKLOperationsValidator.CanPerformOperation(main.Ckl, related))
+                        if (related != null && BinaryCklOperationsValidator.CanPerformOperation(main.Ckl, related))
                             Add(related);
                     }
                 }
             }
-
         }
     }
 }

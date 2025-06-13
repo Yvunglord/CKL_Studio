@@ -12,16 +12,15 @@ using System.Threading.Tasks;
 
 namespace CKL_Studio.Infrastructure.Services
 {
-    public class CKLOperationService : ICklOperationService
+    public class CklOperationService : ICklOperationService
     {
         public void ExecuteBinaryOperation(Func<CKL, CKL, CKL> operation, CKL current, IEnumerable<CKL> related)
         {
             var dialog = new SelectCklDialogViewModel(related, current.FilePath);
             dialog.RequestClose += result =>
             {
-                if (result == true && dialog.SelectedCkl != null)
+                if (result && dialog.SelectedCkl != null)
                 {
-                    var operationName = operation.Method.Name;
                     var resultCkl = operation(current, dialog.SelectedCkl);
                     CKL.Save(resultCkl);
                 }

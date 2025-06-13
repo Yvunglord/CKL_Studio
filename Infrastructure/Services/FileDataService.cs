@@ -15,7 +15,7 @@ namespace CKL_Studio.Infrastructure.Services
     public class FileDataService : IDataService<FileData>
     {
         private readonly ObservableCollection<FileData> _allFiles = new ObservableCollection<FileData>();
-        private ObservableCollection<FileData> _filteredFiles = new ObservableCollection<FileData>();
+        private readonly ObservableCollection<FileData> _filteredFiles = new ObservableCollection<FileData>();
         private const string _storagePath = "recent_files.json";
 
         public ObservableCollection<FileData> FilteredFiles => _filteredFiles;

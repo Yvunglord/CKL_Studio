@@ -20,7 +20,7 @@ using System.Windows.Input;
 
 namespace CKL_Studio.Presentation.ViewModels
 {
-    public class CKLViewModel : ViewModelBase, IParameterReceiver<CKLView>
+    public class CklViewModel : ViewModelBase, IParameterReceiver<CKLView>
     {
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
@@ -91,7 +91,8 @@ namespace CKL_Studio.Presentation.ViewModels
         public ICommand ScalePlusCommand => new RelayCommand(ScalePlus);
         public ICommand ScaleMinusCommand => new RelayCommand(ScaleMinus);
         public ICommand CopyFilePathCommand => new RelayCommand(CopyFilePath);
-        public CKLViewModel(IServiceProvider serviceProvider, CKLView cklView) : base(serviceProvider)
+
+        public CklViewModel(IServiceProvider serviceProvider, CKLView cklView) : base(serviceProvider)
         {
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();  
             _dialogService = serviceProvider.GetRequiredService<IDialogService>();
@@ -110,7 +111,7 @@ namespace CKL_Studio.Presentation.ViewModels
         }
 
         private void NavigateToEntryPointView() => _navigationService.NavigateTo<EntryPointViewModel>();
-        private void NavigateToCKLCreationView() => _navigationService.NavigateTo<CKLCreationViewModel>();
+        private void NavigateToCKLCreationView() => _navigationService.NavigateTo<CklCreationViewModel>();
 
         private void LoadSolutionItems()
         {
@@ -160,18 +161,18 @@ namespace CKL_Studio.Presentation.ViewModels
 
                 CloseTabsForFile(path);
                 _solutionExplorerService?.Delete(SelectedSolutionItem);
+
                 if (IsMainCKLView(path))
                 {
-                    if (_solutionExplorerService.GetAll().Count() != 0)
+                    if (_solutionExplorerService.GetAll().Any())
                     {
-                        var newMainCkl = SolutionItems.First();
+                        var newMainCkl = SolutionItems[0];
                         MainCKLView = new CKLView(newMainCkl);
                     }
                     else
-                    { 
+                    {
                         HandleMainCKLDeletion();
                     }
-                    
                 }
             }
             catch (Exception ex)
@@ -179,6 +180,7 @@ namespace CKL_Studio.Presentation.ViewModels
                 _dialogService.ShowMessage($"Ошибка удаления: {ex.Message}");
             }
         }
+
 
         private void CloseTabsForFile(string path)
         {
@@ -301,7 +303,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
             dialogVm.RequestClose += result =>
             {
-                if (result == true && dialogVm.SelectedCkl != null)
+                if (result && dialogVm.SelectedCkl != null)
                 {
                     try
                     {
@@ -316,7 +318,7 @@ namespace CKL_Studio.Presentation.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        AddOperationLog("Ошибка",
+                        AddOperationLog(Constants.DEFAULT_LOG_ERROR_MESSAGE,
                           $"{Path.GetFileName(currentCkl.FilePath)} и {Path.GetFileName(dialogVm.SelectedCkl.FilePath)}",
                           ex.Message);
                         _dialogService.ShowMessage($"Ошибка выполнения бинарной операции: {ex.Message}");
@@ -347,7 +349,7 @@ namespace CKL_Studio.Presentation.ViewModels
             }
             catch (Exception ex)
             {
-                AddOperationLog("Ошибка",
+                AddOperationLog(Constants.DEFAULT_LOG_ERROR_MESSAGE,
                           $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
                           ex.Message);
                 _dialogService.ShowMessage($"Ошибка выполнения унарной операции: {ex.Message}");
@@ -374,7 +376,7 @@ namespace CKL_Studio.Presentation.ViewModels
                 }
                 catch (ArgumentException ex)
                 {
-                    AddOperationLog("Ошибка",
+                    AddOperationLog(Constants.DEFAULT_LOG_ERROR_MESSAGE,
                          $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
                          ex.Message);
                     _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
@@ -403,7 +405,7 @@ namespace CKL_Studio.Presentation.ViewModels
                 }
                 catch (ArgumentException ex)
                 {
-                    AddOperationLog("Ошибка",
+                    AddOperationLog(Constants.DEFAULT_LOG_ERROR_MESSAGE,
                          $"{Path.GetFileName(SelectedCKLView.Ckl.FilePath)}",
                          ex.Message);
                     _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
@@ -438,7 +440,7 @@ namespace CKL_Studio.Presentation.ViewModels
                 OpenedCKLViews.Add(cklView);
                 SelectedCKLView = cklView;
 
-                if (!BinaryCKLOperationsValidator.CanPerformOperation(MainCKLView.Ckl, ckl))
+                if (!BinaryCklOperationsValidator.CanPerformOperation(MainCKLView.Ckl, ckl))
                     AddOperationLog("Добавление файла", Path.GetFileName(path), "Возможны проблемы применения бинарных операций к этой CKL!");
                 else
                     AddOperationLog("Добавление файла", Path.GetFileName(path));

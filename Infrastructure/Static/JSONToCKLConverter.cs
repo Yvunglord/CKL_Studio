@@ -13,7 +13,7 @@ using System.Text.Json.Nodes;
 
 namespace CKL_Studio.Infrastructure.Static
 {
-    public static class JSONToCKLConverter
+    public static class JsonToCklConverter
     {
         public static CKL ConvertFromJson(string jsonFilePath, TimeDimentions dimention = TimeDimentions.SECONDS)
         {

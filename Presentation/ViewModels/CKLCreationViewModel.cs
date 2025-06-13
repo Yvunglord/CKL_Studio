@@ -18,11 +18,11 @@ using System.Windows;
 using CKL_Studio.Infrastructure.Services;
 namespace CKL_Studio.Presentation.ViewModels
 {
-    public class CKLCreationViewModel : ViewModelBase, IParameterReceiver<CKL>, IDataErrorInfo
+    public class CklCreationViewModel : ViewModelBase, IParameterReceiver<CKL>, IDataErrorInfo
     {
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
-        private readonly IJSONToCklСonversion _conversionService;
+        private readonly IJsonToCklСonversion _conversionService;
         private readonly INamingService _namingService;
         private readonly IDataService<FileData> _fileService;
 
@@ -52,7 +52,6 @@ namespace CKL_Studio.Presentation.ViewModels
             get => _name;
             set
             {
-                var sanitizedValue = _namingService.SanitizeName(value);
                 if (SetField(ref _name, value) && !_isFilePathManuallySet)
                 {
                     UpdateFilePathFromName();
@@ -82,7 +81,7 @@ namespace CKL_Studio.Presentation.ViewModels
             }
         }
 
-        public IEnumerable<TimeDimentions> TimeDimensions =>
+        public static IEnumerable<TimeDimentions> TimeDimensions =>
             Enum.GetValues(typeof(TimeDimentions)).Cast<TimeDimentions>();
 
         public bool IsFileImportedUncorrect
@@ -103,74 +102,75 @@ namespace CKL_Studio.Presentation.ViewModels
         {
             get
             {
-                string error = string.Empty;
-                switch (columnName)
+                return columnName switch
                 {
-                    case nameof(Name):
-                        if (string.IsNullOrWhiteSpace(_name))
-                            error = "Имя файла обязательно";
-                        else if (_name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-                            error = "Недопустимые символы в имени файла";
-                        break;
-
-                    case nameof(_ckl.GlobalInterval.StartTime):
-                        if (_ckl.GlobalInterval.StartTime < 0)
-                            error = "Время не может быть отрицательным";
-                        else if (_ckl.GlobalInterval.StartTime > _ckl.GlobalInterval.EndTime)
-                            error = "Начальное время больше конечного";
-                        break;
-
-                    case nameof(_ckl.GlobalInterval.EndTime):
-                        if (_ckl.GlobalInterval.EndTime < 0)
-                            error = "Время не может быть отрицательным";
-                        else if (_ckl.GlobalInterval.EndTime < _ckl.GlobalInterval.StartTime)
-                            error = "Конечное время меньше начального";
-                        break;
-
-                    case nameof(FilePath):
-                        {
-                            if (string.IsNullOrWhiteSpace(_ckl.FilePath))
-                            {
-                                error = "Путь к файлу обязателен";
-                                break;
-                            }
-
-                            try
-                            {
-                                var directory = Path.GetDirectoryName(_ckl.FilePath);
-                                var fileName = Path.GetFileName(_ckl.FilePath);
-
-                                if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-                                {
-                                    error = "Недопустимые символы в имени файла";
-                                    break;
-                                }
-
-                                if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
-                                {
-                                    error = "Указанная директория не существует";
-                                    break;
-                                }
-
-                                if (File.Exists(_ckl.FilePath))
-                                {
-                                    error = "Файл с таким именем уже существует";
-                                }
-                            }
-                            catch (Exception ex) when (ex is ArgumentException || ex is NotSupportedException)
-                            {
-                                error = "Недопустимый формат пути";
-                            }
-                            catch (PathTooLongException)
-                            {
-                                error = "Слишком длинный путь к файлу";
-                            }
-                            break;
-                        }
-                }
-                return error;
+                    nameof(Name) => ValidateName(),
+                    nameof(_ckl.GlobalInterval.StartTime) => ValidateStartTime(),
+                    nameof(_ckl.GlobalInterval.EndTime) => ValidateEndTime(),
+                    nameof(FilePath) => ValidateFilePath(),
+                    _ => string.Empty
+                };
             }
         }
+
+        private string ValidateName()
+        {
+            if (string.IsNullOrWhiteSpace(_name))
+                return "Имя файла обязательно";
+            if (_name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                return "Недопустимые символы в имени файла";
+            return string.Empty;
+        }
+
+        private string ValidateStartTime()
+        {
+            if (_ckl.GlobalInterval.StartTime < 0)
+                return "Время не может быть отрицательным";
+            if (_ckl.GlobalInterval.StartTime > _ckl.GlobalInterval.EndTime)
+                return "Начальное время больше конечного";
+            return string.Empty;
+        }
+
+        private string ValidateEndTime()
+        {
+            if (_ckl.GlobalInterval.EndTime < 0)
+                return "Время не может быть отрицательным";
+            if (_ckl.GlobalInterval.EndTime < _ckl.GlobalInterval.StartTime)
+                return "Конечное время меньше начального";
+            return string.Empty;
+        }
+
+        private string ValidateFilePath()
+        {
+            if (string.IsNullOrWhiteSpace(_ckl.FilePath))
+                return "Путь к файлу обязателен";
+
+            try
+            {
+                var directory = Path.GetDirectoryName(_ckl.FilePath);
+                var fileName = Path.GetFileName(_ckl.FilePath);
+
+                if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                    return "Недопустимые символы в имени файла";
+
+                if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
+                    return "Указанная директория не существует";
+
+                if (File.Exists(_ckl.FilePath))
+                    return "Файл с таким именем уже существует";
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is NotSupportedException)
+            {
+                return "Недопустимый формат пути";
+            }
+            catch (PathTooLongException)
+            {
+                return "Слишком длинный путь к файлу";
+            }
+
+            return string.Empty;
+        }
+
         #endregion
 
         public bool HasErrors => !string.IsNullOrEmpty(AllErrors);
@@ -190,12 +190,12 @@ namespace CKL_Studio.Presentation.ViewModels
             }
         }
 
-        public CKLCreationViewModel(IServiceProvider serviceProvider, CKL ckl) : base(serviceProvider)
+        public CklCreationViewModel(IServiceProvider serviceProvider, CKL ckl) : base(serviceProvider)
         {
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();
             _dialogService = serviceProvider.GetRequiredService<IDialogService>();
             _namingService = serviceProvider.GetRequiredService<INamingService>();
-            _conversionService = serviceProvider.GetRequiredService<IJSONToCklСonversion>();
+            _conversionService = serviceProvider.GetRequiredService<IJsonToCklСonversion>();
             _fileService = serviceProvider.GetRequiredService<IDataService<FileData>>();
 
             _ckl = ckl ?? new CKL();
@@ -238,9 +238,7 @@ namespace CKL_Studio.Presentation.ViewModels
         }
 
         private void NavigateToCKLView() =>
-            _navigationService.NavigateTo<CKLViewModel, CKLView>(CKLView ?? throw new InvalidOperationException("CKLView is null"));
-
-        //private bool CanNavigateToCKLView() => CKLView != null;
+            _navigationService.NavigateTo<CklViewModel, CKLView>(CKLView ?? throw new InvalidOperationException("CKLView is null"));
 
         private void NavigateToSourceInput() =>
             _navigationService.NavigateTo<SourceInputViewModel, CKL>(_ckl);
@@ -268,7 +266,6 @@ namespace CKL_Studio.Presentation.ViewModels
 
             if (!string.IsNullOrEmpty(result))
             { 
-                //_isFilePathManuallySet = true;
                 Name = Path.GetFileNameWithoutExtension(result);
                 FilePath = result;
             }

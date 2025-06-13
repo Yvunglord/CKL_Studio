@@ -23,10 +23,19 @@ namespace CKL_Studio.Common.Converters
             if (Invert)
                 boolValue = !boolValue;
 
-            return boolValue
-                ? Visibility.Visible
-                : (UseHidden ? Visibility.Hidden : Visibility.Collapsed);
+            Visibility visibility;
+            if (boolValue)
+            {
+                visibility = Visibility.Visible;
+            }
+            else
+            {
+                visibility = UseHidden ? Visibility.Hidden : Visibility.Collapsed;
+            }
+
+            return visibility;
         }
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -22,6 +22,9 @@ namespace CKL_Studio.Presentation.Windows.Dialogs
     {
         public string TextBox1Value { get; private set; } = string.Empty;
         public string TextBox2Value { get; private set; } = string.Empty;
+
+        private static readonly Regex NumberRegex = NumberValidationRegex();
+
         public TimeOperationDialog()
         {
             InitializeComponent();
@@ -49,10 +52,12 @@ namespace CKL_Studio.Presentation.Windows.Dialogs
             }
         }
 
+        [GeneratedRegex("[^0-9.-]+")]
+        private static partial Regex NumberValidationRegex();
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9.-]+");
-            e.Handled = regex.IsMatch(e.Text);
+            e.Handled = NumberRegex.IsMatch(e.Text);
         }
     }
 }

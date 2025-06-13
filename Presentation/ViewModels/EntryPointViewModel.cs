@@ -91,10 +91,10 @@ namespace CKL_Studio.Presentation.ViewModels
         }
 
 #pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
-        private void NavigateToCKLView() => _navigationService.NavigateTo<CKLViewModel, CKLView>(CKLView);
+        private void NavigateToCKLView() => _navigationService.NavigateTo<CklViewModel, CKLView>(CKLView);
 #pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
 
-        private void NavigateToCKLCreation() => _navigationService.NavigateTo<CKLCreationViewModel>();
+        private void NavigateToCKLCreation() => _navigationService.NavigateTo<CklCreationViewModel>();
 
         private async Task<string?> GetCklPathAsync()
         {
@@ -200,12 +200,11 @@ namespace CKL_Studio.Presentation.ViewModels
             }
         }
 
-        private void CopyFilePath(FileData? file)
+        private static void CopyFilePath(FileData? file)
         {
             if (file != null)
             {
                 Clipboard.SetText(file.Path);
-                //_dialogService.ShowMessage("Путь скопирован в буфер обмена");
             }
         }
     }

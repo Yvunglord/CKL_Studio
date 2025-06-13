@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Windows;
 
 namespace CKL_Studio.Presentation.Services.Navigation
@@ -36,13 +37,13 @@ namespace CKL_Studio.Presentation.Services.Navigation
             where TViewModel : ViewModelBase, IParameterReceiver<TParameter>
             where TParameter : class
         {
-            if (parameter == null)
-                throw new ArgumentNullException(nameof(parameter));
+            ArgumentNullException.ThrowIfNull(parameter);
 
             var viewModel = (TViewModel)_viewModelFactory(typeof(TViewModel));
             viewModel.ReceiveParameter(parameter);
             InternalNavigate(viewModel);
         }
+
 
         private void OnWindowClosed(object? sender, EventArgs e)
         {
@@ -64,7 +65,6 @@ namespace CKL_Studio.Presentation.Services.Navigation
         {
             if (!CanGoBack) return;
 
-            ViewModelBase? currentViewModel = _navigationStack.Count > 0 ? _navigationStack.Pop() : null;
             if (!_navigationStack.TryPeek(out ViewModelBase? previousViewModel)) return;
 
             if (previousViewModel == null || _windowStack.Count == 0) return;
@@ -92,7 +92,7 @@ namespace CKL_Studio.Presentation.Services.Navigation
 
         private void InternalNavigate(ViewModelBase viewModel)
         {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+            ArgumentNullException.ThrowIfNull(viewModel);
 
             Type newWindowType = _windowTypeResolver(viewModel);
 

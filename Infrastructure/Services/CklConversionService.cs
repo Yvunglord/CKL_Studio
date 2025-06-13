@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CKL_Studio.Infrastructure.Services
 {
-    public class CklConversionService : IJSONToCklСonversion
+    public class CklConversionService : IJsonToCklСonversion
     { 
         public CKL Convert(string path)
         {
@@ -18,11 +18,11 @@ namespace CKL_Studio.Infrastructure.Services
             {
                 try
                 {
-                    return JSONToCKLConverter.ConvertFromJson(path);            
+                    return JsonToCklConverter.ConvertFromJson(path);            
                 }
                 catch (ArgumentException ex)
                 {
-                    throw new ArgumentException(ex.Message, "path");
+                    throw new ArgumentException(ex.Message, nameof(path));
                 }
             }
 

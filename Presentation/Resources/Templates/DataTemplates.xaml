@@ -7,7 +7,7 @@
         <views:EntryPointView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:CKLCreationViewModel}">
+    <DataTemplate DataType="{x:Type vm:CklCreationViewModel}">
         <views:CKLCreationView />
     </DataTemplate>
 
@@ -19,7 +19,7 @@
         <views:RelationInputView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:CKLViewModel}">
+    <DataTemplate DataType="{x:Type vm:CklViewModel}">
         <views:CKLModelView/>
     </DataTemplate>
 

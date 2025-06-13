@@ -18,12 +18,12 @@ namespace CKL_Studio.Infrastructure.Services
             return dialog.ShowDialog();
         }
 
-        public string? ShowOpenFileDialog(string filter, string initialDirectory)
+        public string? ShowOpenFileDialog(string filter, string defaultDir)
         {
             var dialog = new OpenFileDialog
             {
                 Filter = filter,
-                InitialDirectory = initialDirectory
+                InitialDirectory = defaultDir
             };
             return dialog.ShowDialog() == true ? dialog.FileName : null;
         }

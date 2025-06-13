@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CKL_Studio.Common.Interfaces.CKLInterfaces
 {
-    public interface IJSONToCklСonversion
+    public interface IJsonToCklСonversion
     {
         CKL Convert(string path);
     }

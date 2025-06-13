@@ -51,10 +51,10 @@ namespace CKL_Studio
             services.AddTransient<CKL, CKL>();
             services.AddSingleton<CKLView, CKLView>();
             services.AddSingleton<INamingService, NamingService>();
-            services.AddSingleton<IJSONToCklСonversion, CklConversionService>();
+            services.AddSingleton<IJsonToCklСonversion, CklConversionService>();
             services.AddSingleton<IDataService<CKL>, SolutionExplorerDataService>();
             services.AddSingleton<ISolutionExplorerDataServiceFactory, SolutionExplorerDataServiceFactory>();
-            services.AddTransient<ICklOperationService, CKLOperationService>();
+            services.AddTransient<ICklOperationService, CklOperationService>();
 
             //Сервисы EntryPointViewModel
             services.AddSingleton<IDataService<FileData>, FileDataService>();
@@ -64,10 +64,10 @@ namespace CKL_Studio
 
             //ViewModels
             services.AddTransient<EntryPointViewModel>();
-            services.AddTransient<CKLCreationViewModel>();
+            services.AddTransient<CklCreationViewModel>();
             services.AddTransient<SourceInputViewModel>();
             services.AddTransient<RelationInputViewModel>();
-            services.AddTransient<CKLViewModel>();
+            services.AddTransient<CklViewModel>();
             //Windows
             services.AddTransient<LoadDataWindow>();
             services.AddTransient<CKLWindow>();
@@ -77,16 +77,16 @@ namespace CKL_Studio
         {
             return viewModel switch
             {
-                CKLViewModel _ => new CKLWindow { DataContext = viewModel },
+                CklViewModel _ => new CKLWindow { DataContext = viewModel },
                 _ => new LoadDataWindow { DataContext = viewModel }
             };
         }
 
-        private Type GetWindowTypeForViewModel(ViewModelBase viewModel)
+        private static Type GetWindowTypeForViewModel(ViewModelBase viewModel)
         {
             return viewModel switch
             {
-                CKLViewModel _ => typeof(CKLWindow),
+                CklViewModel _ => typeof(CKLWindow),
                 _ => typeof(LoadDataWindow)
             };
         }

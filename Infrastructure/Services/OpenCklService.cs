@@ -31,10 +31,9 @@ namespace CKL_Studio.Infrastructure.Services
 
         public bool Validate(string path)
         {
-            if (File.Exists(path))
+            if (File.Exists(path) && CKL.GetFromFile(path) != null)
             { 
-                if (CKL.GetFromFile(path) != null)
-                    return true;
+                return true;
             }
             
             return false;

@@ -17,29 +17,43 @@ jobs:
       with:
         dotnet-version: 7.0.x
 
-    - name: Verify project structure
+    - name: Verify structure
       run: |
-        if (!(Test-Path "CKL_Studio.csproj")) { throw "CKL_Studio.csproj not found" }
-        if (!(Test-Path "lib\CKLLib.dll")) { throw "CKLLib.dll not found in lib folder" }
-        if (!(Test-Path "lib\CKLDrawing.dll")) { throw "CKLDrawing.dll not found in lib folder" }
-        
+        # Проверка структуры
+        if (!(Test-Path "CKL_Studio.sln")) { throw "Solution file not found" }
+        if (!(Test-Path "lib\CKLLib.dll")) { throw "CKLLib.dll not found" }
+        if (!(Test-Path "lib\CKLDrawing.dll")) { throw "CKLDrawing.dll not found" }
         tree /f
 
-    - name: Add DLL references (manual method)
+    - name: Restore original .csproj
       run: |
-        $projContent = @"
-        <Project Sdk="Microsoft.NET.Sdk">
-            <ItemGroup>
-            <Reference Include="CKLLib">
-                <HintPath>lib\CKLLib.dll</HintPath>
-            </Reference>
-            <Reference Include="CKLDrawing">
-                <HintPath>lib\CKLDrawing.dll</HintPath>
-            </Reference>
-            </ItemGroup>
-        </Project>
-        "@
-        $projContent | Out-File -FilePath "CKL_Studio.csproj" -Append -Encoding utf8
+        # Восстановление оригинального .csproj (удаляем наши временные правки)
+        git checkout -- CKL_Studio.csproj
+
+    - name: Manual DLL reference
+      run: |
+        # Добавляем ссылки вручную через XML
+        $xml = [xml](Get-Content "CKL_Studio.csproj")
+        $itemGroup = $xml.CreateElement("ItemGroup")
+        
+        # Добавляем CKLLib
+        $ref = $xml.CreateElement("Reference")
+        $ref.SetAttribute("Include", "CKLLib")
+        $hint = $xml.CreateElement("HintPath")
+        $hint.InnerText = "lib\CKLLib.dll"
+        $ref.AppendChild($hint)
+        $itemGroup.AppendChild($ref)
+        
+        # Добавляем CKLDrawing
+        $ref = $xml.CreateElement("Reference")
+        $ref.SetAttribute("Include", "CKLDrawing")
+        $hint = $xml.CreateElement("HintPath")
+        $hint.InnerText = "lib\CKLDrawing.dll"
+        $ref.AppendChild($hint)
+        $itemGroup.AppendChild($ref)
+        
+        $xml.Project.AppendChild($itemGroup)
+        $xml.Save("CKL_Studio.csproj")
 
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner
@@ -49,6 +63,6 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         dotnet sonarscanner begin /k:"CKL_Studio" /o:"yvunglord" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-        dotnet build CKL_Studio.sln
+        dotnet build CKL_Studio.sln --configuration Release
         dotnet test --configuration Release --collect:"XPlat Code Coverage"
         dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

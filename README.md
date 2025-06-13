@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/Yvunglord/CKL_Studio?style=social)](https://github.com/Yvunglord/CKL_Studio/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/Yvunglord/CKL_Studio)](https://github.com/Yvunglord/CKL_Studio/commits/main)
 
-![CKL Studio Preview](https://via.placeholder.com/800x400?text=CKL+Studio+Screenshot) <!-- Замените на реальный скриншот -->
+![CKL Studio Preview](./Assets/CKL_Studio_example.png)
 
 ## 📝 Описание проекта
 CKL Studio — это прототип инструментальной системы для работы с **алгеброй динамических отношений** (циклограммами). Проект предназначен для:

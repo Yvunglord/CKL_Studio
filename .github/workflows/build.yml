@@ -62,7 +62,7 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        dotnet sonarscanner begin /k:"CKL_Studio" /o:"yvunglord" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        dotnet sonarscanner begin /k:"Yvunglord_CKL_Studio" /o:"yvunglord" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         dotnet build CKL_Studio.sln --configuration Release
         dotnet test --configuration Release --collect:"XPlat Code Coverage"
         dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

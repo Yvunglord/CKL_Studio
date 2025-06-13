@@ -17,8 +17,10 @@ jobs:
       with:
         dotnet-version: 7.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore  
+    - name: Install dependencies
+      run: |
+        dotnet add ./CKL_Studio/CKL_Studio.csproj reference ./lib/CKLLib.dll
+        dotnet add ./CKL_Studio/CKL_Studio.csproj reference ./lib/CKLDrawing.dll
 
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner
@@ -28,6 +30,6 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         dotnet sonarscanner begin /k:"CKL_Studio" /o:"yvunglord" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-        dotnet build
-        dotnet test --configuration Release --collect:"XPlat Code Coverage" --settings coverlet.runsettings
+        dotnet build CKL_Studio.sln
+        dotnet test --configuration Release --collect:"XPlat Code Coverage"
         dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

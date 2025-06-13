@@ -46,3 +46,6 @@ publish/
 *.sln.iml
 
 .DS_Store 
+
+!/lib/
+!/lib/*.dll

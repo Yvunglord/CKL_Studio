@@ -1,0 +1,3 @@
+sonar.projectKey=CKL_Studio
+sonar.organization=yvunglord
+sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml

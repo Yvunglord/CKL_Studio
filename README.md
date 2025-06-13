@@ -1,12 +1,16 @@
 # CKL Studio: Инструментальная система для построения алгебры динамических отношений
 
+<div align="center">
+  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET Version](https://img.shields.io/badge/.NET-%3E%3D%207.0-blue)](https://dotnet.microsoft.com/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Yvunglord_CKL_Studio&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Yvunglord_CKL_Studio)
 [![WPF](https://img.shields.io/badge/UI-WPF-ff69b4)](https://docs.microsoft.com/ru-ru/dotnet/desktop/wpf/)
+
 [![GitHub stars](https://img.shields.io/github/stars/Yvunglord/CKL_Studio?style=social)](https://github.com/Yvunglord/CKL_Studio/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/Yvunglord/CKL_Studio)](https://github.com/Yvunglord/CKL_Studio/commits/main)
 
-![CKL Studio Preview](./Assets/CKL_Studio_example.png)
+</div>
 
 ## 📝 Описание проекта
 CKL Studio — это прототип инструментальной системы для работы с **алгеброй динамических отношений** (циклограммами). Проект предназначен для:

@@ -53,6 +53,7 @@
                 <MenuItem Header="Объединение" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding UnionCommand}"/>
                 <MenuItem Header="Пересечение" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding IntersectionCommand}"/>
                 <MenuItem Header="Разность" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding DifferenceCommand}"/>
+                <MenuItem Header="Композиция" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding CompositionCommand}"/>
             </MenuItem>
             <MenuItem Header="Семантические" Style="{StaticResource CustomMenuItemStyle}">
                 <MenuItem Header="Семантическое объединение" Style="{StaticResource CustomSubMenuItemStyle}" Command="{Binding SemanticUnionCommand}"/>
@@ -116,7 +117,7 @@
                      Margin="0,0,20,-149"
                      ItemsSource="{Binding SolutionItems}"
                      SelectedItem="{Binding SelectedSolutionItem}">
-                
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FilePath, Converter={StaticResource FilePathToNameConverter}}"
@@ -195,7 +196,7 @@
                         <i:InvokeCommandAction Command="{Binding OpenSolutionItemCommand}"
                        CommandParameter="{Binding ElementName=ListBox, Path=SelectedSolutionItem}"/>
                     </i:EventTrigger>
-                </i:Interaction.Triggers>   
+                </i:Interaction.Triggers>
             </ListBox>
         </Grid>
 

@@ -57,7 +57,11 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void Save()
         {
+            CKL finalCKL = new CKL(_ckl.FilePath, _ckl.GlobalInterval, _ckl.Dimention, _ckl.Source, new HashSet<RelationItem>());
+            _ckl = finalCKL;
+            CKLView = new CKLView(_ckl);
             CKL.Save(_ckl);
+
             NavigateToCKLView();
         }
     }

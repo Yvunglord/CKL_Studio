@@ -26,7 +26,6 @@ namespace CKL_Studio.Presentation.ViewModels
         private readonly IDialogService _dialogService;
         private readonly ISolutionExplorerDataServiceFactory _serviceFactory;
         private readonly IDataService<FileData> _fileService;
-        private readonly IOpenCklService _openCklService;
         private IDataService<CKL>? _solutionExplorerService;
 
         private CKLView _mainCklView;
@@ -97,7 +96,6 @@ namespace CKL_Studio.Presentation.ViewModels
             _navigationService = serviceProvider.GetRequiredService<INavigationService>();  
             _dialogService = serviceProvider.GetRequiredService<IDialogService>();
             _fileService = serviceProvider.GetRequiredService<IDataService<FileData>>();
-            _openCklService = serviceProvider.GetRequiredService<IOpenCklService>();
             _mainCklView  = cklView;
             _serviceFactory = serviceProvider.GetRequiredService<ISolutionExplorerDataServiceFactory>();
         }
@@ -116,35 +114,16 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void LoadSolutionItems()
         {
-            SolutionItems.Clear();
-
-            _solutionExplorerService.Add(MainCKLView.Ckl);
-            var root = Path.GetDirectoryName(MainCKLView.Ckl.FilePath);
-            if (root != null)
-            { 
-                foreach (var path in Directory.GetFiles(root, "*.ckl"))
-                {
-                    if (path != MainCKLView.Ckl.FilePath)
-                    {
-                        try
-                        {
-                            var related = CKL.GetFromFile(path);
-                            related.FilePath = path;
-                            if (related != null && BinaryCKLOperationsValidator.CanPerformOperation(MainCKLView.Ckl, related))
-                            {
-                                _solutionExplorerService.Add(related);
-                            }
-                        }
-
-                        catch (Exception ex)
-                        {
-                            _dialogService.ShowMessage($"Ошибка при добавлении файла: {ex.Message}");
-                        }
-                    }
-                }
+            try
+            {
+                (_solutionExplorerService as SolutionExplorerDataService)?.Load(MainCKLView);
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowMessage($"Ошибка при добавлении файла: {ex.Message}");
             }
         }
-
+ 
         private void OpenSelectedItem()
         { 
             if (SelectedSolutionItem != null)
@@ -435,11 +414,6 @@ namespace CKL_Studio.Presentation.ViewModels
         private async Task<string?> GetCklPathAsync()
         {
             return await Task.Run(() => _dialogService.ShowOpenFileDialog(Constants.CKL_FILE_DIALOG_FILTER, Constants.DEFAULT_FILE_PATH));
-        }
-
-        private async Task<CKLView?> LoadCklAsync(string path)
-        {
-            return await Task.Run(() => _openCklService.Load(path, Application.Current.Dispatcher));
         }
 
         private async Task AddSolutionItemAsync()

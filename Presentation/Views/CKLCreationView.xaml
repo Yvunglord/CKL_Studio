@@ -107,6 +107,7 @@
                        Width ="115"
                        Margin="6, 0, 0, 0"
                        HorizontalAlignment="Left"
+                       IsReadOnly="True"
                        ItemsSource="{Binding TimeDimensions}"
                        SelectedItem="{Binding CKL.Dimention, Mode=TwoWay}"/>
 

@@ -268,7 +268,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
             if (!string.IsNullOrEmpty(result))
             { 
-                _isFilePathManuallySet = true;
+                //_isFilePathManuallySet = true;
                 Name = Path.GetFileNameWithoutExtension(result);
                 FilePath = result;
             }

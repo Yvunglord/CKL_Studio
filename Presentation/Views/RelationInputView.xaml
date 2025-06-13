@@ -31,7 +31,7 @@
             VerticalAlignment="Top" />
 
         <Label Style="{StaticResource h1}"
-            Content="Составьте отношение:"
+            Content="Составьте отношение: (недоступно на данном этапе)"
             Margin="60, 0, 0, 0"/>
 
         <StackPanel Grid.Column="1"
@@ -52,6 +52,12 @@
                  Command="{Binding NavigateToCKLViewCommand}"/>
 
         </StackPanel>
-
+        <Label
+            Style="{StaticResource h1}"
+            Grid.Row="1"
+            Grid.Column="0"
+            Content="Просто нажмите создать для продолжения работы"
+            VerticalAlignment="Top"
+            Margin="60, 20, 0, 0"/>
     </Grid>
 </UserControl>

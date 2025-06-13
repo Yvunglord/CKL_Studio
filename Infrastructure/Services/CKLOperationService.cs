@@ -1,5 +1,6 @@
 ﻿using CKL_Studio.Common.Interfaces;
 using CKL_Studio.Common.Interfaces.CKLInterfaces;
+using CKL_Studio.Presentation.ViewModels.Dialog;
 using CKL_Studio.Presentation.Windows.Dialogs;
 using CKLLib;
 using System;
@@ -13,90 +14,33 @@ namespace CKL_Studio.Infrastructure.Services
 {
     public class CKLOperationService : ICklOperationService
     {
-        private readonly IDialogService _dialogService;
-        private readonly CKL _currentCkl;
-        private readonly Action<CKL> _resetCkl;
-
-        public CKLOperationService(IDialogService dialogService, CKL currentCkl, Action<CKL> resetCkl)
+        public void ExecuteBinaryOperation(Func<CKL, CKL, CKL> operation, CKL current, IEnumerable<CKL> related)
         {
-            _dialogService = dialogService;
-            _currentCkl = currentCkl;
-            _resetCkl = resetCkl;
-        }
-
-        public void ExecuteBinaryOperation(Func<CKL, CKL, CKL> operation, string filter, string defaultDir)
-        {
-            var path = _dialogService.ShowOpenFileDialog(filter, defaultDir);
-            if (path != null) 
+            var dialog = new SelectCklDialogViewModel(related, current.FilePath);
+            dialog.RequestClose += result =>
             {
-                var ckl = CKL.GetFromFile(path);
-                if (ckl != null) 
+                if (result == true && dialog.SelectedCkl != null)
                 {
-                    try
-                    {
-                        var result = operation(_currentCkl, ckl);
-                        _resetCkl(result);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
-                    }
+                    var operationName = operation.Method.Name;
+                    var resultCkl = operation(current, dialog.SelectedCkl);
+                    CKL.Save(resultCkl);
                 }
-            }
+            };
         }
 
         public void ExecuteOperation(Func<CKL, CKL> operation)
         {
-            try
-            {
-                var result = operation(_currentCkl);
-                _resetCkl(result);
-            }
-            catch (ArgumentException ex)
-            {
-                _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
-            }
+            throw new NotImplementedException();
         }
 
-        public void ExecuteParameterizedTimeOperation(Func<CKL, TimeInterval, double, CKL> operation, string dialogTitle)
+        public void ExecuteParameterizedTimeOperation(Func<CKL, TimeInterval, double, CKL> operation)
         {
-            var dialog = new ParameterizedTimeOperationDialog() { Title = dialogTitle};
-            if (_dialogService.ShowDialog<ParameterizedTimeOperationDialog>(d => d.Title = dialogTitle) == true)
-            {
-                var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
-                var enTime = double.Parse(dialog.TextBox2Value, NumberStyles.Any, CultureInfo.InvariantCulture);
-                var t = double.Parse(dialog.TextBox3Value, NumberStyles.Any, CultureInfo.InvariantCulture);
-
-                try
-                {
-                    var result = operation(_currentCkl, new TimeInterval(stTime, enTime), t);
-                    _resetCkl(result);
-                }
-                catch (ArgumentException ex)
-                {
-                    _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
-                } 
-            } 
+            throw new NotImplementedException();
         }
 
-        public void ExecuteTimeOperation(Func<CKL, TimeInterval, CKL> operation, string dialogTitle)
+        public void ExecuteTimeOperation(Func<CKL, TimeInterval, CKL> operation)
         {
-            var dialog = new TimeOperationDialog() { Title = dialogTitle };
-            if (_dialogService.ShowDialog<TimeOperationDialog>(d => d.Title = dialogTitle) == true)
-            {
-                var stTime = double.Parse(dialog.TextBox1Value, NumberStyles.Any, CultureInfo.InvariantCulture);
-                var enTime = double.Parse(dialog.TextBox2Value, NumberStyles.Any, CultureInfo.InvariantCulture);
-
-                try
-                {
-                    var result = operation(_currentCkl, new TimeInterval(stTime, enTime));
-                    _resetCkl(result);
-                }
-                catch (ArgumentException ex)
-                {
-                    _dialogService.ShowMessage($"Uncorrect data: {ex.Message}", "Error");
-                }
-            } 
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using CKL_Studio.Common.Interfaces;
+using CKL_Studio.Infrastructure.Static;
+using CKLDrawing;
 using CKLLib;
 using Newtonsoft.Json;
 using System;
@@ -82,6 +84,29 @@ namespace CKL_Studio.Infrastructure.Services
                 existing.GlobalInterval = item.GlobalInterval;
                 existing.Relation = item.Relation;
             }
+        }
+
+        public void Load(CKLView main)
+        { 
+            _solutionItems.Clear();
+
+            Add(main.Ckl);
+            var root = Path.GetDirectoryName(main.Ckl.FilePath);
+
+            if (root != null)
+            {
+                foreach (var path in Directory.GetFiles(root, "*.ckl"))
+                {
+                    if (path != main.Ckl.FilePath)
+                    { 
+                        var related = CKL.GetFromFile(path);
+                        related.FilePath = path;
+                        if (related != null && BinaryCKLOperationsValidator.CanPerformOperation(main.Ckl, related))
+                            Add(related);
+                    }
+                }
+            }
+
         }
     }
 }

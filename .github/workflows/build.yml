@@ -17,10 +17,29 @@ jobs:
       with:
         dotnet-version: 7.0.x
 
-    - name: Install dependencies
+    - name: Verify project structure
       run: |
-        dotnet add CKL_Studio.csproj reference .\lib\CKLLib.dll
-        dotnet add CKL_Studio.csproj reference .\lib\CKLDrawing.dll
+        if (!(Test-Path "CKL_Studio.csproj")) { throw "CKL_Studio.csproj not found" }
+        if (!(Test-Path "lib\CKLLib.dll")) { throw "CKLLib.dll not found in lib folder" }
+        if (!(Test-Path "lib\CKLDrawing.dll")) { throw "CKLDrawing.dll not found in lib folder" }
+        
+        tree /f
+
+    - name: Add DLL references (manual method)
+      run: |
+        $projContent = @"
+        <Project Sdk="Microsoft.NET.Sdk">
+            <ItemGroup>
+            <Reference Include="CKLLib">
+                <HintPath>lib\CKLLib.dll</HintPath>
+            </Reference>
+            <Reference Include="CKLDrawing">
+                <HintPath>lib\CKLDrawing.dll</HintPath>
+            </Reference>
+            </ItemGroup>
+        </Project>
+        "@
+        $projContent | Out-File -FilePath "CKL_Studio.csproj" -Append -Encoding utf8
 
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner

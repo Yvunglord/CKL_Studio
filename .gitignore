@@ -4,7 +4,6 @@ obj/
 [Dd]ebug/
 [Rr]elease/
 *.exe
-*.dll
 *.pdb
 *.cache
 *.suo
@@ -47,5 +46,3 @@ publish/
 
 .DS_Store 
 
-!/lib/
-!/lib/*.dll

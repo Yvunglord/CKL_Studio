@@ -19,8 +19,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        dotnet add .\CKL_Studio\CKL_Studio.csproj reference .\lib\CKLLib.dll
-        dotnet add .\CKL_Studio\CKL_Studio.csproj reference .\lib\CKLDrawing.dll
+        dotnet add CKL_Studio.csproj reference .\lib\CKLLib.dll
+        dotnet add CKL_Studio.csproj reference .\lib\CKLDrawing.dll
 
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner

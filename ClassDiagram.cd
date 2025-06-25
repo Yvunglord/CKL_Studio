@@ -64,10 +64,10 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="CKL_Studio.Infrastructure.Services.CKLOperationService" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="CKL_Studio.Infrastructure.Services.CklOperationService" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAgAAAAAACAAAAAAABAAAQAAACAAIAAAAA=</HashCode>
+      <HashCode>AAAIAAAAAAAgAAAAAACAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Infrastructure\Services\CKLOperationService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -115,19 +115,19 @@
   <Class Name="CKL_Studio.Infrastructure.Services.SolutionExplorerDataService" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="22.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAYAAAAABAAICABAAAAAgAAAgAEAAAAAAgAAAABAAAA=</HashCode>
+      <HashCode>AAYAgAAABAAICABAAAAAgAAAgAEAAAAAAgAAAABAAAA=</HashCode>
       <FileName>Infrastructure\Services\SolutionExplorerDataService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="CKL_Studio.Infrastructure.Static.BinaryCKLOperationsValidator" Collapsed="true">
+  <Class Name="CKL_Studio.Infrastructure.Static.BinaryCklOperationsValidator" Collapsed="true">
     <Position X="17.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAAgAAAAAAAAAAAAAAAAEAAAAAAAAAE=</HashCode>
       <FileName>Infrastructure\Static\BinaryCKLOperationsValidator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CKL_Studio.Infrastructure.Static.JSONToCKLConverter" Collapsed="true">
+  <Class Name="CKL_Studio.Infrastructure.Static.JsonToCklConverter" Collapsed="true">
     <Position X="22.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
@@ -176,7 +176,7 @@
   <Class Name="CKL_Studio.Presentation.ViewModels.Base.Constants" Collapsed="true">
     <Position X="17.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>ABAAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Presentation\ViewModels\Base\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -196,7 +196,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CKL_Studio.Presentation.ViewModels.Dialog.SelectCklDialogViewModel" BaseTypeListCollapsed="true">
+  <Class Name="CKL_Studio.Presentation.ViewModels.Dialog.SelectCklDialogViewModel" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="21" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>UAAAAAAAAAAQAABAIAAAAAAQgAAAAgAIAAAEAAAACAA=</HashCode>
@@ -204,18 +204,18 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="CKL_Studio.Presentation.ViewModels.CKLCreationViewModel" Collapsed="true">
+  <Class Name="CKL_Studio.Presentation.ViewModels.CklCreationViewModel" Collapsed="true">
     <Position X="2.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AKAAsIAAEAgBIQJAKgAAAARQAACRBCUoABhAEAAAwIA=</HashCode>
+      <HashCode>AKAAsIAAEAghIQJAKgAAAARQAACRBiUogBhAEAAA0IA=</HashCode>
       <FileName>Presentation\ViewModels\CKLCreationViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CKL_Studio.Presentation.ViewModels.CKLViewModel" Collapsed="true">
+  <Class Name="CKL_Studio.Presentation.ViewModels.CklViewModel" Collapsed="true">
     <Position X="4.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAMAAIGKgNAMID4wMkQBBABAZIGAYBUAsAIABekwQSQ=</HashCode>
+      <HashCode>gAMAAIGCgNAMID4wMkQBBABAJIGAYBUAsAIABekwQSQ=</HashCode>
       <FileName>Presentation\ViewModels\CKLViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -279,7 +279,7 @@
   <Class Name="CKL_Studio.Presentation.Views.SourceInputView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAABMAAABAAAIAAAAAFAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <HashCode>AIAgAAABMAAABAAAIAAAAEFAAAAAAAAAAAAAABAAAAA=</HashCode>
       <FileName>Presentation\Views\SourceInputView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -287,7 +287,7 @@
   <Class Name="CKL_Studio.Presentation.Windows.Dialogs.ParameterizedTimeOperationDialog" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="22.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAiAAAAABAAAAAAAAAAEQAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AIAAAiAAAAABAAAAAAAAAEEQAAAAAAAAAAAAAAAEAAA=</HashCode>
       <FileName>Presentation\Windows\Dialogs\ParameterizedTimeOperationDialog.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -303,7 +303,7 @@
   <Class Name="CKL_Studio.Presentation.Windows.Dialogs.TimeOperationDialog" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="15.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAiAAAAABAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAiAAAAABAAAAAAAAAEEQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Presentation\Windows\Dialogs\TimeOperationDialog.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -346,7 +346,7 @@
       <FileName>Common\Interfaces\CKLInterfaces\ICklOperationService.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CKL_Studio.Common.Interfaces.CKLInterfaces.IJSONToCklСonversion" Collapsed="true">
+  <Interface Name="CKL_Studio.Common.Interfaces.CKLInterfaces.IJsonToCklСonversion" Collapsed="true">
     <Position X="19.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

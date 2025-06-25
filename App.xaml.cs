@@ -89,8 +89,6 @@ namespace CKL_Studio
                 CklViewModel _ => typeof(CKLWindow),
                 _ => typeof(LoadDataWindow)
             };
-        }
-
-        
+        }     
     }
 }

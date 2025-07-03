@@ -51,9 +51,9 @@ namespace CKL_Studio.Infrastructure.Static
 
                 foreach (Pair p1 in ckl1.Source)
                 {
-                    if (p1.SecondValue != null)
+                    if (p1.Values[1] != null)
                     {
-                        if (!ckl2.Source.Any(el => el.FirstValue.ToString().Equals(p1.SecondValue.ToString()))) return false;
+                        if (!ckl2.Source.Any(el => el.Values[0].ToString().Equals(p1.Values[1].ToString()))) return false;
                     }
                 }
 
@@ -74,11 +74,11 @@ namespace CKL_Studio.Infrastructure.Static
 
                 foreach (Pair p in ckl1.Source)
                 {
-                    if (p.SecondValue != null) return false;
+                    if (p.Values[1] != null) return false;
                 }
                 foreach (Pair p in ckl2.Source)
                 {
-                    if (p.SecondValue != null) return false;
+                    if (p.Values[1] != null) return false;
                 }
 
                 return true;

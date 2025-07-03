@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CKLLib" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -27,9 +28,6 @@
   <ItemGroup>
     <Reference Include="CKLDrawing">
       <HintPath>..\..\..\Desktop\CKL\CKLLib-1.1\CKLDrawing\bin\Debug\net8.0-windows\CKLDrawing.dll</HintPath>
-    </Reference>
-    <Reference Include="CKLLib">
-      <HintPath>..\..\..\Desktop\CKL\CKLLib-1.1\CKLLib\bin\Release\net8.0\CKLLib.dll</HintPath>
     </Reference>
   </ItemGroup>
 

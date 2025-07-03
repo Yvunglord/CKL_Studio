@@ -221,7 +221,7 @@ namespace CKL_Studio.Presentation.ViewModels
         {
             if (string.IsNullOrEmpty(_ckl.FilePath))
             {
-                var defaultPath = _namingService.GeneratePath("Project", Constants.DEFAULT_CKL_FILE_PATH);
+                var defaultPath = _namingService.GeneratePath("Project", Base.Constants.DEFAULT_CKL_FILE_PATH);
                 _name = Path.GetFileNameWithoutExtension(defaultPath);
                 FilePath = defaultPath;
             }
@@ -264,7 +264,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private void SelectFilePath()
         {
-            var result = _dialogService.ShowSaveFileDialog($"{_name}.ckl", Constants.DEFAULT_CKL_FILE_PATH, Constants.CKL_FILE_DIALOG_FILTER);
+            var result = _dialogService.ShowSaveFileDialog($"{_name}.ckl", Base.Constants.DEFAULT_CKL_FILE_PATH, Base.Constants.CKL_FILE_DIALOG_FILTER);
 
             if (!string.IsNullOrEmpty(result))
             { 
@@ -276,7 +276,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private async Task<string?> GetCklPathAsync()
         {
-            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Constants.JSON_FILE_DIALOG_FILTER, Constants.DEFAULT_FILE_PATH));
+            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Base.Constants.JSON_FILE_DIALOG_FILTER, Base.Constants.DEFAULT_FILE_PATH));
         }
 
         private async Task<bool> BrowseAsync()

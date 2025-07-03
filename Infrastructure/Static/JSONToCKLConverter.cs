@@ -42,13 +42,7 @@ namespace CKL_Studio.Infrastructure.Static
                      .Select(kvp => $"{kvp.Key}{kvp.Value!.ToString()}") 
                      .ToList();
 
-                Pair pair = pairFields.Count switch
-                {
-                    1 => new Pair(pairFields[0]),
-                    2 => new Pair(pairFields[0], pairFields[1]),
-                    3 => new Pair(pairFields[0], pairFields[1], pairFields[2]),
-                    _ => throw new InvalidDataException("Pair must have 1, 2, or 3 fields.")
-                };
+                Pair pair = new Pair(pairFields);
 
                 source.Add(pair);
 

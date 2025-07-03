@@ -107,6 +107,8 @@ namespace CKL_Studio.Presentation.ViewModels
             _openedCKLViews.Add(_mainCklView);
             LoadSolutionItems();
             AddOperationLog("Открытие проекта", $"{Path.GetFileName(MainCKLView.Ckl.FilePath)}");
+
+            _selectedSolutionItem = _mainCklView.Ckl;
         }
 
         private void NavigateToEntryPointView() => _navigationService.NavigateTo<EntryPointViewModel>();
@@ -413,7 +415,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private async Task<string?> GetCklPathAsync()
         {
-            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Constants.CKL_FILE_DIALOG_FILTER, Constants.DEFAULT_FILE_PATH));
+            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Base.Constants.CKL_FILE_DIALOG_FILTER, Base.Constants.DEFAULT_FILE_PATH));
         }
 
         private async Task AddSolutionItemAsync()

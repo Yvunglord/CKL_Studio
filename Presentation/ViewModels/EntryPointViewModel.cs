@@ -98,7 +98,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private async Task<string?> GetCklPathAsync()
         {
-            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Constants.CKL_FILE_DIALOG_FILTER, Constants.DEFAULT_FILE_PATH));
+            return await Task.Run(() => _dialogService.ShowOpenFileDialog(Base.Constants.CKL_FILE_DIALOG_FILTER, Base.Constants.DEFAULT_FILE_PATH));
         }
 
         private async Task<CKLView?> LoadCklAsync(string path)

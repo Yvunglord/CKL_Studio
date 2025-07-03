@@ -120,36 +120,26 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private Pair CreateEmptyPair()
         {
-            return Dim switch
-            {
-                1 => new Pair(string.Empty),
-                2 => new Pair(string.Empty, string.Empty),
-                3 => new Pair(string.Empty, string.Empty, string.Empty),
-                _ => new Pair(string.Empty)
-            };
+            var values = Enumerable.Repeat(string.Empty, Dim).Cast<object>().ToList();
+            return new Pair(values);
         }
 
         private Pair AdjustPairToDimension(Pair pair)
         {
-            return Dim switch
+            var newValues = new List<object>();
+            int minCount = Math.Min(pair.Values.Count, Dim);
+
+            for (int i = 0; i < minCount; i++)
             {
-                1 when pair.SecondValue != null || pair.ThirdValue != null
-                    => new Pair(pair.FirstValue ?? string.Empty),
+                newValues.Add(pair.Values[i] ?? string.Empty);
+            }
 
-                2 when pair.ThirdValue != null
-                    => new Pair(pair.FirstValue ?? string.Empty, pair.SecondValue ?? string.Empty),
+            for (int i = minCount; i < Dim; i++)
+            {
+                newValues.Add(string.Empty);
+            }
 
-                2 when pair.SecondValue == null
-                    => new Pair(pair.FirstValue ?? string.Empty, string.Empty),
-
-                3 when pair.ThirdValue == null
-                    => new Pair(
-                        pair.FirstValue ?? string.Empty,
-                        pair.SecondValue ?? string.Empty,
-                        string.Empty),
-
-                _ => pair
-            };
+            return new Pair(newValues);
         }
 
         private void Save()
@@ -160,7 +150,7 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private HashSet<Pair> GenerateValidatedSource()
         {
-            var validatedSource = new HashSet<Pair>(new PairComparer());
+            var validatedSource = new HashSet<Pair>(new Pair.PairEqualityComparer());
 
             foreach (var pair in Source)
             {
@@ -177,19 +167,16 @@ namespace CKL_Studio.Presentation.ViewModels
                 {
                     for (int j = 0; j < validPairs.Count; j++)
                     {
-                        if (Dim == 2)
+                        var newValues = new List<object>();
+
+                        newValues.Add(validPairs[i].Values[0]);
+
+                        for (int idx = 1; idx < Dim; idx++)
                         {
-                            validatedSource.Add(new Pair(
-                                validPairs[i].FirstValue,
-                                validPairs[j].SecondValue ?? string.Empty));
+                            newValues.Add(validPairs[j].Values[idx]);
                         }
-                        else if (Dim == 3)
-                        {
-                            validatedSource.Add(new Pair(
-                                validPairs[i].FirstValue,
-                                validPairs[j].SecondValue ?? string.Empty,
-                                validPairs[j].ThirdValue ?? string.Empty));
-                        }
+
+                        validatedSource.Add(new Pair(newValues));
                     }
                 }
             }
@@ -199,48 +186,30 @@ namespace CKL_Studio.Presentation.ViewModels
 
         private bool IsValidPair(Pair pair)
         {
-            if (string.IsNullOrEmpty(pair.FirstValue?.ToString()))
-                return false;
-
-            if (Dim >= 2 && string.IsNullOrEmpty(pair.SecondValue?.ToString()))
-                return false;
-
-            if (Dim >= 3 && string.IsNullOrEmpty(pair.ThirdValue?.ToString()))
-                return false;
-
+            for (int i = 0; i < Dim; i++)
+            {
+                if (i >= pair.Values.Count ||
+                    string.IsNullOrEmpty(pair.Values[i]?.ToString()))
+                {
+                    return false;
+                }
+            }
             return true;
         }
 
         private Pair NormalizePair(Pair pair)
         {
-            return Dim switch
+            var normalizedValues = new List<object>();
+
+            for (int i = 0; i < Dim; i++)
             {
-                1 => new Pair(pair.FirstValue.ToString().Trim()),
-                2 => new Pair(
-                    pair.FirstValue.ToString().Trim(),
-                    pair.SecondValue.ToString().Trim()),
-                3 => new Pair(
-                    pair.FirstValue.ToString().Trim(),
-                    pair.SecondValue.ToString().Trim(),
-                    pair.ThirdValue.ToString().Trim()),
-                _ => pair
-            };
-        }
-    }
+                var value = i < pair.Values.Count
+                    ? pair.Values[i]?.ToString().Trim() ?? string.Empty
+                    : string.Empty;
+                normalizedValues.Add(value);
+            }
 
-    public class PairComparer : IEqualityComparer<Pair>
-    {
-        public bool Equals(Pair x, Pair y)
-        {
-            if (ReferenceEquals(x, y)) return true;
-            if (x is null || y is null) return false;
-
-            return string.Equals(x.ToString(), y.ToString(), StringComparison.OrdinalIgnoreCase);
-        }
-
-        public int GetHashCode(Pair obj)
-        {
-            return obj.ToString().ToLower().GetHashCode();
+            return new Pair(normalizedValues);
         }
     }
 }

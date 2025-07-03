@@ -65,7 +65,7 @@ namespace CKL_Studio.Presentation.Views
                 var col1 = new DataGridTextColumn
                 {
                     Header = "Множество 1",
-                    Binding = new Binding("FirstValue") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
+                    Binding = new Binding("Values[0]") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
                     Width = new DataGridLength(1, DataGridLengthUnitType.Star),
                     HeaderStyle = (Style)FindResource("CustomDataGridColumnHeaderStyle"),
                     EditingElementStyle = (Style)FindResource("CustomDataGridCellEditingStyle")
@@ -77,7 +77,7 @@ namespace CKL_Studio.Presentation.Views
                     var col2 = new DataGridTextColumn
                     {
                         Header = "Множество 2",
-                        Binding = new Binding("SecondValue") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
+                        Binding = new Binding("Values[1]") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
                         Width = new DataGridLength(1, DataGridLengthUnitType.Star),
                         HeaderStyle = (Style)FindResource("CustomDataGridColumnHeaderStyle"),
                         EditingElementStyle = (Style)FindResource("CustomDataGridCellEditingStyle")
@@ -90,7 +90,7 @@ namespace CKL_Studio.Presentation.Views
                     var col3 = new DataGridTextColumn
                     {
                         Header = "Множество 3",
-                        Binding = new Binding("ThirdValue") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
+                        Binding = new Binding("Values[2]") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged },
                         Width = new DataGridLength(1, DataGridLengthUnitType.Star),
                         HeaderStyle = (Style)FindResource("CustomDataGridColumnHeaderStyle"),
                         EditingElementStyle = (Style)FindResource("CustomDataGridCellEditingStyle")

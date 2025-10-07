@@ -74,7 +74,7 @@ namespace CKL_Studio
             services.AddTransient<CKLWindow>();
         }
 
-        private static Window CreateWindowForViewModel(ViewModelBase viewModel)
+        private Window CreateWindowForViewModel(ViewModelBase viewModel)
         {
             return viewModel switch
             {
@@ -83,13 +83,13 @@ namespace CKL_Studio
             };
         }
 
-        private static Type GetWindowTypeForViewModel(ViewModelBase viewModel)
+        private Type GetWindowTypeForViewModel(ViewModelBase viewModel)
         {
             return viewModel switch
             {
                 CklViewModel _ => typeof(CKLWindow),
                 _ => typeof(LoadDataWindow)
             };
-        }
+        }     
     }
 }

@@ -15,6 +15,7 @@ using CKL_Studio.Common.Interfaces.CKLInterfaces;
 using CKL_Studio.Common.Interfaces.Factories;
 using CKL_Studio.Infrastructure.Services.Factories;
 using CKL_Studio.Presentation.ViewModels.Dialog;
+using CKL_Studio.CKL_Tests;
 
 namespace CKL_Studio
 {
